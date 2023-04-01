@@ -3,14 +3,14 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:music_app/app/player/getx_player_controller.dart';
 import 'package:music_app/app/ui/pages/player_page/widgets/custom_slider.dart';
-
 import '../../../config/widgets/background/custom_background.dart';
 import '../../../config/widgets/text_base.dart';
 import '../../../config/widgets/vector_asset.dart';
+import '../../../services/api.dart';
 import 'widgets/bottom_sheet_appbar.dart';
 
 class BottomSheetPlayer extends StatelessWidget {
-  const BottomSheetPlayer({Key? key}) : super(key: key);
+   BottomSheetPlayer({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -27,7 +27,9 @@ class BottomSheetPlayer extends StatelessWidget {
                   children: [
                     const BottomSheetAppbar(), //
                     // SizedBox(height: 20.h),
-                    const ArtImage(),
+                     ArtImage(
+
+                    ),
                     //SizedBox(height: 5.h),
                     const ArtistAndSongName(),
                     SizedBox(height: 20.h),
@@ -65,7 +67,8 @@ class BottomSheetPlayer extends StatelessWidget {
 }
 
 class ArtImage extends GetView<GetXPlayerController> {
-  const ArtImage({Key? key}) : super(key: key);
+
+  const ArtImage({Key? key,}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -75,15 +78,16 @@ class ArtImage extends GetView<GetXPlayerController> {
         borderRadius: BorderRadius.circular(20.r),
         child: Obx(
           () => Image.network(
+           // "${Api.baseUrl}/${controller.latestRelease[index!].thumbnail128}",
             controller.currentSongArtNotifier.value,
             fit: BoxFit.cover,
             height: Get.height / 3,
             width: Get.width / 0.9,
           ),
         ),
-      ),
-    );
-  }
+  ),
+  );
+}
 }
 
 class ArtistAndSongName extends GetView<GetXPlayerController> {
@@ -240,7 +244,8 @@ class NextSongButton extends GetView<GetXPlayerController> {
   Widget build(BuildContext context) {
     return Obx(
       () => GestureDetector(
-        onTap: (controller.isLastSongNotifier.value) ? null : controller.next,
+        onTap:
+        (controller.isLastSongNotifier.value) ? null : controller.next,
         child: VectorAsset(
           icon: 'ic_forward',
           size: 32.r,

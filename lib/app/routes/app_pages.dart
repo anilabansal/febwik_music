@@ -29,7 +29,7 @@ class AppPages {
     ),
     GetPage(
       name: _Paths.bottomPlayer,
-      page: () => const BottomSheetPlayer(),
+      page: () =>  BottomSheetPlayer(),
         transition: Transition.downToUp,
       transitionDuration: const Duration(milliseconds: 400),
     ),

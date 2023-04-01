@@ -1,7 +1,6 @@
 import 'package:audio_service/audio_service.dart';
 import 'package:get/get.dart';
 import 'package:music_app/app/models/home_music_response.dart';
-
 import 'getx_audio_handler.dart';
 import 'getx_playlist_repository.dart';
 
@@ -59,6 +58,7 @@ class GetXPlayerController extends GetxController {
       }
       _updateSkipButtons();
     });
+    print("playist--->${playlistNotifier.value}");
   }
 
   void _listenToPlaybackState() {
@@ -132,6 +132,10 @@ class GetXPlayerController extends GetxController {
       isFirstSongNotifier.value = playlist.first == mediaItem;
       isLastSongNotifier.value = playlist.last == mediaItem;
     }
+    print("object queue --->${_audioHandler.queue.value}");
+    print("mediaQueue ----->${_audioHandler.mediaItem.value}");
+    print("playlistLength---->${_audioHandler.queue.value.length}");
+    print("latestReleaseIndex--->${latestRelease.length-1}");
   }
 
   void play() {
@@ -159,7 +163,9 @@ class GetXPlayerController extends GetxController {
 
   void previous() => _audioHandler.skipToPrevious();
 
+
   void next() => _audioHandler.skipToNext();
+
 
   void repeat() {
     _nextRepeatState();
@@ -193,8 +199,11 @@ class GetXPlayerController extends GetxController {
     }
   }
 
-  Future<void> add(mediaItem) async {
-    _audioHandler.addQueueItems(mediaItem);
+  Future<void> add(mediaItem,index) async {
+  //  _audioHandler.updateQueue( mediaItem);
+ _audioHandler.addQueueItems(mediaItem);
+
+  print("value--->${mediaItem}");
     play();
   }
 
@@ -206,7 +215,7 @@ class GetXPlayerController extends GetxController {
 
   Future<void> clearPlaylist() async {
     final lastIndex = _audioHandler.queue.value.length - 1;
-
+        print("lastIndex--->${lastIndex}");
     for (int i = 0; i <= lastIndex; i++) {
       await removeLastItemFromIndex();
     }

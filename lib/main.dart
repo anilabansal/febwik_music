@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-
 import 'app/player/getx_audio_handler.dart';
 import 'app/player/getx_player_controller.dart';
 import 'app/player/getx_playlist_repository.dart';

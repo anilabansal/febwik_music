@@ -11,7 +11,6 @@ import 'package:music_app/app/routes/app_pages.dart';
 import 'package:music_app/app/services/api.dart';
 import 'package:music_app/app/ui/theme/index.dart';
 import '../../../config/widgets/small_text.dart';
-
 import '../../../config/widgets/background/custom_background.dart';
 import '../mini_player.dart';
 import 'widgets/home_appbar.dart';
@@ -80,24 +79,41 @@ class NewRelease extends GetView<GetXPlayerController> {
                       musicName: list[index].name ?? "",
                       artistName: "Artist Name",
                       onTap: () {
-                        List<MediaItem> mediaItems = [];
-                        for (var element in list) {
-                          mediaItems.add(
-                            MediaItem(
-                              id: "${element.id}",
-                              title: element.name ?? "",
-                              displayTitle: element.name ?? "",
-                              artUri: Uri.parse(
-                                  "${Api.baseUrl}/${element.thumbnail128}"),
-                              extras: {
-                                'url': "${Api.baseUrl}/${element.songFile}"
-                              },
-                            ),
-                          );
+                        List<MediaItem> playlist = [];
+                        for (int i = index; i < list.length; i++) {
+
+                          playlist.add(MediaItem(
+                            id: list[i].id.toString(),
+                            title: list[i].name!,
+                            artUri:Uri.parse("${Api.baseUrl}/${list[i].thumbnail128}"),
+                            //audioList[index].artUri,
+                            extras: {
+                              'url':  "${Api.baseUrl}/${list[i].songFile}",
+                            },
+                          ),);
+
                         }
                         controller.clearPlaylist();
-                        controller.add(mediaItems);
+                        controller.add(playlist,index);
                         Get.toNamed(AppRoutes.bottomPlayer);
+                        // List<MediaItem> mediaItems = [];
+                        // for (var element in list) {
+                        //   mediaItems.add(
+                        //     MediaItem(
+                        //       id: "${element.id}",
+                        //       title: element.name ?? "",
+                        //       displayTitle: element.name ?? "",
+                        //       artUri: Uri.parse(
+                        //           "${Api.baseUrl}/${element.thumbnail128}"),
+                        //       extras: {
+                        //         'url': "${Api.baseUrl}/${element.songFile}"
+                        //       },
+                        //     ),
+                        //   );
+                        // }
+                        // controller.clearPlaylist();
+                        // controller.add(mediaItems, index);
+                        // Get.toNamed(AppRoutes.bottomPlayer);
                       },
                     );
                   });
@@ -119,6 +135,7 @@ class HeaderSection extends StatelessWidget {
   final String title;
   final String action;
   final bool showAction;
+
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -184,30 +201,33 @@ class TrendingSongs extends GetView<GetXPlayerController> {
                 itemCount: controller.latestRelease.length,
                 itemBuilder: (context, index) {
                   var list = controller.latestRelease;
+                  print("index---->${controller.latestRelease.length - 1}");
                   return Obx(() {
                     return PlayerCard(
                       image: "${Api.baseUrl}/${list[index].thumbnail128}",
                       musicName: list[index].name ?? "",
                       artistName: "Artist Name",
                       onTap: () {
-                        List<MediaItem> mediaItems = [];
-                        for (var element in list) {
-                          mediaItems.add(
-                            MediaItem(
-                              id: "${element.id}",
-                              title: element.name ?? "",
-                              displayTitle: element.name ?? "",
-                              artUri: Uri.parse(
-                                  "${Api.baseUrl}/${element.thumbnail128}"),
-                              extras: {
-                                'url': "${Api.baseUrl}/${element.songFile}"
-                              },
-                            ),
-                          );
-                        }
+
+                         List<MediaItem> playlist = [];
+                         for (int i = index; i < list.length; i++) {
+                           // if (i == index) {
+                             playlist.add(MediaItem(
+                               id: list[i].id.toString(),
+                               title: list[i].name!,
+                               artUri:Uri.parse("${Api.baseUrl}/${list[i].thumbnail128}"),
+                               //audioList[index].artUri,
+                               extras: {
+                                 'url':  "${Api.baseUrl}/${list[i].songFile}",
+                               },
+                             ),);
+                           // }
+
+                         }
                         controller.clearPlaylist();
-                        controller.add(mediaItems);
-                        Get.toNamed(AppRoutes.bottomPlayer);
+                         controller.add(playlist,index);
+                         // controller.play();
+                         Get.toNamed(AppRoutes.bottomPlayer);
                       },
                     );
                   });
@@ -316,7 +336,7 @@ class FreshHits extends GetView<GetXPlayerController> {
                   return Obx(() {
                     return PlayerCard(
                       image:
-                          controller.playlistNotifier[index].artUri.toString(),
+                      controller.playlistNotifier[index].artUri.toString(),
                       musicName: controller.playlistNotifier[index].title,
                       artistName: "Artist Name",
                       onTap: () => Get.toNamed(AppRoutes.bottomPlayer),
@@ -349,7 +369,7 @@ class PlayList extends GetView<GetXPlayerController> {
                   return Obx(() {
                     return PlayerCard(
                       image:
-                          "http://65.2.183.74/storage/7/conversions/62541b21309a5_20210110_121942_0000-mediumthumb.jpg",
+                      "http://65.2.183.74/storage/7/conversions/62541b21309a5_20210110_121942_0000-mediumthumb.jpg",
                       musicName: controller.playlists[index].name ?? "",
                       artistName: "Artist Name",
                       onTap: () => Get.toNamed(AppRoutes.bottomPlayer),
@@ -364,17 +384,17 @@ class PlayList extends GetView<GetXPlayerController> {
 }
 
 class PlayerCard extends StatelessWidget {
-  const PlayerCard(
-      {Key? key,
-      required this.image,
-      required this.musicName,
-      required this.artistName,
-      required this.onTap})
+  const PlayerCard({Key? key,
+    required this.image,
+    required this.musicName,
+    required this.artistName,
+    required this.onTap})
       : super(key: key);
   final String image;
   final String musicName;
   final String artistName;
   final VoidCallback onTap;
+
   @override
   Widget build(BuildContext context) {
     return InkWell(
@@ -421,7 +441,6 @@ class PlayerCard extends StatelessWidget {
     );
   }
 }
-
 
 // InkWell(
 //                 onTap: () => controller.play,
