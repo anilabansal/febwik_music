@@ -145,12 +145,19 @@ class PreviousSongButton extends GetView<GetXPlayerController> {
   Widget build(BuildContext context) {
     return Obx(
       () => GestureDetector(
-        onTap:
-            (controller.isFirstSongNotifier.value) ? null : controller.previous,
+        onTap: (controller.isFirstSongNotifier.value)
+            ?
+            // null
+            controller.startFromEnd
+            : controller.previous,
         child: VectorAsset(
           icon: 'ic_backward',
           size: 32.r,
-          color: (controller.isFirstSongNotifier.value) ? Colors.white54 : Colors.white,
+          color:
+              // (controller.isFirstSongNotifier.value)
+              //     ? Colors.white54
+              //     :
+              Colors.white,
         ),
       ),
     );
@@ -172,7 +179,8 @@ class PlayButton extends GetView<GetXPlayerController> {
               shape: BoxShape.circle,
               color: Colors.white24,
             ),
-            child: const Center(child: CircularProgressIndicator(
+            child: const Center(
+                child: CircularProgressIndicator(
               color: Colors.white54,
               strokeWidth: 2,
             )),
@@ -237,11 +245,17 @@ class NextSongButton extends GetView<GetXPlayerController> {
   Widget build(BuildContext context) {
     return Obx(
       () => GestureDetector(
-        onTap: (controller.isLastSongNotifier.value) ? null : controller.next,
+        onTap: (controller.isLastSongNotifier.value)
+            ?
+            // null
+            controller.startFromStarting
+            : controller.next,
         child: VectorAsset(
           icon: 'ic_forward',
           size: 32.r,
-          color: (controller.isLastSongNotifier.value) ? Colors.white54 : Colors.white,
+          color:
+              // (controller.isLastSongNotifier.value) ? Colors.white54 :
+              Colors.white,
         ),
       ),
     );

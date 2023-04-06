@@ -80,40 +80,35 @@ class NewRelease extends GetView<GetXPlayerController> {
                       artistName: "Artist Name",
                       onTap: () {
                         List<MediaItem> playlist = [];
-                        for (int i = index; i < list.length; i++) {
-
-                          playlist.add(MediaItem(
-                            id: list[i].id.toString(),
-                            title: list[i].name!,
-                            artUri:Uri.parse("${Api.baseUrl}/${list[i].thumbnail128}"),
-                            //audioList[index].artUri,
-                            extras: {
-                              'url':  "${Api.baseUrl}/${list[i].songFile}",
-                            },
-                          ),);
-
+                        for (int i = 0; i < list.length; i++) {
+                          playlist.add(
+                            MediaItem(
+                              id: list[i].id.toString(),
+                              title: list[i].name!,
+                              artUri: Uri.parse(
+                                  "${Api.baseUrl}/${list[i].thumbnail128}"),
+                              //audioList[index].artUri,
+                              extras: {
+                                'url': "${Api.baseUrl}/${list[i].songFile}",
+                              },
+                            ),
+                          );
                         }
-                        controller.clearPlaylist();
-                        controller.add(playlist,index);
-                        Get.toNamed(AppRoutes.bottomPlayer);
-                        // List<MediaItem> mediaItems = [];
-                        // for (var element in list) {
-                        //   mediaItems.add(
-                        //     MediaItem(
-                        //       id: "${element.id}",
-                        //       title: element.name ?? "",
-                        //       displayTitle: element.name ?? "",
-                        //       artUri: Uri.parse(
-                        //           "${Api.baseUrl}/${element.thumbnail128}"),
-                        //       extras: {
-                        //         'url': "${Api.baseUrl}/${element.songFile}"
-                        //       },
-                        //     ),
-                        //   );
+                        // for (int j = 0; j<index; j++) {
+                        //   playlist.add(MediaItem(
+                        //     id: list[j].id.toString(),
+                        //     title: list[j].name!,
+                        //     artUri:Uri.parse("${Api.baseUrl}/${list[j].thumbnail128}"),
+                        //     //audioList[index].artUri,
+                        //     extras: {
+                        //       'url':  "${Api.baseUrl}/${list[j].songFile}",
+                        //     },
+                        //   ),);
                         // }
-                        // controller.clearPlaylist();
-                        // controller.add(mediaItems, index);
-                        // Get.toNamed(AppRoutes.bottomPlayer);
+
+                        controller.clearPlaylist();
+                        controller.add(playlist, index);
+                        Get.toNamed(AppRoutes.bottomPlayer);
                       },
                     );
                   });
@@ -208,26 +203,36 @@ class TrendingSongs extends GetView<GetXPlayerController> {
                       musicName: list[index].name ?? "",
                       artistName: "Artist Name",
                       onTap: () {
+                        List<MediaItem> playlist = [];
+                        for (int i = 0; i < list.length; i++) {
+                          playlist.add(
+                            MediaItem(
+                              id: list[i].id.toString(),
+                              title: list[i].name!,
+                              artUri: Uri.parse(
+                                  "${Api.baseUrl}/${list[i].thumbnail128}"),
+                              //audioList[index].artUri,
+                              extras: {
+                                'url': "${Api.baseUrl}/${list[i].songFile}",
+                              },
+                            ),
+                          );
+                        }
+                        // for (int j = 0; j<index; j++) {
+                        //   playlist.add(MediaItem(
+                        //     id: list[j].id.toString(),
+                        //     title: list[j].name!,
+                        //     artUri:Uri.parse("${Api.baseUrl}/${list[j].thumbnail128}"),
+                        //     //audioList[index].artUri,
+                        //     extras: {
+                        //       'url':  "${Api.baseUrl}/${list[j].songFile}",
+                        //     },
+                        //   ),);
+                        // }
 
-                         List<MediaItem> playlist = [];
-                         for (int i = index; i < list.length; i++) {
-                           // if (i == index) {
-                             playlist.add(MediaItem(
-                               id: list[i].id.toString(),
-                               title: list[i].name!,
-                               artUri:Uri.parse("${Api.baseUrl}/${list[i].thumbnail128}"),
-                               //audioList[index].artUri,
-                               extras: {
-                                 'url':  "${Api.baseUrl}/${list[i].songFile}",
-                               },
-                             ),);
-                           // }
-
-                         }
                         controller.clearPlaylist();
-                         controller.add(playlist,index);
-                         // controller.play();
-                         Get.toNamed(AppRoutes.bottomPlayer);
+                        controller.add(playlist, index);
+                        Get.toNamed(AppRoutes.bottomPlayer);
                       },
                     );
                   });
@@ -336,7 +341,7 @@ class FreshHits extends GetView<GetXPlayerController> {
                   return Obx(() {
                     return PlayerCard(
                       image:
-                      controller.playlistNotifier[index].artUri.toString(),
+                          controller.playlistNotifier[index].artUri.toString(),
                       musicName: controller.playlistNotifier[index].title,
                       artistName: "Artist Name",
                       onTap: () => Get.toNamed(AppRoutes.bottomPlayer),
@@ -369,7 +374,7 @@ class PlayList extends GetView<GetXPlayerController> {
                   return Obx(() {
                     return PlayerCard(
                       image:
-                      "http://65.2.183.74/storage/7/conversions/62541b21309a5_20210110_121942_0000-mediumthumb.jpg",
+                          "http://65.2.183.74/storage/7/conversions/62541b21309a5_20210110_121942_0000-mediumthumb.jpg",
                       musicName: controller.playlists[index].name ?? "",
                       artistName: "Artist Name",
                       onTap: () => Get.toNamed(AppRoutes.bottomPlayer),
@@ -384,11 +389,12 @@ class PlayList extends GetView<GetXPlayerController> {
 }
 
 class PlayerCard extends StatelessWidget {
-  const PlayerCard({Key? key,
-    required this.image,
-    required this.musicName,
-    required this.artistName,
-    required this.onTap})
+  const PlayerCard(
+      {Key? key,
+      required this.image,
+      required this.musicName,
+      required this.artistName,
+      required this.onTap})
       : super(key: key);
   final String image;
   final String musicName;

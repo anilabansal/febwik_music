@@ -150,13 +150,18 @@ class PreviousSongButton extends GetView<GetXPlayerController> {
     return Obx(
       () => GestureDetector(
         onTap:
-            (controller.isFirstSongNotifier.value) ? null : controller.previous,
+            (controller.isFirstSongNotifier.value) ?
+            // null
+                controller.startFromEnd
+                : controller.previous,
         child: VectorAsset(
           icon: 'ic_backward',
           size: 32.r,
-          color: (controller.isFirstSongNotifier.value)
-              ? Colors.white54
-              : Colors.white,
+          color:
+          // (controller.isFirstSongNotifier.value)
+          //     ? Colors.white54
+          //     :
+          Colors.white,
         ),
       ),
     );
@@ -245,13 +250,17 @@ class NextSongButton extends GetView<GetXPlayerController> {
     return Obx(
       () => GestureDetector(
         onTap:
-        (controller.isLastSongNotifier.value) ? null : controller.next,
+        (controller.isLastSongNotifier.value) ?
+        // null
+        controller.startFromStarting
+            : controller.next,
         child: VectorAsset(
           icon: 'ic_forward',
           size: 32.r,
-          color: (controller.isLastSongNotifier.value)
-              ? Colors.white54
-              : Colors.white,
+          color:
+          // (controller.isLastSongNotifier.value)
+          //     ? Colors.white54:
+               Colors.white,
         ),
       ),
     );

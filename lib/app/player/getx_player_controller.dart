@@ -135,7 +135,7 @@ class GetXPlayerController extends GetxController {
     print("object queue --->${_audioHandler.queue.value}");
     print("mediaQueue ----->${_audioHandler.mediaItem.value}");
     print("playlistLength---->${_audioHandler.queue.value.length}");
-    print("latestReleaseIndex--->${latestRelease.length-1}");
+    print("latestReleaseIndex--->${latestRelease.length - 1}");
   }
 
   void play() {
@@ -146,6 +146,7 @@ class GetXPlayerController extends GetxController {
   void pause() => _audioHandler.pause();
 
   void seek(Duration position) => _audioHandler.seek(position);
+
   void forwordSeek10Sec() {
     _audioHandler.seek(Duration(
         seconds: _audioHandler.playbackState.value.position.inSeconds + 10));
@@ -163,9 +164,12 @@ class GetXPlayerController extends GetxController {
 
   void previous() => _audioHandler.skipToPrevious();
 
-
   void next() => _audioHandler.skipToNext();
 
+  void startFromStarting() => _audioHandler.skipToQueueItem(0);
+
+  void startFromEnd() =>
+      _audioHandler.skipToQueueItem(_audioHandler.queue.value.length - 1);
 
   void repeat() {
     _nextRepeatState();
@@ -199,11 +203,16 @@ class GetXPlayerController extends GetxController {
     }
   }
 
-  Future<void> add(mediaItem,index) async {
-  //  _audioHandler.updateQueue( mediaItem);
- _audioHandler.addQueueItems(mediaItem);
+  Future<void> add(mediaItem, index) async {
+    //  _audioHandler.updateQueue( mediaItem);
+    // for()
+    _audioHandler.addQueueItems(mediaItem);
 
-  print("value--->${mediaItem}");
+    print("value--->${mediaItem}");
+    _audioHandler.skipToQueueItem(index);
+    // _audioHandler.updateMediaItem(mediaItem[index]);
+    print('Current index - $index');
+
     play();
   }
 
@@ -215,10 +224,17 @@ class GetXPlayerController extends GetxController {
 
   Future<void> clearPlaylist() async {
     final lastIndex = _audioHandler.queue.value.length - 1;
-        print("lastIndex--->${lastIndex}");
-    for (int i = 0; i <= lastIndex; i++) {
-      await removeLastItemFromIndex();
-    }
+    print("lastIndex--->${lastIndex}");
+    // for (int i = 0; i <= lastIndex; i++) {
+    //   // await removeLastItemFromIndex();
+    //   await _audioHandler.removeQueueItemAt(i);
+    // }
+    _audioHandler.stop();
+    Future.delayed(Duration.zero, () {
+      _audioHandler.queue.value.clear();
+    });
+    update();
+    print('Current Length - ${_audioHandler.queue.value.length}');
   }
 
   @override

@@ -195,13 +195,18 @@ class MiniNextSongButton extends GetView<GetXPlayerController> {
   Widget build(BuildContext context) {
     return Obx(
       () => GestureDetector(
-        onTap: (controller.isLastSongNotifier.value) ? null : controller.next,
+        // onTap: (controller.isLastSongNotifier.value) ? null : controller.next,
+        onTap: (controller.isLastSongNotifier.value)
+            // ? null
+            ? controller.startFromStarting
+            : controller.next,
         child: VectorAsset(
           icon: 'ic_forward',
           size: 26.r,
-          color: (controller.isLastSongNotifier.value)
-              ? Colors.white54
-              : Colors.white,
+          // color: (controller.isLastSongNotifier.value)
+          //     ? Colors.white54
+          //     : Colors.white,
+          color: Colors.white,
         ),
       ),
     );
@@ -246,14 +251,19 @@ class MiniPreviousSongButton extends GetView<GetXPlayerController> {
   Widget build(BuildContext context) {
     return Obx(
       () => GestureDetector(
-        onTap:
-            (controller.isFirstSongNotifier.value) ? null : controller.previous,
+        onTap: (controller.isFirstSongNotifier.value)
+            ?
+            // null
+            controller.startFromEnd
+            : controller.previous,
         child: VectorAsset(
           icon: 'ic_backward',
           size: 26.r,
-          color: (controller.isFirstSongNotifier.value)
-              ? Colors.white54
-              : Colors.white,
+          color:
+              // (controller.isFirstSongNotifier.value)
+              //     ? Colors.white54
+              //     :
+              Colors.white,
         ),
       ),
     );
