@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:music_app/app/ui/pages/home_page/home_page_view.dart';
 import 'package:music_app/app/ui/pages/profile/profile_page.dart';
-
 import 'config/widgets/custom_nav_bar.dart';
 import 'ui/pages/search/search_page.dart';
 import 'ui/theme/colors.dart';

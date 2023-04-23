@@ -2,10 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:music_app/app/config/widgets/small_text.dart';
-
 import '../../config/widgets/vector_asset.dart';
 import '../../player/getx_player_controller.dart';
 import '../../routes/app_pages.dart';
+import '../theme/colors.dart';
 import 'player_page/widgets/custom_slider.dart';
 
 class MiniPlayer extends GetView<GetXPlayerController> {
@@ -27,15 +27,31 @@ class MiniPlayer extends GetView<GetXPlayerController> {
                 //   exitBottomSheetDuration: const Duration(milliseconds: 500),
                 // );
               },
-              child: Column(
-                children: [
-                  const MiniPlayerContainer(),
-                  SizedBox(
-                    height: 8.h,
-                    child: const CustomSlider(),
+              child: Padding(
+                padding: const EdgeInsets.only(bottom: 8.0),
+                child: Container(
+                //  margin: const EdgeInsets.only(bottom: 10),
+                //   decoration:  BoxDecoration(
+                //     borderRadius: const BorderRadius.only(
+                //         topRight: Radius.circular(15),
+                //         topLeft: Radius.circular(15)
+                //     ),
+                //   border: Border.all(color:AppColor.darkColor ),
+                //    color: AppColor.darkColor,
+                //     //color: Colors.green
+                //   ),
+                  color: AppColor.darkColor,
+                  child: Column(
+                    children: [
+                      const MiniPlayerContainer(),
+                      SizedBox(
+                        height: 0.h,
+                        child: const CustomSlider(),
+                      ),
+                     SizedBox(height: 55.h)
+                    ],
                   ),
-                  SizedBox(height: 60.h)
-                ],
+                ),
               ),
             );
     });
@@ -52,9 +68,9 @@ class MiniPlayerContainer extends GetView<GetXPlayerController> {
     return Obx(() {
       return Container(
         width: Get.width,
-        height: 70,
+        height: 55,
         alignment: Alignment.center,
-        color: Colors.black38,
+       // color: Colors.black38,
         child: Row(
           children: [
             const MiniArtImage(),
@@ -93,7 +109,8 @@ class MiniArtImage extends GetView<GetXPlayerController> {
       child: AspectRatio(
         aspectRatio: 1,
         child: ClipRRect(
-          borderRadius: BorderRadius.circular(20.r),
+          borderRadius: BorderRadius.circular(10.r),
+          // borderRadius: BorderRadius.circular(20.r),
           child: Obx(
             () => Image.network(
               controller.currentSongArtNotifier.value,
@@ -115,8 +132,10 @@ class MiniPlayButton extends GetView<GetXPlayerController> {
       switch (controller.playButtonNotifier.value) {
         case ButtonState.loading:
           return Container(
-            width: 50.r,
-            height: 50.r,
+            // width: 50.r,
+            // height: 50.r,
+            width: 35.r,
+            height: 35.r,
             decoration: const BoxDecoration(
               shape: BoxShape.circle,
               color: Colors.white24,
@@ -125,12 +144,12 @@ class MiniPlayButton extends GetView<GetXPlayerController> {
                 child: CircularProgressIndicator(
               color: Colors.white54,
               strokeWidth: 2,
-            )),
+            ),),
           );
         case ButtonState.paused:
           return Container(
-            width: 50.r,
-            height: 50.r,
+            width: 35.r,
+            height: 35.r,
             decoration: const BoxDecoration(
               shape: BoxShape.circle,
               color: Colors.white24,
@@ -138,15 +157,18 @@ class MiniPlayButton extends GetView<GetXPlayerController> {
             child: Center(
               child: IconButton(
                 icon: const Icon(Icons.play_arrow),
-                iconSize: 30.h,
+                // iconSize: 30.h,
+                iconSize: 20.h,
                 onPressed: controller.play,
               ),
             ),
           );
         case ButtonState.playing:
           return Container(
-            width: 50.r,
-            height: 50.r,
+            // width: 50.r,
+            // height: 50.r,
+            width: 35.r,
+            height: 35.r,
             decoration: const BoxDecoration(
               shape: BoxShape.circle,
               color: Colors.white24,
@@ -154,7 +176,8 @@ class MiniPlayButton extends GetView<GetXPlayerController> {
             child: Center(
               child: IconButton(
                 icon: const Icon(Icons.pause),
-                iconSize: 26.h,
+               iconSize: 20.h,
+
                 onPressed: controller.pause,
               ),
             ),
@@ -226,13 +249,15 @@ class MiniArtistAndSongName extends GetView<GetXPlayerController> {
           children: [
             SmallText(
               text: controller.currentSongTitleNotifier.value,
+              //weight: FontWeight.bold,
               weight: FontWeight.bold,
+              size: 18,
             ),
-            SizedBox(height: 3.r),
+            //SizedBox(height: 3.r),
             SmallText(
               text: "artist name",
               weight: FontWeight.w500,
-              size: 13.sp,
+              size: 12.sp,
               color: Colors.white54,
             ),
           ],

@@ -6,7 +6,6 @@ import 'package:music_app/app/ui/pages/player_page/widgets/custom_slider.dart';
 import '../../../config/widgets/background/custom_background.dart';
 import '../../../config/widgets/text_base.dart';
 import '../../../config/widgets/vector_asset.dart';
-import '../../../services/api.dart';
 import 'widgets/bottom_sheet_appbar.dart';
 
 class BottomSheetPlayer extends StatelessWidget {
@@ -26,8 +25,8 @@ class BottomSheetPlayer extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     const BottomSheetAppbar(), //
-                    // SizedBox(height: 20.h),
-                     ArtImage(
+                    SizedBox(height: 20.h),
+                     const ArtImage(
 
                     ),
                     //SizedBox(height: 5.h),

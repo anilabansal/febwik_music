@@ -16,8 +16,9 @@ dependencies:
   flutter_svg: ^1.0.3
   just_audio: ^0.9.27
   audio_service: ^0.18.6
-  miniplayer: ^1.0.1
+#  miniplayer: ^1.0.1
   flutter_font_icons: ^2.2.5
+  http: ^0.13.5
 
 dev_dependencies:
   flutter_test:

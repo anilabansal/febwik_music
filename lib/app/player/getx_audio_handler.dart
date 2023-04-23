@@ -24,73 +24,87 @@ class GetXAudioHandler extends GetxService {
   }
 }
 
-class GetXBaseAudioHandler extends BaseAudioHandler{
+class GetXBaseAudioHandler extends BaseAudioHandler {
   final _player = AudioPlayer();
   final _playlist = ConcatenatingAudioSource(children: []);
 
   GetXBaseAudioHandler() {
     _loadEmptyPlaylist();
     _notifyAudioHandlerAboutPlaybackEvents();
-    _listenForDurationChanges();
+   _listenForDurationChanges();
     _listenForCurrentSongIndexChanges();
     _listenForSequenceStateChanges();
   }
+
   AudioPlayer get player => _player;
+
   Future<void> _loadEmptyPlaylist() async {
     try {
-      await _player.setAudioSource(_playlist);
+      print("ist time queue---->${_playlist}");
+      await _player.setAudioSource(_playlist, );
+
     } catch (e) {
       if (kDebugMode) {
         print("Error: $e");
       }
     }
   }
-
+  void printSongsName1121(list) {
+    list.forEach((item) {
+      print(item.title);
+    });
+  }
   void _notifyAudioHandlerAboutPlaybackEvents() {
     _player.playbackEventStream.listen((PlaybackEvent event) {
       final playing = _player.playing;
-      playbackState.add(playbackState.value.copyWith(
-        controls: [
-          MediaControl.skipToPrevious,
-          if (playing) MediaControl.pause else MediaControl.play,
-          MediaControl.stop,
-          MediaControl.skipToNext,
-        ],
-        systemActions: const {
-          MediaAction.seek,
-        },
-        androidCompactActionIndices: const [0, 1, 3],
-        processingState: const {
-          ProcessingState.idle: AudioProcessingState.idle,
-          ProcessingState.loading: AudioProcessingState.loading,
-          ProcessingState.buffering: AudioProcessingState.buffering,
-          ProcessingState.ready: AudioProcessingState.ready,
-          ProcessingState.completed: AudioProcessingState.completed,
-        }[_player.processingState]!,
-        repeatMode: const {
-          LoopMode.off: AudioServiceRepeatMode.none,
-          LoopMode.one: AudioServiceRepeatMode.one,
-          LoopMode.all: AudioServiceRepeatMode.all,
-        }[_player.loopMode]!,
-        shuffleMode: (_player.shuffleModeEnabled)
-            ? AudioServiceShuffleMode.all
-            : AudioServiceShuffleMode.none,
-        playing: playing,
-        updatePosition: _player.position,
-        bufferedPosition: _player.bufferedPosition,
-        speed: _player.speed,
-        queueIndex: event.currentIndex,
-      ));
+      playbackState.add(
+        playbackState.value.copyWith(
+          controls: [
+            MediaControl.skipToPrevious,
+            if (playing) MediaControl.pause else MediaControl.play,
+            MediaControl.stop,
+            MediaControl.skipToNext,
+          ],
+          systemActions: const {
+            MediaAction.seek,
+          },
+          androidCompactActionIndices: const [0, 1, 3],
+          processingState: const {
+            ProcessingState.idle: AudioProcessingState.idle,
+            ProcessingState.loading: AudioProcessingState.loading,
+            ProcessingState.buffering: AudioProcessingState.buffering,
+            ProcessingState.ready: AudioProcessingState.ready,
+            ProcessingState.completed: AudioProcessingState.completed,
+          }[_player.processingState]!,
+          repeatMode: const {
+            LoopMode.off: AudioServiceRepeatMode.none,
+            LoopMode.one: AudioServiceRepeatMode.one,
+            LoopMode.all: AudioServiceRepeatMode.all,
+          }[_player.loopMode]!,
+          shuffleMode: (_player.shuffleModeEnabled)
+              ? AudioServiceShuffleMode.all
+              : AudioServiceShuffleMode.none,
+          playing: playing,
+          updatePosition: _player.position,
+          bufferedPosition: _player.bufferedPosition,
+          speed: _player.speed,
+          queueIndex: event.currentIndex,
+        ),
+      );
     });
   }
 
   void _listenForDurationChanges() {
+    print("step2344");
     _player.durationStream.listen((duration) {
       var index = _player.currentIndex;
+      print("duration index --->${index}");
       final newQueue = queue.value;
+      print("newQueue ---->${newQueue}");
       if (index == null || newQueue.isEmpty) return;
       if (_player.shuffleModeEnabled) {
         index = _player.shuffleIndices![index];
+        print("shuffle index --->${index}");
       }
       final oldMediaItem = newQueue[index];
       final newMediaItem = oldMediaItem.copyWith(duration: duration);
@@ -101,46 +115,83 @@ class GetXBaseAudioHandler extends BaseAudioHandler{
   }
 
   void _listenForCurrentSongIndexChanges() {
+    print("Step 1122233 ---->");
     _player.currentIndexStream.listen((index) {
       final playlist = queue.value;
+      print("service --->${playlist}");
+      playlist.forEach((item) {
+        print(item.title);
+      });
       if (index == null || playlist.isEmpty) return;
       if (_player.shuffleModeEnabled) {
         index = _player.shuffleIndices![index];
+        print("index ---->${index}");
+
       }
+      print("mediaIndex--->${playlist[index]}");
+      print("audioSource---->${_player.audioSource}");
       mediaItem.add(playlist[index]);
     });
   }
 
   void _listenForSequenceStateChanges() {
+    print("Step sequenceStateChanges ---->");
     _player.sequenceStateStream.listen((SequenceState? sequenceState) {
       final sequence = sequenceState?.effectiveSequence;
       if (sequence == null || sequence.isEmpty) return;
       final items = sequence.map((source) => source.tag as MediaItem);
+
       queue.add(items.toList());
+
     });
   }
 
   @override
   Future<void> addQueueItems(List<MediaItem> mediaItems) async {
+    print("audioSource4567889");
+    queue.forEach((item) {
+      print(item.length);
+    });
+  queue.value.clear();
+
+    print("audioSourcejfvjgjggj");
+    queue.forEach((item) {
+      print(item.length);
+    });
+    print("playlist length---->${_playlist.length}");
+
+  _playlist.clear();
+    print("playlist length1---->${_playlist.length}");
+
     // manage Just Audio
+    print("audioSource123456");
+    mediaItems.forEach((item) {
+      print(item.title);
+    });
     final audioSource = mediaItems.map(_createAudioSource);
+
     _playlist.addAll(audioSource.toList());
+    print("audioSource56787--->${_playlist.length}");
 
     // notify system
     final newQueue = queue.value..addAll(mediaItems);
+    print("audioSource89078");
+    newQueue.forEach((item) {
+      print(item.title);
+    });
     queue.add(newQueue);
   }
 
   @override
-  Future<void> addQueueItem(MediaItem mediaItem) async {
-    // manage Just Audio
-    final audioSource = _createAudioSource(mediaItem);
-    _playlist.add(audioSource);
-
-    // notify system
-    final newQueue = queue.value..add(mediaItem);
-    queue.add(newQueue);
-  }
+  // Future<void> addQueueItem(MediaItem mediaItem) async {
+  //   // manage Just Audio
+  //   final audioSource = _createAudioSource(mediaItem);
+  //   _playlist.add(audioSource);
+  //    print("audioSource--->$audioSource");
+  //   // notify system
+  //   final newQueue = queue.value..add(mediaItem);
+  //   queue.add(newQueue);
+  // }
 
   UriAudioSource _createAudioSource(MediaItem mediaItem) {
     return AudioSource.uri(

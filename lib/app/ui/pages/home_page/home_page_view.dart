@@ -23,29 +23,36 @@ class HomePage extends StatelessWidget {
     return CustomBackground(
       child: SafeArea(
         child: Scaffold(
-          body: Column(
-            children: [
-              Expanded(
-                child: SingleChildScrollView(
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      const HomeAppbar(),
-                      const TrendingSongs(),
-                      const TopArtists(),
-                      const NewRelease(),
-                      //const FreshHits(),
-                      const PlayList(),
-                      SizedBox(height: 60.h)
-                    ],
+          body: Obx(() {
+            return    Get.put(GetXPlayerController()).isLoading.value?
+                const CircularProgressIndicator():
+              Column(
+              children: [
+                Expanded(
+                  child: SingleChildScrollView(
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        const HomeAppbar(),
+                        const TrendingSongs(),
+                        const TopStations(title: "Top Stations",),
+                        const TopArtists(),
+                        const NewRelease(),
+                        //   const FreshHits(),
+                        //     const PlayList(),
+                        //  const TopStations(title: "Fresh Hits",),
+                        SizedBox(height: 60.h)
+                      ],
+                    ),
                   ),
                 ),
-              ),
-              const MiniPlayer(),
-            ],
-          ),
+                const MiniPlayer(),
+              ],
+            );
+          })
+
         ),
       ),
     );
@@ -59,64 +66,65 @@ class NewRelease extends GetView<GetXPlayerController> {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        const HeaderSection(
-          title: "New Release",
-        ),
-        SizedBox(
-          height: 160.h,
-          child: Obx(() {
-            return ListView.builder(
-                scrollDirection: Axis.horizontal,
-                shrinkWrap: true,
-                itemCount: controller.latestRelease.length,
-                itemBuilder: (context, index) {
-                  var list = controller.latestRelease;
-                  return Obx(() {
-                    return PlayerCard(
-                      image: "${Api.baseUrl}/${list[index].thumbnail128}",
-                      musicName: list[index].name ?? "",
-                      artistName: "Artist Name",
-                      onTap: () {
-                        List<MediaItem> playlist = [];
-                        for (int i = 0; i < list.length; i++) {
-                          playlist.add(
-                            MediaItem(
-                              id: list[i].id.toString(),
-                              title: list[i].name!,
-                              artUri: Uri.parse(
-                                  "${Api.baseUrl}/${list[i].thumbnail128}"),
-                              //audioList[index].artUri,
-                              extras: {
-                                'url': "${Api.baseUrl}/${list[i].songFile}",
-                              },
-                            ),
-                          );
-                        }
-                        // for (int j = 0; j<index; j++) {
-                        //   playlist.add(MediaItem(
-                        //     id: list[j].id.toString(),
-                        //     title: list[j].name!,
-                        //     artUri:Uri.parse("${Api.baseUrl}/${list[j].thumbnail128}"),
-                        //     //audioList[index].artUri,
-                        //     extras: {
-                        //       'url':  "${Api.baseUrl}/${list[j].songFile}",
-                        //     },
-                        //   ),);
-                        // }
+    return ListView.builder(
+        shrinkWrap: true,
+        physics: const NeverScrollableScrollPhysics(),
+        itemCount: controller.playlists.length,
+        itemBuilder: (context, index) {
+          return  Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              const HeaderSection(
+                title: "New Release",
+              ),
+              SizedBox(
+                width: MediaQuery.of(context).size.width,
+                height: 160.h,
+                child: ListView.builder(
+                    scrollDirection: Axis.horizontal,
+                   shrinkWrap: true,
+                    itemCount:controller.playlists[index].value!.length ,
+                   // physics: const NeverScrollableScrollPhysics(),
+                    itemBuilder: (context, j) {
+                      var list = controller.playlists[index].value;
+                      // return Obx(() {
+                        return PlayerCard(
+                          image: "${Api.baseUrl}/${list![j].thumbnail128}",
+                          musicName: list[j].name ?? "",
+                          artistName: "Artist Name",
+                          onTap: () {
+                            List<MediaItem> playlist = [];
+                            print('tap new re');
+                            print(list);
+                            controller.printSongsName(list);
 
-                        controller.clearPlaylist();
-                        controller.add(playlist, index);
-                        Get.toNamed(AppRoutes.bottomPlayer);
-                      },
-                    );
-                  });
-                });
-          }),
-        ),
-      ],
-    );
+                            for (int i = 0; i < list.length; i++) {
+                              playlist.add(
+                                MediaItem(
+                                  id: list[i].id.toString(),
+                                  title: list[i].name!,
+                                  artUri: Uri.parse(
+                                      "${Api.baseUrl}/${list[i].thumbnail128}"),
+                                  //audioList[index].artUri,
+                                  extras: {
+                                    'url': "${Api.baseUrl}/${list[i].songFile}",
+                                  },
+                                ),
+                              );
+                            }
+
+                            controller.clearPlaylist();
+                            controller.add(playlist, j);
+                            Get.toNamed(AppRoutes.bottomPlayer);
+                          },
+                        );
+                      // });
+                    }),
+              ),
+            ],
+          );
+
+        });
   }
 }
 
@@ -204,6 +212,8 @@ class TrendingSongs extends GetView<GetXPlayerController> {
                       artistName: "Artist Name",
                       onTap: () {
                         List<MediaItem> playlist = [];
+                        print('tap trend');
+                        controller.printSongsName(list);
                         for (int i = 0; i < list.length; i++) {
                           playlist.add(
                             MediaItem(
@@ -231,7 +241,77 @@ class TrendingSongs extends GetView<GetXPlayerController> {
                         // }
 
                         controller.clearPlaylist();
-                        controller.add(playlist, index);
+                        controller.add(playlist, index,);
+                        Get.toNamed(AppRoutes.bottomPlayer);
+                      },
+                    );
+                  });
+                });
+          }),
+        ),
+      ],
+    );
+  }
+}
+
+class TopStations extends GetView<GetXPlayerController> {
+  final String? title;
+  const TopStations({Key? key,this.title}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        SizedBox(height: 10.h),
+         HeaderSection(title: title!),
+        SizedBox(
+          height: 160.h,
+          child: Obx(() {
+            return ListView.builder(
+                scrollDirection: Axis.horizontal,
+                shrinkWrap: true,
+                itemCount: controller.latestRelease.length,
+                itemBuilder: (context, index) {
+                  var list = controller.latestRelease;
+                  print("index---->${controller.latestRelease.length - 1}");
+                  return Obx(() {
+                    return PlayerCard(
+                      image: "${Api.baseUrl}/${list[index].thumbnail128}",
+                      musicName: list[index].name ?? "",
+                      artistName: "Artist Name",
+                      onTap: () {
+                        List<MediaItem> playlist = [];
+                        print('tap latest');
+                        controller.printSongsName(list);
+                        for (int i = 0; i < list.length; i++) {
+                          playlist.add(
+                            MediaItem(
+                              id: list[i].id.toString(),
+                              title: list[i].name!,
+                              artUri: Uri.parse(
+                                  "${Api.baseUrl}/${list[i].thumbnail128}"),
+                              //audioList[index].artUri,
+                              extras: {
+                                'url': "${Api.baseUrl}/${list[i].songFile}",
+                              },
+                            ),
+                          );
+                        }
+                        // for (int j = 0; j<index; j++) {
+                        //   playlist.add(MediaItem(
+                        //     id: list[j].id.toString(),
+                        //     title: list[j].name!,
+                        //     artUri:Uri.parse("${Api.baseUrl}/${list[j].thumbnail128}"),
+                        //     //audioList[index].artUri,
+                        //     extras: {
+                        //       'url':  "${Api.baseUrl}/${list[j].songFile}",
+                        //     },
+                        //   ),);
+                        // }
+
+                        controller.clearPlaylist();
+                        controller.add(playlist, index,);
                         Get.toNamed(AppRoutes.bottomPlayer);
                       },
                     );
@@ -251,7 +331,7 @@ class TopArtists extends GetView<GetXPlayerController> {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        const HeaderSection(title: "Top Artist"),
+        const HeaderSection(title: "Top Artist Radio"),
         Container(
           height: 140.h,
           alignment: Alignment.center,
@@ -303,7 +383,8 @@ class TopArtists extends GetView<GetXPlayerController> {
                         child: Padding(
                           padding: EdgeInsets.only(left: 10.w),
                           child: SmallText(
-                            text: "7 songs",
+                           // text: "7 songs",
+                            text: 'Artist Radio',
                             size: Dimensions.font10,
                           ),
                         ),

@@ -144,19 +144,19 @@ class Playlist {
     this.name,
     this.slug,
     this.id,
-    this.playlists,
+    this.value,
   });
 
   String? name;
   String? slug;
   int? id;
-  List<LatestRelease>? playlists;
+  List<LatestRelease>? value;
 
   factory Playlist.fromJson(Map<String, dynamic> json) => Playlist(
         name: json["name"],
         slug: json["slug"],
         id: json["id"],
-        playlists: json["value"] == null
+        value: json["value"] == null
             ? []
             : List<LatestRelease>.from(
                 json["value"].map((x) => LatestRelease.fromJson(x))),
