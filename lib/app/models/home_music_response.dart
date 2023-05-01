@@ -30,12 +30,13 @@ class Data {
     this.latestRelease,
     this.featuredArtists,
     this.playlists,
+    this.tranding,
   });
 
   List<LatestRelease>? latestRelease;
   List<FeaturedArtist>? featuredArtists;
   List<Playlist>? playlists;
-
+  List<LatestRelease>? tranding;
   factory Data.fromJson(Map<String, dynamic> json) => Data(
         latestRelease: json["latest_release"] == null
             ? []
@@ -49,65 +50,92 @@ class Data {
             ? []
             : List<Playlist>.from(
                 json["playlists"].map((x) => Playlist.fromJson(x))),
+    tranding: json["tranding"] == null
+        ? []
+        : List<LatestRelease>.from(
+        json["tranding"].map((x) => LatestRelease.fromJson(x))),
       );
 }
+
 
 class FeaturedArtist {
-  FeaturedArtist({
-    this.id,
-    this.name,
-    this.email,
-    this.contactNo,
-    this.gender,
-    this.emailVerifiedAt,
-    this.approved,
-    this.verified,
-    this.verifiedAt,
-    this.verificationToken,
-    this.firebaseUid,
-    this.createdAt,
-    this.updatedAt,
-    this.deletedAt,
-    this.userId,
-    this.roleId,
-  });
-
   int? id;
   String? name;
-  String? email;
-  String? contactNo;
-  String? gender;
-  String? emailVerifiedAt;
-  int? approved;
-  int? verified;
-  String? verifiedAt;
-  String? verificationToken;
-  String? firebaseUid;
-  String? createdAt;
-  String? updatedAt;
-  String? deletedAt;
-  int? userId;
-  int? roleId;
+  String? image;
 
-  factory FeaturedArtist.fromJson(Map<String, dynamic> json) => FeaturedArtist(
-        id: json["id"],
-        name: json["name"],
-        email: json["email"],
-        contactNo: json["contact_no"],
-        gender: json["gender"],
-        emailVerifiedAt: json["email_verified_at"],
-        approved: json["approved"],
-        verified: json["verified"],
-        verifiedAt: json["verified_at"],
-        verificationToken: json["verification_token"],
-        firebaseUid: json["firebase_uid"],
-        createdAt: json["created_at"],
-        updatedAt: json["updated_at"],
-        deletedAt: json["deleted_at"],
-        userId: json["user_id"],
-        roleId: json["role_id"],
-      );
+  FeaturedArtist({this.id, this.name, this.image});
+
+  FeaturedArtist.fromJson(Map<String, dynamic> json) {
+    id = json['id'];
+    name = json['name'];
+    image = json['image'];
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['id'] = this.id;
+    data['name'] = this.name;
+    data['image'] = this.image;
+    return data;
+  }
 }
+
+// class FeaturedArtist {
+//   FeaturedArtist({
+//     this.id,
+//     this.name,
+//     this.email,
+//     this.contactNo,
+//     this.gender,
+//     this.emailVerifiedAt,
+//     this.approved,
+//     this.verified,
+//     this.verifiedAt,
+//     this.verificationToken,
+//     this.firebaseUid,
+//     this.createdAt,
+//     this.updatedAt,
+//     this.deletedAt,
+//     this.userId,
+//     this.roleId,
+//   });
+//
+//   int? id;
+//   String? name;
+//   String? email;
+//   String? contactNo;
+//   String? gender;
+//   String? emailVerifiedAt;
+//   int? approved;
+//   int? verified;
+//   String? verifiedAt;
+//   String? verificationToken;
+//   String? firebaseUid;
+//   String? createdAt;
+//   String? updatedAt;
+//   String? deletedAt;
+//   int? userId;
+//   int? roleId;
+//
+//   factory FeaturedArtist.fromJson(Map<String, dynamic> json) => FeaturedArtist(
+//         id: json["id"],
+//         name: json["name"],
+//         email: json["email"],
+//         contactNo: json["contact_no"],
+//         gender: json["gender"],
+//         emailVerifiedAt: json["email_verified_at"],
+//         approved: json["approved"],
+//         verified: json["verified"],
+//         verifiedAt: json["verified_at"],
+//         verificationToken: json["verification_token"],
+//         firebaseUid: json["firebase_uid"],
+//         createdAt: json["created_at"],
+//         updatedAt: json["updated_at"],
+//         deletedAt: json["deleted_at"],
+//         userId: json["user_id"],
+//         roleId: json["role_id"],
+//       );
+// }
 
 class LatestRelease {
   LatestRelease({
@@ -118,6 +146,7 @@ class LatestRelease {
     this.thumbnail128,
     this.thumbnail320,
     this.isFavourite,
+    this.artists,
   });
 
   int? id;
@@ -127,6 +156,7 @@ class LatestRelease {
   String? thumbnail128;
   String? thumbnail320;
   int? isFavourite;
+  List<Artists>? artists;
 
   factory LatestRelease.fromJson(Map<String, dynamic> json) => LatestRelease(
         id: json["id"],
@@ -136,6 +166,8 @@ class LatestRelease {
         thumbnail128: json["thumbnail_128"],
         thumbnail320: json["thumbnail_320"],
         isFavourite: json["is_favourite"],
+        artists: json["artists"]==null? []:List<Artists>.from(
+            json["artists"].map((x) => Artists.fromJson(x)))
       );
 }
 
@@ -161,4 +193,22 @@ class Playlist {
             : List<LatestRelease>.from(
                 json["value"].map((x) => LatestRelease.fromJson(x))),
       );
+}
+class Artists {
+  String? name;
+  String? slug;
+
+  Artists({this.name, this.slug});
+
+  Artists.fromJson(Map<String, dynamic> json) {
+    name = json['name'];
+    slug = json['slug'];
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['name'] = this.name;
+    data['slug'] = this.slug;
+    return data;
+  }
 }

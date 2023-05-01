@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:music_app/app/config/dimensions.dart';
 import 'package:music_app/app/config/widgets/small_text.dart';
 import 'package:music_app/app/models/artist.dart';
-
 import '../../../config/widgets/background/custom_background.dart';
+import '../../theme/colors.dart';
 
 class ArtistsPage extends StatefulWidget {
   const ArtistsPage({Key? key}) : super(key: key);
@@ -18,6 +19,7 @@ class _ArtistsPageState extends State<ArtistsPage> {
   int index = Get.arguments ?? 0;
   double height = 200;
   bool showButton = false;
+
   @override
   void initState() {
     _scrollController.addListener(_scrollListener);
@@ -79,13 +81,67 @@ class _ArtistsPageState extends State<ArtistsPage> {
                         : const SizedBox.shrink(),
                   ],
                 ),
+                // const Align(
+                //     alignment: Alignment.topLeft, child: Icon(Icons.arrow_back)),
+
               ];
             },
             body: ListView.builder(
-              itemCount: 100,
+              shrinkWrap: true,
+              itemCount: Artists.artistList.length,
               itemBuilder: (BuildContext context, int index) {
-                return ListTile(
-                  title: Text('Item $index'),
+                return
+                  ListTile(
+                  leading: Container(
+                    height: 80.h,
+                    width: 80.w,
+                    decoration: BoxDecoration(
+                      border:
+                          Border.all(color: AppColor.orangeColor, width: 3.w),
+                      shape: BoxShape.circle,
+                      gradient: const LinearGradient(
+                        colors: [
+                          AppColor.orangeColor,
+                          AppColor.pinkColor,
+                        ],
+                      ),
+                      image: DecorationImage(
+                        image: NetworkImage(
+                          Artists.artistList[index].imgUrl.toString(),
+                        ),
+                        fit: BoxFit.fill,
+                      ),
+                    ),
+                  ),
+                  // title: Text('Item $index'),
+                  title: SmallText(
+                    text: 'Item $index',
+                    overFlow: TextOverflow.ellipsis,
+                    size: Dimensions.font12,
+                  ),
+                  subtitle: SmallText(
+                    text: "artist name",
+                    overFlow: TextOverflow.ellipsis,
+                    size: Dimensions.font10,
+                    color: Colors.white54,
+                  ),
+                  // trailing:   const Icon(
+                  //   Icons.favorite_outline,
+                  //   color: Colors.white,
+                  // ),
+                  trailing: Wrap(
+                    spacing: 12, // space between two icons
+                    children: const <Widget>[
+                      Icon(
+                        Icons.favorite_outline,
+                        size: 20,
+                      ), // icon-1
+                      Icon(
+                        Icons.more_vert,
+                        size: 20,
+                      ), // icon-2
+                    ],
+                  ),
                 );
               },
             ),

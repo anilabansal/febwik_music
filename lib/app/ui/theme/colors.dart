@@ -4,6 +4,7 @@ class AppColor {
   static const Color darkColor = Color(0XFF0D121A);
   static const Color orangeColor = Color(0XFFFF9666);
   static const Color pinkColor = Color(0XFFFF6663);
+  static const Color sliderColor = Color(0XFFfe8063);
   static const Color primaryColor = Color.fromRGBO(38, 0, 190, 1);
   static const Color accentColor = Color.fromRGBO(118, 1, 129, 1);
   static const Color backgroundColor = Color.fromRGBO(40, 0, 71, 1);

@@ -82,7 +82,8 @@ class MiniPlayerContainer extends GetView<GetXPlayerController> {
               child: Row(
                 children: [
                   // const MiniPreviousSongButton(),
-                  const BackwordSongButton(),
+                  const LikeSongButton(),
+                 // const BackwordSongButton(),
                   SizedBox(width: 15.w),
                   const MiniPlayButton(),
                   SizedBox(width: 15.w),
@@ -138,7 +139,13 @@ class MiniPlayButton extends GetView<GetXPlayerController> {
             height: 35.r,
             decoration: const BoxDecoration(
               shape: BoxShape.circle,
-              color: Colors.white24,
+                gradient: LinearGradient(
+                  colors: [
+                    AppColor.orangeColor,
+                    AppColor.pinkColor,
+                  ],
+                ),
+              // color: Colors.white24,
             ),
             child: const Center(
                 child: CircularProgressIndicator(
@@ -152,7 +159,13 @@ class MiniPlayButton extends GetView<GetXPlayerController> {
             height: 35.r,
             decoration: const BoxDecoration(
               shape: BoxShape.circle,
-              color: Colors.white24,
+                gradient: LinearGradient(
+                  colors: [
+                    AppColor.orangeColor,
+                    AppColor.pinkColor,
+                  ],
+                ),
+              // color: Colors.white24,
             ),
             child: Center(
               child: IconButton(
@@ -171,7 +184,13 @@ class MiniPlayButton extends GetView<GetXPlayerController> {
             height: 35.r,
             decoration: const BoxDecoration(
               shape: BoxShape.circle,
-              color: Colors.white24,
+                gradient: LinearGradient(
+                  colors: [
+                    AppColor.orangeColor,
+                    AppColor.pinkColor,
+                  ],
+                ),
+              // color: Colors.white24,
             ),
             child: Center(
               child: IconButton(
@@ -204,7 +223,8 @@ class MiniCloseSongButton extends GetView<GetXPlayerController> {
           color: (controller.isLastSongNotifier.value)
               ? Colors.white54
               : Colors.white,
-          size: 26.h,
+          size: 20.h,
+          // size: 26.h,
         ),
       ),
     );
@@ -224,8 +244,9 @@ class MiniNextSongButton extends GetView<GetXPlayerController> {
             ? controller.startFromStarting
             : controller.next,
         child: VectorAsset(
-          icon: 'ic_forward',
-          size: 26.r,
+          icon: 'ic_right',
+          size: 20.r,
+          // size: 26.r,
           // color: (controller.isLastSongNotifier.value)
           //     ? Colors.white54
           //     : Colors.white,
@@ -255,7 +276,8 @@ class MiniArtistAndSongName extends GetView<GetXPlayerController> {
             ),
             //SizedBox(height: 3.r),
             SmallText(
-              text: "artist name",
+            //  text: "artist name",
+              text: controller.currentSongArtistNotifier.value,
               weight: FontWeight.w500,
               size: 12.sp,
               color: Colors.white54,
@@ -295,24 +317,33 @@ class MiniPreviousSongButton extends GetView<GetXPlayerController> {
   }
 }
 
-class BackwordSongButton extends GetView<GetXPlayerController> {
-  const BackwordSongButton({Key? key}) : super(key: key);
+class LikeSongButton extends GetView<GetXPlayerController> {
+  const LikeSongButton({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return Obx(
-      () => GestureDetector(
-        onTap: (controller.playlistNotifier.isNotEmpty)
-            ? controller.backwordSeek10Sec
-            : null,
-        child: Transform.scale(
-          scaleX: -1,
-          child: const Icon(
-            Icons.forward_10_outlined,
-            color: Colors.white,
-          ),
-        ),
-      ),
-    );
+  return const Icon(Icons.favorite_border_outlined,color: Colors.white, size: 25,);
   }
 }
+
+// class BackwordSongButton extends GetView<GetXPlayerController> {
+//   const BackwordSongButton({Key? key}) : super(key: key);
+//
+//   @override
+//   Widget build(BuildContext context) {
+//     return Obx(
+//       () => GestureDetector(
+//         onTap: (controller.playlistNotifier.isNotEmpty)
+//             ? controller.backwordSeek10Sec
+//             : null,
+//         child: Transform.scale(
+//           scaleX: -1,
+//           child: const Icon(
+//             Icons.forward_10_outlined,
+//             color: Colors.white,
+//           ),
+//         ),
+//       ),
+//     );
+//   }
+// }

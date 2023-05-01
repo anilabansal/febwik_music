@@ -40,8 +40,9 @@ class SmallText extends StatelessWidget {
           fontFamily: 'HindSiliguri',
           fontWeight: weight,
           decoration: textDecoration,
-          height: height),
+          height: height,),
       overflow: overFlow,
+      softWrap: false,
     );
   }
 }

@@ -20,6 +20,7 @@ class GetXPlayerController extends GetxController {
 
   // Listeners: Updates going to the UI
   final currentSongTitleNotifier = ''.obs;
+  final currentSongArtistNotifier = ''.obs;
   final currentSongArtNotifier = ''.obs;
   final playlistNotifier = <MediaItem>[].obs;
   final progressNotifier = ProgressModel.zero().obs;
@@ -32,6 +33,10 @@ class GetXPlayerController extends GetxController {
   final latestRelease = <LatestRelease>[].obs;
   final featuredArtists = <FeaturedArtist>[].obs;
   final playlists = <Playlist>[].obs;
+  final trending = <LatestRelease>[].obs;
+  final artist = <Artists>[].obs;
+
+
   var isLoading = true.obs;
 
   final _audioHandler = Get.find<GetXAudioHandler>().audioHandler;
@@ -48,6 +53,7 @@ class GetXPlayerController extends GetxController {
         latestRelease.value = result.data!.latestRelease ?? [];
         featuredArtists.value = result.data!.featuredArtists ?? [];
         playlists.value = result.data!.playlists ?? [];
+        trending.value = result.data!.tranding??[];
         print("latestRelease --->${latestRelease}");
         print("latestRelease12345 --->${playlists}");
       }
@@ -63,6 +69,7 @@ class GetXPlayerController extends GetxController {
         playlistNotifier.value = [];
         currentSongTitleNotifier.value = '';
         currentSongArtNotifier.value = '';
+        currentSongArtistNotifier.value = '';
 
         print("isEmpty--->${playlistNotifier}");
       } else {
@@ -135,9 +142,11 @@ class GetXPlayerController extends GetxController {
   void _listenToChangesInSong() {
     print('step 8 _listenToChangeSong');
     _audioHandler.mediaItem.listen((mediaItem) {
-      print("updatedmedia--->$mediaItem");
+    //  print("updatedmedia--->${mediaItem!.artist}");
       currentSongTitleNotifier.value = mediaItem?.title ?? '';
       currentSongArtNotifier.value = mediaItem?.artUri.toString() ?? '';
+      currentSongArtistNotifier.value = mediaItem?.artist.toString()??'';
+      print("artist value---->${currentSongArtistNotifier.value}");
       _updateSkipButtons();
     });
   }
@@ -230,21 +239,18 @@ class GetXPlayerController extends GetxController {
     }
   }
 
-  void add(mediaItem, index) async {
+  void add(mediaItem, index, ) async {
     await _audioHandler.stop();
     print('list new1');
     printSongsName1(_audioHandler.queue.value);
     print('media item');
+
     printSongsName1(mediaItem);
     _audioHandler.addQueueItems(mediaItem);
     _audioHandler.skipToQueueItem(index);
-    // currentSongTitleNotifier.value = mediaItem?.title ?? '';
-    // currentSongArtNotifier.value = mediaItem?.artUri.toString() ?? '';
-    //
-    // print('list new');
-    // printSongsName1(_audioHandler.queue.value);
-    // play();
-    // update();
+
+    play();
+
   }
 
   Future<void> removeLastItemFromIndex() async {
@@ -270,6 +276,7 @@ class GetXPlayerController extends GetxController {
     print('list 1');
     printSongsName1(_audioHandler.queue.value);
     _audioHandler.queue.value.clear();
+    artist.clear();
 
     update();
 

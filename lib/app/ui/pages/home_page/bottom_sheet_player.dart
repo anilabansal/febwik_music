@@ -6,10 +6,11 @@ import 'package:music_app/app/ui/pages/player_page/widgets/custom_slider.dart';
 import '../../../config/widgets/background/custom_background.dart';
 import '../../../config/widgets/text_base.dart';
 import '../../../config/widgets/vector_asset.dart';
+import '../../theme/colors.dart';
 import 'widgets/bottom_sheet_appbar.dart';
 
 class BottomSheetPlayer extends StatelessWidget {
-   BottomSheetPlayer({Key? key}) : super(key: key);
+  BottomSheetPlayer({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -25,30 +26,41 @@ class BottomSheetPlayer extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     const BottomSheetAppbar(), //
-                    SizedBox(height: 20.h),
-                     const ArtImage(
-
-                    ),
+                    SizedBox(height: 30.h),
+                    const ArtImage(),
                     //SizedBox(height: 5.h),
-                    const ArtistAndSongName(),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: const [
+                        RepeatButton(),
+                        Icon(Icons.add),
+                        Icon(Icons.favorite_border_outlined,
+                            ),
+                        ShuffleButton(),
+                        Icon(Icons.share, ),
+                      ],
+                    ),
                     SizedBox(height: 20.h),
                     const CustomSlider(),
+                    SizedBox(height: 20.h),
+                    const ArtistAndSongName(),
+                    SizedBox(height: 20.h),
                     //const Spacer(flex: 1),
                     // player controller buttons
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                      children: [
+                      children: const [
                         //const RepeatButton(),
                         // SizedBox(width: 10.r),
-                        const PreviousSongButton(),
-                        SizedBox(width: 10.r),
-                        const BackwordSongButton(),
-                        SizedBox(width: 10.r),
-                        const PlayButton(),
-                        SizedBox(width: 10.r),
-                        const ForwordSongButton(),
-                        SizedBox(width: 10.r),
-                        const NextSongButton(),
+                        PreviousSongButton(),
+                        // SizedBox(width: 10.r),
+                        // const BackwordSongButton(),
+                        // SizedBox(width: 10.r),
+                        PlayButton(),
+                        // SizedBox(width: 10.r),
+                        // const ForwordSongButton(),
+                        // SizedBox(width: 10.r),
+                        NextSongButton(),
                         //SizedBox(width: 10.r),
                         //const ShuffleButton(),
                       ],
@@ -66,8 +78,9 @@ class BottomSheetPlayer extends StatelessWidget {
 }
 
 class ArtImage extends GetView<GetXPlayerController> {
-
-  const ArtImage({Key? key,}) : super(key: key);
+  const ArtImage({
+    Key? key,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -77,16 +90,17 @@ class ArtImage extends GetView<GetXPlayerController> {
         borderRadius: BorderRadius.circular(20.r),
         child: Obx(
           () => Image.network(
-           // "${Api.baseUrl}/${controller.latestRelease[index!].thumbnail128}",
+            // "${Api.baseUrl}/${controller.latestRelease[index!].thumbnail128}",
             controller.currentSongArtNotifier.value,
-            fit: BoxFit.cover,
+            fit: BoxFit.fill,
+            width: Get.width,
             height: Get.height / 3,
-            width: Get.width / 0.9,
+            // width: Get.width / 0.9,
           ),
         ),
-  ),
-  );
-}
+      ),
+    );
+  }
 }
 
 class ArtistAndSongName extends GetView<GetXPlayerController> {
@@ -95,21 +109,23 @@ class ArtistAndSongName extends GetView<GetXPlayerController> {
   @override
   Widget build(BuildContext context) {
     return Obx(
-      () => Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          TextBase(
-            controller.currentSongTitleNotifier.value,
-            fontWeight: FontWeight.bold,
-          ),
-          SizedBox(height: 3.r),
-          TextBase(
-            "artist name",
-            fontWeight: FontWeight.w500,
-            fontSize: 13.sp,
-            color: Colors.white54,
-          ),
-        ],
+      () => Center(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+              TextBase(
+              controller.currentSongTitleNotifier.value,
+              fontWeight: FontWeight.bold,
+            ),
+            SizedBox(height: 3.r),
+            TextBase(
+              controller.currentSongArtistNotifier.value,
+              fontWeight: FontWeight.w500,
+              fontSize: 13.sp,
+              color: Colors.white54,
+            ),
+          ],
+        ),
       ),
     );
   }
@@ -124,10 +140,11 @@ class RepeatButton extends GetView<GetXPlayerController> {
       Icon icon;
       switch (controller.repeatButtonNotifier.value) {
         case RepeatState.off:
-          icon = const Icon(Icons.repeat, color: Colors.white54);
+          // icon = const Icon(Icons.repeat, color: Colors.white54);
+          icon = const Icon(Icons.repeat,);
           break;
         case RepeatState.repeatSong:
-          icon = const Icon(Icons.repeat_one);
+          icon = const Icon(Icons.repeat_one,color: AppColor.orangeColor,);
           break;
         case RepeatState.repeatPlaylist:
           icon = const Icon(Icons.repeat);
@@ -148,19 +165,20 @@ class PreviousSongButton extends GetView<GetXPlayerController> {
   Widget build(BuildContext context) {
     return Obx(
       () => GestureDetector(
-        onTap:
-            (controller.isFirstSongNotifier.value) ?
+        onTap: (controller.isFirstSongNotifier.value)
+            ?
             // null
-                controller.startFromEnd
-                : controller.previous,
+            controller.startFromEnd
+            : controller.previous,
         child: VectorAsset(
-          icon: 'ic_backward',
-          size: 32.r,
+          // icon: 'ic_backward',
+          icon: 'ic_left',
+          size: 20.r,
           color:
-          // (controller.isFirstSongNotifier.value)
-          //     ? Colors.white54
-          //     :
-          Colors.white,
+              // (controller.isFirstSongNotifier.value)
+              //     ? Colors.white54
+              //     :
+              Colors.white,
         ),
       ),
     );
@@ -176,62 +194,89 @@ class PlayButton extends GetView<GetXPlayerController> {
       switch (controller.playButtonNotifier.value) {
         case ButtonState.loading:
           return Container(
-            width: 60.r,
-            height: 60.r,
+            width: 80.r,
+            height: 80.r,
             decoration: const BoxDecoration(
-              shape: BoxShape.circle,
-              color: Colors.white24,
-            ),
+                shape: BoxShape.circle,
+                gradient: LinearGradient(
+                  colors: [
+                    AppColor.orangeColor,
+                    AppColor.pinkColor,
+                  ],
+                ),
+                // color: Colors.white24,
+                ),
             child: const Center(
-                child: CircularProgressIndicator(
-              color: Colors.white54,
-              strokeWidth: 2,
-            )),
+              child: CircularProgressIndicator(
+                color: Colors.white54,
+                strokeWidth: 2,
+              ),
+            ),
           );
         case ButtonState.paused:
           return Container(
-            width: 60.r,
-            height: 60.r,
+            width: 80.r,
+            height: 80.r,
             decoration: const BoxDecoration(
-              shape: BoxShape.circle,
-              color: Colors.white24,
-            ),
+                shape: BoxShape.circle,
+                // color: Colors.white24,
+              gradient: LinearGradient(
+                colors: [
+                  AppColor.orangeColor,
+                  AppColor.pinkColor,
+                ],
+              ),),
             child: Center(
               child: IconButton(
-                icon: const Icon(Icons.play_arrow),
-                iconSize: 32.0,
+                icon: const Icon(Icons.play_arrow,
+                ),
+                iconSize: 40.0,
                 onPressed: controller.play,
               ),
             ),
           );
         case ButtonState.playing:
           return Container(
-            width: 60.r,
-            height: 60.r,
+            width: 80.r,
+            height: 80.r,
             decoration: const BoxDecoration(
-              shape: BoxShape.circle,
-              color: Colors.white24,
-            ),
+                shape: BoxShape.circle,
+                gradient: LinearGradient(
+                  colors: [
+                    AppColor.orangeColor,
+                    AppColor.pinkColor,
+                  ],
+                )
+                // color: Colors.white24,
+                ),
             child: Center(
               child: IconButton(
-                icon: const Icon(Icons.pause),
-                iconSize: 32.0,
+                icon: const Icon(Icons.pause,
+                ),
+                iconSize: 40.0,
                 onPressed: controller.pause,
               ),
             ),
           );
         case ButtonState.idle:
           return Container(
-            width: 60.r,
-            height: 60.r,
+            width: 80.r,
+            height:80.r,
             decoration: const BoxDecoration(
-              shape: BoxShape.circle,
-              color: Colors.white24,
-            ),
+                shape: BoxShape.circle,
+                gradient: LinearGradient(
+                  colors: [
+                    AppColor.orangeColor,
+                    AppColor.pinkColor,
+                  ],
+                )
+                // color: Colors.white24,
+                ),
             child: Center(
               child: IconButton(
-                icon: const Icon(Icons.pause),
-                iconSize: 32.0,
+                icon: const Icon(Icons.pause,
+                ),
+                iconSize: 40.0,
                 onPressed: controller.pause,
               ),
             ),
@@ -248,18 +293,19 @@ class NextSongButton extends GetView<GetXPlayerController> {
   Widget build(BuildContext context) {
     return Obx(
       () => GestureDetector(
-        onTap:
-        (controller.isLastSongNotifier.value) ?
-        // null
-        controller.startFromStarting
+        onTap: (controller.isLastSongNotifier.value)
+            ?
+            // null
+            controller.startFromStarting
             : controller.next,
         child: VectorAsset(
-          icon: 'ic_forward',
-          size: 32.r,
+          // icon: 'ic_forward',
+          icon: "ic_right",
+          size: 20.r,
           color:
-          // (controller.isLastSongNotifier.value)
-          //     ? Colors.white54:
-               Colors.white,
+              // (controller.isLastSongNotifier.value)
+              //     ? Colors.white54:
+              Colors.white,
         ),
       ),
     );
@@ -315,8 +361,8 @@ class ShuffleButton extends GetView<GetXPlayerController> {
     return Obx(
       () => IconButton(
         icon: (controller.isShuffleModeEnabledNotifier.value)
-            ? const Icon(Icons.shuffle)
-            : const Icon(Icons.shuffle, color: Colors.white54),
+            ? const Icon(Icons.shuffle, color: AppColor.orangeColor,)
+            : const Icon(Icons.shuffle,),
         onPressed: controller.shuffle,
       ),
     );

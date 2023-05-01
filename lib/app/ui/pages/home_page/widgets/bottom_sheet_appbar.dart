@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
+import 'package:music_app/app/config/widgets/small_text.dart';
 
 class BottomSheetAppbar extends StatelessWidget implements PreferredSizeWidget {
   const BottomSheetAppbar({Key? key}) : super(key: key);
@@ -20,8 +21,13 @@ class BottomSheetAppbar extends StatelessWidget implements PreferredSizeWidget {
               quarterTurns: 1,
               child: IconButton(
                 onPressed: () => Get.back(),
-                icon: const Icon(Icons.arrow_forward_ios),
+                icon: const Icon(Icons.arrow_forward_ios, size: 20,),
+
               ),
+            ),
+             const SmallText(text: 'NOW PLAYING',
+              size: 15,
+              weight: FontWeight.bold,
             ),
             IconButton(
               onPressed: () => Get.back(),

@@ -3,6 +3,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:music_app/app/player/getx_player_controller.dart';
 import '../../../../config/widgets/audio_video_progress_bar.dart';
+import '../../../theme/colors.dart';
 
 class CustomSlider extends GetView<GetXPlayerController> {
   const CustomSlider({Key? key}) : super(key: key);
@@ -21,8 +22,10 @@ class CustomSlider extends GetView<GetXPlayerController> {
           barCapShape: BarCapShape.round,
           baseBarColor: Colors.white38,
           bufferedBarColor: Colors.white12,
-          progressBarColor: Colors.white,
-          thumbColor: Colors.white,
+          // progressBarColor: Colors.white,
+          progressBarColor: AppColor.sliderColor,
+          // thumbColor: Colors.white,
+          thumbColor: AppColor.sliderColor,
           timeLabelTextStyle: TextStyle(
             fontWeight: FontWeight.w500,
             fontSize: 13.sp,

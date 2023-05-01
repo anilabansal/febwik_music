@@ -97,6 +97,14 @@ class _MainPageState extends State<MainPage> {
           inactiveColor: _inactiveColor,
           textAlign: TextAlign.center,
         ),
+        BottomNavyBarItem(
+          icon: NavBarIcon(
+              imgUrl: _currentIndex == 2 ? "user.png" : "user_white.png"),
+          title: const Text("Profile"),
+          activeColor: AppColor.whiteColor,
+          inactiveColor: _inactiveColor,
+          textAlign: TextAlign.center,
+        ),
       ],
     );
   }
@@ -153,7 +161,7 @@ class _MainPageState extends State<MainPage> {
 
   //====Body===
   Widget getBody() {
-    List<Widget> pages = const [HomePage(), SearchPage(), ProfilePage()];
+    List<Widget> pages = const [HomePage(), SearchPage(), ProfilePage(),ProfilePage()];
     return PageView(
       pageSnapping: false,
       physics: const NeverScrollableScrollPhysics(),
