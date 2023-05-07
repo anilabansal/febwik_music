@@ -186,7 +186,9 @@ class PreviousSongButton extends GetView<GetXPlayerController> {
 }
 
 class PlayButton extends GetView<GetXPlayerController> {
-  const PlayButton({Key? key}) : super(key: key);
+  final double? width;
+  final double? height;
+  const PlayButton({Key? key, this.height, this.width}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -194,8 +196,8 @@ class PlayButton extends GetView<GetXPlayerController> {
       switch (controller.playButtonNotifier.value) {
         case ButtonState.loading:
           return Container(
-            width: 80.r,
-            height: 80.r,
+            width: width??80.r,
+            height:height?? 80.r,
             decoration: const BoxDecoration(
                 shape: BoxShape.circle,
                 gradient: LinearGradient(
@@ -215,8 +217,8 @@ class PlayButton extends GetView<GetXPlayerController> {
           );
         case ButtonState.paused:
           return Container(
-            width: 80.r,
-            height: 80.r,
+            width: width??80.r,
+            height:height?? 80.r,
             decoration: const BoxDecoration(
                 shape: BoxShape.circle,
                 // color: Colors.white24,
@@ -237,8 +239,8 @@ class PlayButton extends GetView<GetXPlayerController> {
           );
         case ButtonState.playing:
           return Container(
-            width: 80.r,
-            height: 80.r,
+            width:width?? 80.r,
+            height:height?? 80.r,
             decoration: const BoxDecoration(
                 shape: BoxShape.circle,
                 gradient: LinearGradient(
@@ -260,8 +262,8 @@ class PlayButton extends GetView<GetXPlayerController> {
           );
         case ButtonState.idle:
           return Container(
-            width: 80.r,
-            height:80.r,
+            width:width?? 80.r,
+            height:height??80.r,
             decoration: const BoxDecoration(
                 shape: BoxShape.circle,
                 gradient: LinearGradient(

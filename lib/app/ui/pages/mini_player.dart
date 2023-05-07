@@ -268,19 +268,27 @@ class MiniArtistAndSongName extends GetView<GetXPlayerController> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            SmallText(
-              text: controller.currentSongTitleNotifier.value,
-              //weight: FontWeight.bold,
-              weight: FontWeight.bold,
-              size: 18,
+            SizedBox(
+             // width: 70.h,
+              child: SmallText(
+                text: controller.currentSongTitleNotifier.value,
+                //weight: FontWeight.bold,
+                weight: FontWeight.bold,
+                size: 18,
+                overFlow: TextOverflow.ellipsis,
+              ),
             ),
             //SizedBox(height: 3.r),
-            SmallText(
-            //  text: "artist name",
-              text: controller.currentSongArtistNotifier.value,
-              weight: FontWeight.w500,
-              size: 12.sp,
-              color: Colors.white54,
+            SizedBox(
+              //width: 70.h,
+              child: SmallText(
+              //  text: "artist name",
+                text: controller.currentSongArtistNotifier.value,
+                weight: FontWeight.w500,
+                size: 12.sp,
+                color: Colors.white54,
+                overFlow: TextOverflow.ellipsis,
+              ),
             ),
           ],
         ),

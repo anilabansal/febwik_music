@@ -25,7 +25,9 @@ class GetXDemoPlaylist extends GetxService {
   Future<Response> getHomeSongList() async {
     return await ApiClient().getRequest(Api.home);
   }
-
+  Future<Response> getArtistDetailSongList(index) async {
+    return await ApiClient().getRequest("${Api.artistDetailUrl}$index?page=1");
+  }
   var _songIndex = 0;
   static const _maxSongNumber = 10;
 

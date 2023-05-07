@@ -20,39 +20,46 @@ class HomePage extends StatelessWidget {
     return CustomBackground(
       child: SafeArea(
         child: Scaffold(body: Obx(() {
-          return Get.find<GetXPlayerController>().isLoading.value
-              ? const Center(child: CircularProgressIndicator(color: Colors.white,))
+          return Get
+              .find<GetXPlayerController>()
+              .isLoading
+              .value
+              ? const Center(
+              child: CircularProgressIndicator(color: Colors.white,))
               : Column(
-                  children: [
-                    Expanded(
-                      child:
-                      SingleChildScrollView(
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          mainAxisSize: MainAxisSize.min,
-                          children: [
-                            const HomeAppbar(),
-                            const TrendingSongs(),
-                            const TopStations(
-                              title: "Top Stations",
-                            ),
-                            const TopArtists(),
-                            const NewRelease(),
-                            //   const FreshHits(),
-                            //     const PlayList(),
-                            //  const TopStations(title: "Fresh Hits",),
-                            // SizedBox(height: 60.h)
-                            Get.find<GetXPlayerController>().isCloseNotifier.value
-                                ?   SizedBox(height: 60.h): SizedBox(height: 0.h,)
-                          ],
-                        ),
+            children: [
+              Expanded(
+                child:
+                SingleChildScrollView(
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      const HomeAppbar(),
+                      const TrendingSongs(),
+                      const TopStations(
+                        title: "Top Stations",
                       ),
-                    ),
-                    const MiniPlayer(),
-                  ],
-                );
-        })),
+                      const TopArtists(),
+                      const NewRelease(),
+                      //   const FreshHits(),
+                      //     const PlayList(),
+                      //  const TopStations(title: "Fresh Hits",),
+                      // SizedBox(height: 60.h)
+                      Get
+                          .find<GetXPlayerController>()
+                          .isCloseNotifier
+                          .value
+                          ? SizedBox(height: 60.h) : SizedBox(height: 0.h,)
+                    ],
+                  ),
+                ),
+              ),
+              const MiniPlayer(),
+            ],
+          );
+        }),),
       ),
     );
   }
@@ -79,7 +86,10 @@ class NewRelease extends GetView<GetXPlayerController> {
                 // title: "New Release",
               ),
               SizedBox(
-                width: MediaQuery.of(context).size.width,
+                width: MediaQuery
+                    .of(context)
+                    .size
+                    .width,
                 height: 160.h,
                 child: ListView.builder(
                     scrollDirection: Axis.horizontal,
@@ -92,7 +102,7 @@ class NewRelease extends GetView<GetXPlayerController> {
                       list![j].artists!.map((artist) => artist.name).toList();
                       // return Obx(() {
                       return PlayerCard(
-                        image: "${Api.baseUrl}/${list[j].thumbnail128}",
+                        image: "${Api.baseUrl}/${list[j].thumbnail320}",
                         musicName: list[j].name ?? "",
                         artistName: artistNames.join(','),
                         // artistName: "Artist Name",
@@ -109,7 +119,7 @@ class NewRelease extends GetView<GetXPlayerController> {
                                 title: list[i].name!,
                                 artist: artistNames.join(','),
                                 artUri: Uri.parse(
-                                    "${Api.baseUrl}/${list[i].thumbnail128}"),
+                                    "${Api.baseUrl}/${list[i].thumbnail320}"),
                                 //audioList[index].artUri,
                                 extras: {
                                   'url': "${Api.baseUrl}/${list[i].songFile}",
@@ -206,14 +216,13 @@ class TrendingSongs extends GetView<GetXPlayerController> {
                 shrinkWrap: true,
                 itemCount: controller.trending.length,
                 itemBuilder: (context, index) {
-
                   var list = controller.trending;
                   List<dynamic> artistNames =
                   list[index].artists!.map((artist) => artist.name).toList();
                   print("artist Name --->${artistNames}");
                   return Obx(() {
                     return PlayerCard(
-                      image: "${Api.baseUrl}/${list[index].thumbnail128}",
+                      image: "${Api.baseUrl}/${list[index].thumbnail320}",
                       musicName: list[index].name ?? "",
                       artistName: artistNames.join(','),
                       // artistName: "Artist Name",
@@ -230,7 +239,7 @@ class TrendingSongs extends GetView<GetXPlayerController> {
                               title: list[i].name!,
                               artist: artistNames.join(', '),
                               artUri: Uri.parse(
-                                  "${Api.baseUrl}/${list[i].thumbnail128}"),
+                                  "${Api.baseUrl}/${list[i].thumbnail320}"),
                               //audioList[index].artUri,
                               extras: {
                                 'url': "${Api.baseUrl}/${list[i].songFile}",
@@ -284,7 +293,7 @@ class TopStations extends GetView<GetXPlayerController> {
                   list[index].artists!.map((artist) => artist.name).toList();
                   return Obx(() {
                     return PlayerCard(
-                      image: "${Api.baseUrl}/${list[index].thumbnail128}",
+                      image: "${Api.baseUrl}/${list[index].thumbnail320}",
                       musicName: list[index].name ?? "",
                       artistName: artistNames.join(','),
                       onTap: () {
@@ -298,7 +307,7 @@ class TopStations extends GetView<GetXPlayerController> {
                               title: list[i].name!,
                               artist: artistNames.join(','),
                               artUri: Uri.parse(
-                                  "${Api.baseUrl}/${list[i].thumbnail128}"),
+                                  "${Api.baseUrl}/${list[i].thumbnail320}"),
                               //audioList[index].artUri,
                               extras: {
                                 'url': "${Api.baseUrl}/${list[i].songFile}",
@@ -344,7 +353,9 @@ class TopArtists extends GetView<GetXPlayerController> {
               itemBuilder: (context, index) {
                 return InkWell(
                   onTap: () {
-                    Get.toNamed(AppRoutes.artistPage, arguments: index);
+                    controller.clearPlaylist();
+                    Get.toNamed(AppRoutes.artistPage,
+                        arguments: controller.featuredArtists[index].id);
                   },
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
@@ -367,7 +378,8 @@ class TopArtists extends GetView<GetXPlayerController> {
                         ),
                         child: ClipOval(
                           child: Image.network(
-                            "${Api.baseUrl}/${controller.featuredArtists[index].image}",
+                            "${Api.baseUrl}/${controller.featuredArtists[index]
+                                .image}",
                             // Artists.artistList[index].imgUrl.toString(),
                             fit: BoxFit.fill,
                           ),
@@ -427,7 +439,7 @@ class FreshHits extends GetView<GetXPlayerController> {
                   return Obx(() {
                     return PlayerCard(
                       image:
-                          controller.playlistNotifier[index].artUri.toString(),
+                      controller.playlistNotifier[index].artUri.toString(),
                       musicName: controller.playlistNotifier[index].title,
                       artistName: "Artist Name",
                       onTap: () => Get.toNamed(AppRoutes.bottomPlayer),
@@ -460,7 +472,7 @@ class PlayList extends GetView<GetXPlayerController> {
                   return Obx(() {
                     return PlayerCard(
                       image:
-                          "http://65.2.183.74/storage/7/conversions/62541b21309a5_20210110_121942_0000-mediumthumb.jpg",
+                      "http://65.2.183.74/storage/7/conversions/62541b21309a5_20210110_121942_0000-mediumthumb.jpg",
                       musicName: controller.playlists[index].name ?? "",
                       artistName: "Artist Name",
                       onTap: () => Get.toNamed(AppRoutes.bottomPlayer),
@@ -487,6 +499,7 @@ class PlayerCard extends StatelessWidget {
   final String musicName;
   final String artistName;
   final VoidCallback onTap;
+
   // final Widget? widget;
 
   @override

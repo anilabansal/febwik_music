@@ -1,5 +1,4 @@
 import 'dart:developer';
-
 import 'package:get/get.dart';
 import 'package:music_app/app/services/api.dart';
 
@@ -7,6 +6,7 @@ class ApiClient extends GetConnect {
   Future<Response> getRequest(String uri) async {
     try {
       Response response = await get("${Api.baseUrl}$uri");
+      print("");
       log(response.statusText.toString());
       return response;
     } catch (e) {

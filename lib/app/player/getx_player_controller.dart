@@ -1,6 +1,7 @@
 import 'package:audio_service/audio_service.dart';
 import 'package:get/get.dart';
 import 'package:music_app/app/models/home_music_response.dart';
+import '../models/artist.dart';
 import 'getx_audio_handler.dart';
 import 'getx_playlist_repository.dart';
 
@@ -35,9 +36,10 @@ class GetXPlayerController extends GetxController {
   final playlists = <Playlist>[].obs;
   final trending = <LatestRelease>[].obs;
   final artist = <Artists>[].obs;
-
+  final artistPageData = ArtistData().obs;
 
   var isLoading = true.obs;
+  var isArtistLoading = true.obs;
 
   final _audioHandler = Get.find<GetXAudioHandler>().audioHandler;
 
@@ -46,7 +48,7 @@ class GetXPlayerController extends GetxController {
     print('step 2 _loadPlaylist');
     final songRepository = Get.find<GetXDemoPlaylist>();
     Response response = await songRepository.fetchInitialPlaylist();
-    if (response.statusCode == 200) {
+      if (response.statusCode == 200) {
        isLoading.value = false;
       var result = homeMusicResponseFromJson(response.bodyString ?? "");
       if (result.code == 200) {
@@ -57,6 +59,25 @@ class GetXPlayerController extends GetxController {
         print("latestRelease --->${latestRelease}");
         print("latestRelease12345 --->${playlists}");
       }
+    }
+  }
+
+  Future<void> loadArtistDetailApiCall(index) async{
+    print("artist--------->");
+    isArtistLoading.value = true;
+    final songRepository = Get.find<GetXDemoPlaylist>();
+    Response response = await songRepository.getArtistDetailSongList(index);
+    if(response.statusCode == 200){
+
+      print("success api call");
+      isArtistLoading.value = false;
+      print("result--->${response.bodyString}");
+      var result =  artistPageFromJson(response.bodyString ?? "");
+      // if(result.data!=null){
+        artistPageData.value = result.data! ;
+
+      // }
+
     }
   }
 

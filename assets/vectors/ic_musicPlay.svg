@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   version="1.1"
+   id="svg2"
+   width="46.106667"
+   height="46.106667"
+   viewBox="0 0 46.106667 46.106667"
+   sodipodi:docname="music play icon in gradient.eps"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+  <defs
+     id="defs6">
+    <linearGradient
+       x1="0"
+       y1="0"
+       x2="1"
+       y2="0"
+       gradientUnits="userSpaceOnUse"
+       gradientTransform="matrix(345.8,0,0,345.8,0,172.9)"
+       spreadMethod="pad"
+       id="linearGradient20">
+      <stop
+         style="stop-opacity:1;stop-color:#f6835a"
+         offset="0"
+         id="stop12" />
+      <stop
+         style="stop-opacity:1;stop-color:#f6835a"
+         offset="0.4791"
+         id="stop14" />
+      <stop
+         style="stop-opacity:1;stop-color:#f14a60"
+         offset="0.9525"
+         id="stop16" />
+      <stop
+         style="stop-opacity:1;stop-color:#f14a60"
+         offset="1"
+         id="stop18" />
+    </linearGradient>
+  </defs>
+  <sodipodi:namedview
+     id="namedview4"
+     pagecolor="#ffffff"
+     bordercolor="#000000"
+     borderopacity="0.25"
+     inkscape:showpageshadow="2"
+     inkscape:pageopacity="0.0"
+     inkscape:pagecheckerboard="0"
+     inkscape:deskcolor="#d1d1d1" />
+  <g
+     id="g8"
+     inkscape:groupmode="layer"
+     inkscape:label="ink_ext_XXXXXX"
+     transform="matrix(1.3333333,0,0,-1.3333333,0,46.106667)">
+    <g
+       id="g10"
+       transform="scale(0.1)">
+      <path
+         d="M 172.898,345.801 C 93,345.801 25.7969,291.602 6,217.996 2.10156,203.598 0.00390625,188.5 0.00390625,172.895 0.00390625,142.203 8,113.402 21.9023,88.4023 43.4023,50.2969 78.8008,21.0977 121.301,7.79688 c 16.301,-5.09766 33.597,-7.80078625 51.597,-7.80078625 8.805,0 17.403,0.70312525 25.903,1.90234625 h 0.097 C 282,14.3984 345.797,86.1953 345.797,172.895 c 0,95.503 -77.395,172.906 -172.899,172.906"
+         style="fill:url(#linearGradient20);fill-opacity:1;fill-rule:evenodd;stroke:none"
+         id="path22" />
+      <path
+         d="m 240.805,172.895 -130.696,75.46 V 97.4453 Z"
+         style="fill:#ffffff;fill-opacity:1;fill-rule:evenodd;stroke:none"
+         id="path24" />
+    </g>
+  </g>
+</svg>

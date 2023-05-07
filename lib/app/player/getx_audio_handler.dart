@@ -29,10 +29,10 @@ class GetXBaseAudioHandler extends BaseAudioHandler {
   final _playlist = ConcatenatingAudioSource(children: []);
 
   GetXBaseAudioHandler() {
-    _loadEmptyPlaylist();
-    _notifyAudioHandlerAboutPlaybackEvents();
+   _loadEmptyPlaylist();
+  _notifyAudioHandlerAboutPlaybackEvents();
    _listenForDurationChanges();
-    _listenForCurrentSongIndexChanges();
+  _listenForCurrentSongIndexChanges();
     _listenForSequenceStateChanges();
   }
 
@@ -126,7 +126,6 @@ class GetXBaseAudioHandler extends BaseAudioHandler {
       if (_player.shuffleModeEnabled) {
         index = _player.shuffleIndices![index];
         print("index ---->${index}");
-
       }
       print("mediaIndex--->${playlist[index]}");
       print("audioSource---->${_player.audioSource}");
@@ -182,7 +181,7 @@ class GetXBaseAudioHandler extends BaseAudioHandler {
     queue.add(newQueue);
   }
 
-  @override
+ // @override
   // Future<void> addQueueItem(MediaItem mediaItem) async {
   //   // manage Just Audio
   //   final audioSource = _createAudioSource(mediaItem);
