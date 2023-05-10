@@ -35,11 +35,11 @@ class CustomNavigationBar extends StatelessWidget {
     final bgColor = backgroundColor ?? Theme.of(context).bottomAppBarColor;
 
     return Container(
-      margin: const EdgeInsets.fromLTRB(0, 0, 0, 0),
-    //  margin: EdgeInsets.symmetric(horizontal: 30.w),
+      margin: const EdgeInsets.fromLTRB(30, 0, 30,8),
+     // margin: EdgeInsets.symmetric(horizontal: 30.w),
       decoration: BoxDecoration(
         color: bgColor,
-       // borderRadius: BorderRadius.circular(15.r),
+       borderRadius: BorderRadius.circular(15.r),
         boxShadow: [
           if (showElevation)
             const BoxShadow(
@@ -49,7 +49,7 @@ class CustomNavigationBar extends StatelessWidget {
         ],
       ),
       child: SafeArea(
-        child: Container(
+        child: SizedBox(
           width: MediaQuery.of(context).size.width,
          // width: double.infinity,
           height: containerHeight,

@@ -41,7 +41,9 @@ class BottomSheetPlayer extends StatelessWidget {
                       ],
                     ),
                     SizedBox(height: 20.h),
-                    const CustomSlider(),
+                     const CustomSlider(
+                      callFrom: "bottomSheet",
+                    ),
                     SizedBox(height: 20.h),
                     const ArtistAndSongName(),
                     SizedBox(height: 20.h),

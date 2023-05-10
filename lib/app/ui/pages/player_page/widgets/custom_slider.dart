@@ -5,14 +5,16 @@ import 'package:music_app/app/player/getx_player_controller.dart';
 import '../../../../config/widgets/audio_video_progress_bar.dart';
 import '../../../theme/colors.dart';
 
-class CustomSlider extends GetView<GetXPlayerController> {
-  const CustomSlider({Key? key}) : super(key: key);
+class CustomSlider extends StatelessWidget {
+  final String?callFrom;
+  const CustomSlider({Key? key,this.callFrom}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    GetXPlayerController controller = Get.find();
     return Obx(
       () => Padding(
-        padding: const EdgeInsets.fromLTRB(10,0,10,0),
+        padding: const EdgeInsets.fromLTRB(0,0,0,0),
         child: ProgressBar(
           progress: controller.progressNotifier.value.current,
           buffered: controller.progressNotifier.value.buffered,
@@ -29,10 +31,12 @@ class CustomSlider extends GetView<GetXPlayerController> {
           timeLabelTextStyle: TextStyle(
             fontWeight: FontWeight.w500,
             fontSize: 13.sp,
-            color: Colors.white38,
+         // color: Colors.transparent,
+          color:callFrom=="bottomSheet"? Colors.white38:Colors.transparent,
+           // color: AppColor.searchBarGreyColor
           ),
           timeLabelPadding: 10.0,
-          thumbRadius: 4,
+          thumbRadius:callFrom=="bottomSheet"? 4:0,
           thumbGlowRadius: 10,
         ),
       ),

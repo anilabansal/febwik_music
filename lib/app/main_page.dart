@@ -7,8 +7,8 @@ import 'ui/pages/search/search_page.dart';
 import 'ui/theme/colors.dart';
 
 class MainPage extends StatefulWidget {
-  final int seletedIndex;
-  const MainPage({Key? key, this.seletedIndex = 0}) : super(key: key);
+  final int selectedIndex;
+  const MainPage({Key? key, this.selectedIndex = 0}) : super(key: key);
 
   @override
   State<MainPage> createState() => _MainPageState();
@@ -19,7 +19,7 @@ class _MainPageState extends State<MainPage> {
   int _currentIndex = 0;
   @override
   void initState() {
-    _currentIndex = widget.seletedIndex;
+    _currentIndex = widget.selectedIndex;
     _pageController = PageController(initialPage: _currentIndex);
     super.initState();
   }
@@ -50,6 +50,7 @@ class _MainPageState extends State<MainPage> {
         }
       },
       child: Scaffold(
+        // backgroundColor: Colors.transparent,
           body: getBody(),
           floatingActionButtonLocation:
               FloatingActionButtonLocation.miniCenterDocked,
@@ -59,7 +60,8 @@ class _MainPageState extends State<MainPage> {
 
   Widget _buildBottomBar() {
     return CustomNavigationBar(
-      containerHeight: 55.h,
+      containerHeight: 48.h,
+      // containerHeight: 55.h,
       backgroundColor: AppColor.darkColor,
       selectedIndex: _currentIndex,
       showElevation: true,
@@ -90,16 +92,17 @@ class _MainPageState extends State<MainPage> {
           textAlign: TextAlign.center,
         ),
         BottomNavyBarItem(
-          icon: NavBarIcon(
-              imgUrl: _currentIndex == 2 ? "user.png" : "user_white.png"),
-          title: const Text("Profile"),
+          icon:
+          NavBarIcon(
+              imgUrl: _currentIndex == 2 ? "footer_navigation.png" : "footer_navigation.png"),
+          title: const Text("library"),
           activeColor: AppColor.whiteColor,
           inactiveColor: _inactiveColor,
           textAlign: TextAlign.center,
         ),
         BottomNavyBarItem(
           icon: NavBarIcon(
-              imgUrl: _currentIndex == 2 ? "user.png" : "user_white.png"),
+              imgUrl: _currentIndex == 3 ? "user.png" : "user_white.png"),
           title: const Text("Profile"),
           activeColor: AppColor.whiteColor,
           inactiveColor: _inactiveColor,

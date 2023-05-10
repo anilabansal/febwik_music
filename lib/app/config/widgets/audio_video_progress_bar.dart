@@ -1,7 +1,6 @@
 ///  | audio_video_progress_bar package |
 ///  | -------- Version 0.10.0 -------- |
 import 'dart:math';
-
 import 'package:flutter/foundation.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';

@@ -8,55 +8,117 @@ import '../../routes/app_pages.dart';
 import '../theme/colors.dart';
 import 'player_page/widgets/custom_slider.dart';
 
-class MiniPlayer extends GetView<GetXPlayerController> {
-  const MiniPlayer({Key? key}) : super(key: key);
+
+class MiniPlayer extends StatelessWidget {
+  final String? callFrom;
+  const MiniPlayer({Key? key,this.callFrom}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    GetXPlayerController controller = Get.find();
+    // Get.find<GetXPlayerController>().
     return Obx(() {
       return controller.isCloseNotifier.value
           ? const SizedBox.shrink()
           : GestureDetector(
-              onTap: () {
-                Get.toNamed(AppRoutes.bottomPlayer);
-                // Get.bottomSheet(
-                //   const BottomSheetPlayer(),
-                //   backgroundColor: Colors.white,
-                //   isScrollControlled: true,
-                //   enterBottomSheetDuration: const Duration(milliseconds: 500),
-                //   exitBottomSheetDuration: const Duration(milliseconds: 500),
-                // );
-              },
-              child: Padding(
-                padding: const EdgeInsets.only(bottom: 8.0),
-                child: Container(
-                //  margin: const EdgeInsets.only(bottom: 10),
-                //   decoration:  BoxDecoration(
-                //     borderRadius: const BorderRadius.only(
-                //         topRight: Radius.circular(15),
-                //         topLeft: Radius.circular(15)
-                //     ),
-                //   border: Border.all(color:AppColor.darkColor ),
-                //    color: AppColor.darkColor,
-                //     //color: Colors.green
-                //   ),
-                  color: AppColor.darkColor,
-                  child: Column(
-                    children: [
-                      const MiniPlayerContainer(),
-                      SizedBox(
-                        height: 0.h,
-                        child: const CustomSlider(),
-                      ),
-                     SizedBox(height: 55.h)
-                    ],
-                  ),
+        onTap: () {
+          Get.toNamed(AppRoutes.bottomPlayer);
+          // Get.bottomSheet(
+          //   const BottomSheetPlayer(),
+          //   backgroundColor: Colors.white,
+          //   isScrollControlled: true,
+          //   enterBottomSheetDuration: const Duration(milliseconds: 500),
+          //   exitBottomSheetDuration: const Duration(milliseconds: 500),
+          // );
+        },
+        child: Padding(
+          padding:  EdgeInsets.only(bottom:  callFrom=="artistPage"?15:70.0),
+          child: Container(
+            //  margin: const EdgeInsets.only(bottom: 10),
+            //   decoration:  BoxDecoration(
+            //     borderRadius: const BorderRadius.only(
+            //         topRight: Radius.circular(15),
+            //         topLeft: Radius.circular(15)
+            //     ),
+            //   border: Border.all(color:AppColor.darkColor ),
+            //    color: AppColor.darkColor,
+            //     //color: Colors.green
+            //   ),
+            color: AppColor.searchBarGreyColor,
+            //color: AppColor.darkColor,
+            child: Column(
+              children: [
+                const MiniPlayerContainer(),
+                SizedBox(
+                  height: 0.h,
+                  child: const CustomSlider(),
                 ),
-              ),
-            );
+                // SizedBox(height: 55.h)
+                SizedBox(height: 0.h)
+              ],
+            ),
+          ),
+        ),
+      );
     });
   }
 }
+
+// class MiniPlayer extends GetView<GetXPlayerController> {
+//
+//   const MiniPlayer({Key? key, }) : super(key: key);
+//
+//   @override
+//   Widget build(BuildContext context) {
+//     return Obx(() {
+//       return controller.isCloseNotifier.value
+//           ? const SizedBox.shrink()
+//           : GestureDetector(
+//               onTap: () {
+//                 Get.toNamed(AppRoutes.bottomPlayer);
+//                 // Get.bottomSheet(
+//                 //   const BottomSheetPlayer(),
+//                 //   backgroundColor: Colors.white,
+//                 //   isScrollControlled: true,
+//                 //   enterBottomSheetDuration: const Duration(milliseconds: 500),
+//                 //   exitBottomSheetDuration: const Duration(milliseconds: 500),
+//                 // );
+//               },
+//               child: Padding(
+//                 padding: const EdgeInsets.only(bottom: 70.0),
+//                 child: Container(
+//                 //  margin: const EdgeInsets.only(bottom: 10),
+//                 //   decoration:  BoxDecoration(
+//                 //     borderRadius: const BorderRadius.only(
+//                 //         topRight: Radius.circular(15),
+//                 //         topLeft: Radius.circular(15)
+//                 //     ),
+//                 //   border: Border.all(color:AppColor.darkColor ),
+//                 //    color: AppColor.darkColor,
+//                 //     //color: Colors.green
+//                 //   ),
+//                   color: AppColor.searchBarGreyColor,
+//                   //color: AppColor.darkColor,
+//                   child: Column(
+//                     children: [
+//                       const MiniPlayerContainer(),
+//                       SizedBox(
+//                         height: 0.h,
+//                         child: const CustomSlider(),
+//                       ),
+//                    // SizedBox(height: 55.h)
+//                       SizedBox(height: 0.h)
+//                     ],
+//                   ),
+//                 ),
+//               ),
+//             );
+//     });
+//   }
+// }
+
+
+
 
 class MiniPlayerContainer extends GetView<GetXPlayerController> {
   const MiniPlayerContainer({
@@ -68,9 +130,11 @@ class MiniPlayerContainer extends GetView<GetXPlayerController> {
     return Obx(() {
       return Container(
         width: Get.width,
-        height: 55,
+        // height: 55,
+        height: 57,
         alignment: Alignment.center,
-       // color: Colors.black38,
+
+     //  color: Colors.black38,
         child: Row(
           children: [
             const MiniArtImage(),
@@ -171,7 +235,8 @@ class MiniPlayButton extends GetView<GetXPlayerController> {
               child: IconButton(
                 icon: const Icon(Icons.play_arrow),
                 // iconSize: 30.h,
-                iconSize: 20.h,
+                iconSize: 15.h,
+                // iconSize: 20.h,
                 onPressed: controller.play,
               ),
             ),
@@ -195,8 +260,8 @@ class MiniPlayButton extends GetView<GetXPlayerController> {
             child: Center(
               child: IconButton(
                 icon: const Icon(Icons.pause),
-               iconSize: 20.h,
-
+               // iconSize: 20.h,
+                iconSize: 15.h,
                 onPressed: controller.pause,
               ),
             ),
@@ -223,7 +288,8 @@ class MiniCloseSongButton extends GetView<GetXPlayerController> {
           color: (controller.isLastSongNotifier.value)
               ? Colors.white54
               : Colors.white,
-          size: 20.h,
+          size: 15.h,
+          // size: 20.h,
           // size: 26.h,
         ),
       ),
@@ -245,7 +311,7 @@ class MiniNextSongButton extends GetView<GetXPlayerController> {
             : controller.next,
         child: VectorAsset(
           icon: 'ic_right',
-          size: 20.r,
+          size: 15.r,
           // size: 26.r,
           // color: (controller.isLastSongNotifier.value)
           //     ? Colors.white54

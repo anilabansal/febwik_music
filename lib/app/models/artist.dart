@@ -32,6 +32,8 @@
 
 import 'dart:convert';
 
+import 'home_music_response.dart';
+
 ArtistPage artistPageFromJson(String str) =>
     ArtistPage.fromJson(json.decode(str));
 
@@ -109,6 +111,7 @@ class Songs {
   String? thumbnail128;
   String? thumbnail320;
   int? isFavourite;
+  List<Artists>? artists;
 
   Songs(
       {this.id,
@@ -117,7 +120,9 @@ class Songs {
         this.songFile,
         this.thumbnail128,
         this.thumbnail320,
-        this.isFavourite});
+        this.isFavourite,
+        this.artists,
+      });
 
   Songs.fromJson(Map<String, dynamic> json) {
     id = json['id'];
@@ -127,10 +132,16 @@ class Songs {
     thumbnail128 = json['thumbnail_128'];
     thumbnail320 = json['thumbnail_320'];
     isFavourite = json['is_favourite'];
+    if (json['artists'] != null) {
+      artists = <Artists>[];
+      json['artists'].forEach((v) {
+        artists!.add( Artists.fromJson(v));
+      });
+    }
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
+    final Map<String, dynamic> data =  Map<String, dynamic>();
     data['id'] = this.id;
     data['name'] = this.name;
     data['song_slug'] = this.songSlug;
