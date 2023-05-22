@@ -20,7 +20,7 @@ class CustomSlider extends StatelessWidget {
           buffered: controller.progressNotifier.value.buffered,
           total: controller.progressNotifier.value.total,
           onSeek: controller.seek,
-          barHeight: 3,
+          barHeight:callFrom=="bottomSheet"? 3:2,
           barCapShape: BarCapShape.round,
           baseBarColor: Colors.white38,
           bufferedBarColor: Colors.white12,

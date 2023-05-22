@@ -7,8 +7,11 @@ import 'package:music_app/app/player/getx_player_controller.dart';
 import 'package:music_app/app/routes/app_pages.dart';
 import 'package:music_app/app/services/api.dart';
 import 'package:music_app/app/ui/theme/index.dart';
+import '../../../../main.dart';
 import '../../../config/widgets/small_text.dart';
 import '../../../config/widgets/background/custom_background.dart';
+import '../artist_page/artists_page.dart';
+import '../artist_latest_page.dart';
 import '../mini_player.dart';
 import 'widgets/home_appbar.dart';
 
@@ -353,9 +356,15 @@ class TopArtists extends GetView<GetXPlayerController> {
               itemBuilder: (context, index) {
                 return InkWell(
                   onTap: () {
-                    controller.clearPlaylist();
-                    Get.toNamed(AppRoutes.artistPage,
-                        arguments: controller.featuredArtists[index].id);
+
+
+                    navigatorKey.currentState?.push(
+                      MaterialPageRoute(
+                        builder: (context) => ArtistsPage(id:controller.featuredArtists[index].id ,),
+                      ),
+                    );
+                    // Get.toNamed(AppRoutes.artistPage,
+                    //     arguments: controller.featuredArtists[index].id);
                   },
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
@@ -527,9 +536,13 @@ class PlayerCard extends StatelessWidget {
           Flexible(
             child: Padding(
               padding: EdgeInsets.only(left: 15.w, top: 4.h),
-              child: SmallText(
-                text: musicName,
-                size: Dimensions.font12,
+              child: SizedBox(
+                width: 120.w,
+                child: SmallText(
+                  text: musicName,
+                  size: Dimensions.font12,
+                  overFlow: TextOverflow.ellipsis,
+                ),
               ),
             ),
           ),

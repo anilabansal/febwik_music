@@ -138,8 +138,9 @@ class MiniPlayerContainer extends GetView<GetXPlayerController> {
         child: Row(
           children: [
             const MiniArtImage(),
-            const Expanded(
-              child: MiniArtistAndSongName(),
+            const Flexible(
+              child:
+              MiniArtistAndSongName(),
             ),
             Container(
               margin: EdgeInsets.only(right: 10.w),
@@ -151,6 +152,7 @@ class MiniPlayerContainer extends GetView<GetXPlayerController> {
                   SizedBox(width: 15.w),
                   const MiniPlayButton(),
                   SizedBox(width: 15.w),
+
                   controller.playButtonNotifier.value == ButtonState.paused
                       ? const MiniCloseSongButton()
                       : const MiniNextSongButton(),
@@ -288,7 +290,7 @@ class MiniCloseSongButton extends GetView<GetXPlayerController> {
           color: (controller.isLastSongNotifier.value)
               ? Colors.white54
               : Colors.white,
-          size: 15.h,
+          size: 20.h,
           // size: 20.h,
           // size: 26.h,
         ),
@@ -311,7 +313,8 @@ class MiniNextSongButton extends GetView<GetXPlayerController> {
             : controller.next,
         child: VectorAsset(
           icon: 'ic_right',
-          size: 15.r,
+          size: 20.r,
+
           // size: 26.r,
           // color: (controller.isLastSongNotifier.value)
           //     ? Colors.white54
@@ -335,7 +338,7 @@ class MiniArtistAndSongName extends GetView<GetXPlayerController> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             SizedBox(
-             // width: 70.h,
+              width:180.h,
               child: SmallText(
                 text: controller.currentSongTitleNotifier.value,
                 //weight: FontWeight.bold,
@@ -346,7 +349,7 @@ class MiniArtistAndSongName extends GetView<GetXPlayerController> {
             ),
             //SizedBox(height: 3.r),
             SizedBox(
-              //width: 70.h,
+             width: 150.h,
               child: SmallText(
               //  text: "artist name",
                 text: controller.currentSongArtistNotifier.value,

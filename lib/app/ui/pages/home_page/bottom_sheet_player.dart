@@ -190,7 +190,8 @@ class PreviousSongButton extends GetView<GetXPlayerController> {
 class PlayButton extends GetView<GetXPlayerController> {
   final double? width;
   final double? height;
-  const PlayButton({Key? key, this.height, this.width}) : super(key: key);
+  final double? iconSize;
+  const PlayButton({Key? key, this.height, this.width, this.iconSize}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -234,7 +235,7 @@ class PlayButton extends GetView<GetXPlayerController> {
               child: IconButton(
                 icon: const Icon(Icons.play_arrow,
                 ),
-                iconSize: 40.0,
+                iconSize: iconSize??40.0,
                 onPressed: controller.play,
               ),
             ),
@@ -257,7 +258,7 @@ class PlayButton extends GetView<GetXPlayerController> {
               child: IconButton(
                 icon: const Icon(Icons.pause,
                 ),
-                iconSize: 40.0,
+                iconSize:iconSize?? 40.0,
                 onPressed: controller.pause,
               ),
             ),
@@ -280,7 +281,7 @@ class PlayButton extends GetView<GetXPlayerController> {
               child: IconButton(
                 icon: const Icon(Icons.pause,
                 ),
-                iconSize: 40.0,
+                iconSize: iconSize??40.0,
                 onPressed: controller.pause,
               ),
             ),

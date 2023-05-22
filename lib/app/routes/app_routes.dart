@@ -7,6 +7,7 @@ abstract class AppRoutes {
   static const player = _Paths.playerPage;
   static const artistPage = _Paths.artistPage;
   static const bottomPlayer = _Paths.bottomPlayer;
+  static const bottomBar = _Paths.bottomBar;
 }
 
 abstract class _Paths {
@@ -16,4 +17,5 @@ abstract class _Paths {
   static const playerPage = '/playerPage';
   static const bottomPlayer = '/bottomPlayer';
   static const artistPage = '/artistPage';
+  static const bottomBar = '/bottomBar';
 }

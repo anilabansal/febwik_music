@@ -37,14 +37,16 @@ class GetXPlayerController extends GetxController {
   final trending = <LatestRelease>[].obs;
   final artist = <Artists>[].obs;
   final artistPageData = ArtistData().obs;
+final  artistSongList= <Songs>[].obs;
 
   var isLoading = true.obs;
   var isArtistLoading = true.obs;
+  var moreArtistSongLoad = false.obs;
 
   final _audioHandler = Get.find<GetXAudioHandler>().audioHandler;
 
   Future<void> _loadPlaylist() async {
-    isLoading.value = true;
+
     print('step 2 _loadPlaylist');
     final songRepository = Get.find<GetXDemoPlaylist>();
     Response response = await songRepository.fetchInitialPlaylist();
@@ -62,11 +64,11 @@ class GetXPlayerController extends GetxController {
     }
   }
 
-  Future<void> loadArtistDetailApiCall(index) async{
+  Future<bool> loadArtistDetailApiCall(index,page) async{
     print("artist--------->");
-    isArtistLoading.value = true;
+    // isArtistLoading.value = true;
     final songRepository = Get.find<GetXDemoPlaylist>();
-    Response response = await songRepository.getArtistDetailSongList(index);
+    Response response = await songRepository.getArtistDetailSongList(index,page);
     if(response.statusCode == 200){
 
       print("success api call");
@@ -75,10 +77,13 @@ class GetXPlayerController extends GetxController {
       var result =  artistPageFromJson(response.bodyString ?? "");
       // if(result.data!=null){
         artistPageData.value = result.data! ;
+       artistSongList.addAll(result.data!.songs!);
+      print("initialArtistSongs${artistSongList.length}");
 
-      // }
 
+    return true;
     }
+    return false;
   }
 
   void _listenToChangesInPlaylist() {

@@ -3,7 +3,6 @@ import 'package:music_app/app/main_page.dart';
 import 'package:music_app/app/ui/pages/home_page/bottom_sheet_player.dart';
 import 'package:music_app/app/ui/pages/home_page/home_page_view.dart';
 import 'package:music_app/app/ui/pages/player_page/player_page_view.dart';
-
 import '../ui/pages/artist_page/artists_page.dart';
 
 part 'app_routes.dart';
@@ -13,6 +12,8 @@ class AppPages {
 
   // ignore: constant_identifier_names
   static const INITIAL = AppRoutes.mainPage;
+ // static const INITIAL = AppRoutes.bottomBar;
+
 
   static final routes = [
     GetPage(
