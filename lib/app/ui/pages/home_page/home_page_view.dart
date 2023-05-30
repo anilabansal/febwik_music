@@ -6,12 +6,12 @@ import 'package:music_app/app/config/dimensions.dart';
 import 'package:music_app/app/player/getx_player_controller.dart';
 import 'package:music_app/app/routes/app_pages.dart';
 import 'package:music_app/app/services/api.dart';
+import 'package:music_app/app/ui/pages/home_page/view_more_detail.dart';
 import 'package:music_app/app/ui/theme/index.dart';
 import '../../../../main.dart';
 import '../../../config/widgets/small_text.dart';
 import '../../../config/widgets/background/custom_background.dart';
-import '../artist_page/artists_page.dart';
-import '../artist_latest_page.dart';
+import '../artist_page/artist_latest_page.dart';
 import '../mini_player.dart';
 import 'widgets/home_appbar.dart';
 
@@ -86,6 +86,16 @@ class NewRelease extends GetView<GetXPlayerController> {
             children: [
               HeaderSection(
                 title: controller.playlists[index].name!,
+                  onTap: (){
+                    controller.playlistNotifier.clear();
+                    navigatorKey.currentState?.push(
+                      MaterialPageRoute(
+                        builder: (context) =>    ViewMorePage(
+                          slug: controller.playlists[index].slug,
+                        ),
+                      ),
+                    );
+                  }
                 // title: "New Release",
               ),
               SizedBox(
@@ -150,10 +160,12 @@ class HeaderSection extends StatelessWidget {
     required this.title,
     this.action = "View All",
     this.showAction = true,
+    this.onTap,
   }) : super(key: key);
   final String title;
   final String action;
   final bool showAction;
+  final VoidCallback ? onTap;
 
   @override
   Widget build(BuildContext context) {
@@ -174,7 +186,7 @@ class HeaderSection extends StatelessWidget {
           ),
           if (showAction)
             GestureDetector(
-              onTap: () {},
+              onTap: onTap,
               child: Container(
                 padding: EdgeInsets.symmetric(vertical: 5.h, horizontal: 10.w),
                 decoration: BoxDecoration(
@@ -210,7 +222,8 @@ class TrendingSongs extends GetView<GetXPlayerController> {
       mainAxisSize: MainAxisSize.min,
       children: [
         SizedBox(height: 10.h),
-        const HeaderSection(title: "Trending Playlists"),
+        const HeaderSection(title: "Trending Playlists", showAction: false,
+        ),
         SizedBox(
           height: 160.h,
           child: Obx(() {
@@ -281,7 +294,7 @@ class TopStations extends GetView<GetXPlayerController> {
       mainAxisSize: MainAxisSize.min,
       children: [
         // SizedBox(height: 10.h),
-        HeaderSection(title: title!),
+        HeaderSection(title: title!,showAction: false),
         SizedBox(
           height: 160.h,
           child: Obx(() {
@@ -343,7 +356,7 @@ class TopArtists extends GetView<GetXPlayerController> {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        const HeaderSection(title: "Top Artist Radio"),
+         const HeaderSection(title: "Top Artist Radio",showAction: false,),
         Container(
           height: 120.h,
           alignment: Alignment.center,
@@ -357,7 +370,7 @@ class TopArtists extends GetView<GetXPlayerController> {
                 return InkWell(
                   onTap: () {
 
-
+                    controller.playlistNotifier.clear();
                     navigatorKey.currentState?.push(
                       MaterialPageRoute(
                         builder: (context) => ArtistsPage(id:controller.featuredArtists[index].id ,),
@@ -425,42 +438,42 @@ class TopArtists extends GetView<GetXPlayerController> {
   }
 }
 
-class FreshHits extends GetView<GetXPlayerController> {
-  const FreshHits({
-    Key? key,
-  }) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return Column(
-      children: [
-        const HeaderSection(
-          title: "Fresh Hits",
-        ),
-        SizedBox(
-          height: 160.h,
-          child: Obx(() {
-            return ListView.builder(
-                scrollDirection: Axis.horizontal,
-                shrinkWrap: true,
-                itemCount: controller.playlistNotifier.length,
-                itemBuilder: (context, index) {
-                  return Obx(() {
-                    return PlayerCard(
-                      image:
-                      controller.playlistNotifier[index].artUri.toString(),
-                      musicName: controller.playlistNotifier[index].title,
-                      artistName: "Artist Name",
-                      onTap: () => Get.toNamed(AppRoutes.bottomPlayer),
-                    );
-                  });
-                });
-          }),
-        ),
-      ],
-    );
-  }
-}
+// class FreshHits extends GetView<GetXPlayerController> {
+//   const FreshHits({
+//     Key? key,
+//   }) : super(key: key);
+//
+//   @override
+//   Widget build(BuildContext context) {
+//     return Column(
+//       children: [
+//         const HeaderSection(
+//           title: "Fresh Hits",
+//         ),
+//         SizedBox(
+//           height: 160.h,
+//           child: Obx(() {
+//             return ListView.builder(
+//                 scrollDirection: Axis.horizontal,
+//                 shrinkWrap: true,
+//                 itemCount: controller.playlistNotifier.length,
+//                 itemBuilder: (context, index) {
+//                   return Obx(() {
+//                     return PlayerCard(
+//                       image:
+//                       controller.playlistNotifier[index].artUri.toString(),
+//                       musicName: controller.playlistNotifier[index].title,
+//                       artistName: "Artist Name",
+//                       onTap: () => Get.toNamed(AppRoutes.bottomPlayer),
+//                     );
+//                   });
+//                 });
+//           }),
+//         ),
+//       ],
+//     );
+//   }
+// }
 
 class PlayList extends GetView<GetXPlayerController> {
   const PlayList({Key? key}) : super(key: key);

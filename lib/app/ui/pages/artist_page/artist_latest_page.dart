@@ -4,13 +4,13 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:music_app/app/player/getx_player_controller.dart';
 import 'package:music_app/app/ui/pages/mini_player.dart';
-import '../../config/dimensions.dart';
-import '../../config/widgets/background/custom_background.dart';
-import '../../config/widgets/small_text.dart';
-import '../../config/widgets/vector_asset.dart';
-import '../../services/api.dart';
-import '../theme/colors.dart';
-import 'home_page/bottom_sheet_player.dart';
+import '../../../config/dimensions.dart';
+import '../../../config/widgets/background/custom_background.dart';
+import '../../../config/widgets/small_text.dart';
+import '../../../config/widgets/vector_asset.dart';
+import '../../../services/api.dart';
+import '../../theme/colors.dart';
+import '../home_page/bottom_sheet_player.dart';
 
 class ArtistsPage extends StatefulWidget {
   final int? id;
@@ -203,7 +203,11 @@ class _ArtistsPageState extends State<ArtistsPage> {
                                     delegate: SliverChildListDelegate([
                                       Padding(
                                         padding: const EdgeInsets.fromLTRB(
-                                            15.0, 15, 15.0, 0),
+                                          15.0,
+                                          15,
+                                          15.0,
+                                          0,
+                                        ),
                                         child: SmallText(
                                           text: Get.find<GetXPlayerController>()
                                                   .artistPageData
@@ -259,6 +263,8 @@ class _ArtistsPageState extends State<ArtistsPage> {
                                           ],
                                         ),
                                       ),
+
+                                      ///Todo: list of songs
                                       ListView.builder(
                                           itemCount:
                                               Get.find<GetXPlayerController>()

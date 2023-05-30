@@ -1,16 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'app/demo_bottom_bar.dart';
 import 'app/player/getx_audio_handler.dart';
 import 'app/player/getx_player_controller.dart';
 import 'app/player/getx_playlist_repository.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'app/routes/app_pages.dart';
-import 'app/ui/pages/demo.dart';
-import 'app/ui/pages/demo2.dart';
-import 'app/ui/pages/demo3.dart';
-import 'app/ui/pages/demo4.dart';
-import 'app/ui/pages/artist_latest_page.dart';
 import 'app/ui/theme/index.dart';
 
 GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();

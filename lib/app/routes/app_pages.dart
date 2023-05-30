@@ -34,11 +34,11 @@ class AppPages {
         transition: Transition.downToUp,
       transitionDuration: const Duration(milliseconds: 400),
     ),
-    GetPage(
-      name: _Paths.artistPage,
-      page: () => const ArtistsPage(),
-      transition: Transition.rightToLeft,
-      transitionDuration: const Duration(milliseconds: 300),
-    ),
+    // GetPage(
+    //   name: _Paths.artistPage,
+    //   page: () => const ArtistsPage(),
+    //   transition: Transition.rightToLeft,
+    //   transitionDuration: const Duration(milliseconds: 300),
+    // ),
   ];
 }
