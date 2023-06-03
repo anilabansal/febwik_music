@@ -8,6 +8,8 @@ abstract class AppRoutes {
   static const artistPage = _Paths.artistPage;
   static const bottomPlayer = _Paths.bottomPlayer;
   static const bottomBar = _Paths.bottomBar;
+  static const loginPage = _Paths.loginPage;
+  static const otpPage = _Paths.otpPage;
 }
 
 abstract class _Paths {
@@ -18,4 +20,6 @@ abstract class _Paths {
   static const bottomPlayer = '/bottomPlayer';
   static const artistPage = '/artistPage';
   static const bottomBar = '/bottomBar';
+  static const loginPage = '/loginPage';
+  static const otpPage = '/otpPage';
 }

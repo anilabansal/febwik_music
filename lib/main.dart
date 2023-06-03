@@ -1,3 +1,4 @@
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'app/demo_bottom_bar.dart';
@@ -15,9 +16,12 @@ import 'app/ui/theme/index.dart';
 
 GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
 void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp();
   await Get.putAsync(() => GetXAudioHandler().init());
   await Get.putAsync(() => GetXDemoPlaylist().init());
   await Get.putAsync(() => GetXPlayerController().init());
+  // await Firebase.initializeApp();
   runApp(const App());
 }
 

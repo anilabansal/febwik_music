@@ -2,6 +2,8 @@ import 'package:get/get.dart';
 import 'package:music_app/app/main_page.dart';
 import 'package:music_app/app/ui/pages/home_page/bottom_sheet_player.dart';
 import 'package:music_app/app/ui/pages/home_page/home_page_view.dart';
+import 'package:music_app/app/ui/pages/login_page/login_page.dart';
+import 'package:music_app/app/ui/pages/login_page/otp_page.dart';
 import 'package:music_app/app/ui/pages/player_page/player_page_view.dart';
 import '../ui/pages/artist_page/artists_page.dart';
 
@@ -34,11 +36,21 @@ class AppPages {
         transition: Transition.downToUp,
       transitionDuration: const Duration(milliseconds: 400),
     ),
+    // GetPage(
+    //   name: _Paths.artistPage,
+    //   page: () => const ArtistsPage(),
+    //   transition: Transition.rightToLeft,
+    //   transitionDuration: const Duration(milliseconds: 300),
+    // ),
     GetPage(
-      name: _Paths.artistPage,
-      page: () => const ArtistsPage(),
+      name: _Paths.loginPage,
+      page: () =>  LoginPage(),
       transition: Transition.rightToLeft,
       transitionDuration: const Duration(milliseconds: 300),
+    ),
+  GetPage(
+      name: _Paths.loginPage,
+      page: () =>  OtpPage(),
     ),
   ];
 }

@@ -36,4 +36,8 @@ class AppColor {
   static const Color google = Color(0xFFDB3236);
   static const Color facebook = Color(0xFF4267B2);
   static const Color twitter = Color(0xFF00acee);
+
+
+
+  static const Color cardBackground = Color(0xFF302018);
 }

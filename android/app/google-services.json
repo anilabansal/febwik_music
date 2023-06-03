@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "642577039389",
+    "project_id": "kumaoni-music",
+    "storage_bucket": "kumaoni-music.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:642577039389:android:2dcb60027a399e55b0c6f4",
+        "android_client_info": {
+          "package_name": "com.feb.music"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "642577039389-v79l75aomue63gqrhhtepnss4l0jhfcf.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAmZ12p7UX7yHV2qY2p4Y22i4sjSbn1Fic"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "642577039389-v79l75aomue63gqrhhtepnss4l0jhfcf.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

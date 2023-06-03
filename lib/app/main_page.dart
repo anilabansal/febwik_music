@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:music_app/app/ui/pages/home_page/home_page_view.dart';
+import 'package:music_app/app/ui/pages/login_page/login_page.dart';
 import 'package:music_app/app/ui/pages/profile/profile_page.dart';
 import '../main.dart';
 import 'config/widgets/custom_nav_bar.dart';
@@ -24,7 +25,7 @@ class _MainPageState extends State<MainPage> {
     const HomePage(),
     const SearchPage(),
     const ProfilePage(),
-    const ProfilePage()
+    const LoginPage()
   ];
 
   @override
@@ -131,7 +132,7 @@ class _MainPageState extends State<MainPage> {
             // Navigating from detail screen to Screen 2
             navigatorKey.currentState?.push(
               MaterialPageRoute(
-                builder: (context) => const ProfilePage(),
+                builder: (context) =>  LoginPage(),
               ),
             );
           }

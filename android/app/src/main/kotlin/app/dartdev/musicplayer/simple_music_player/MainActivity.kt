@@ -1,4 +1,4 @@
-package app.dartdev.musicplayer.music_app
+package com.feb.music
 
 import io.flutter.embedding.android.FlutterActivity
 
