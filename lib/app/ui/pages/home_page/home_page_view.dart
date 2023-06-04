@@ -12,7 +12,7 @@ import '../../../../main.dart';
 import '../../../config/widgets/small_text.dart';
 import '../../../config/widgets/background/custom_background.dart';
 import '../artist_page/artist_latest_page.dart';
-import '../mini_player.dart';
+
 import 'widgets/home_appbar.dart';
 
 class HomePage extends StatelessWidget {
@@ -38,28 +38,28 @@ class HomePage extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.start,
                     crossAxisAlignment: CrossAxisAlignment.start,
                     mainAxisSize: MainAxisSize.min,
-                    children: [
-                      const HomeAppbar(),
-                      const TrendingSongs(),
-                      const TopStations(
+                    children: const [
+                      HomeAppbar(),
+                      TrendingSongs(),
+                      TopStations(
                         title: "Top Stations",
                       ),
-                      const TopArtists(),
-                      const NewRelease(),
+                      TopArtists(),
+                      NewRelease(),
                       //   const FreshHits(),
                       //     const PlayList(),
                       //  const TopStations(title: "Fresh Hits",),
                       // SizedBox(height: 60.h)
-                      Get
-                          .find<GetXPlayerController>()
-                          .isCloseNotifier
-                          .value
-                          ? SizedBox(height: 60.h) : SizedBox(height: 0.h,)
+                      // Get
+                      //     .find<GetXPlayerController>()
+                      //     .isCloseNotifier
+                      //     .value
+                      //     ? SizedBox(height: 60.h) : SizedBox(height: 0.h,)
                     ],
                   ),
                 ),
               ),
-              const MiniPlayer(),
+            // const MiniPlayer(),
             ],
           );
         }),),

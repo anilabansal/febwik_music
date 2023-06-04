@@ -32,7 +32,8 @@ class MiniPlayer extends StatelessWidget {
           // );
         },
         child: Padding(
-          padding:  EdgeInsets.only(bottom:  callFrom=="artistPage"?15:70.0),
+          padding: const EdgeInsets.only(bottom: 8),
+         // padding:  EdgeInsets.only(bottom:  callFrom=="artistPage"?15:70.0),
           child: Container(
             //  margin: const EdgeInsets.only(bottom: 10),
             //   decoration:  BoxDecoration(

@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:music_app/app/ui/pages/home_page/bottom_sheet_player.dart';
-import 'package:music_app/app/ui/pages/mini_player.dart';
 import '../../../config/dimensions.dart';
 import '../../../config/widgets/background/custom_background.dart';
 import '../../../config/widgets/small_text.dart';
@@ -426,17 +425,17 @@ class _ViewMorePageState extends State<ViewMorePage> {
                                           );
 
                                         }),
-                                    Get.find<GetXPlayerController>()
-                                            .isCloseNotifier
-                                            .value
-                                        ? const SizedBox(height: 55)
-                                        : const SizedBox(height: 0),
+                                    // Get.find<GetXPlayerController>()
+                                    //         .isCloseNotifier
+                                    //         .value
+                                    //     ? const SizedBox(height: 55)
+                                    //     : const SizedBox(height: 0),
                                   ]),
                                 ),
                               ],
                             ),
                           ),
-                          const MiniPlayer()
+                          // const MiniPlayer()
                         ],
                       ),
                       Visibility(

@@ -56,11 +56,11 @@ class _AppState extends State<App> with WidgetsBindingObserver {
         theme: AppTheme.lightTheme(),
         darkTheme: AppTheme.darkTheme(),
        //themeMode: ThemeMode.dark,
-        initialRoute: AppPages.INITIAL,
+      initialRoute: AppPages.INITIAL,
         getPages: AppPages.routes,
         debugShowCheckedModeBanner: false,
-       // home: const SliverAppBarStatus(),
-      //   home: Demo3(),
+      // home: const SliverAppBarStatus(),
+      // home: DemoBar(),
         builder: (context, widget) {
           // ScreenUtil.setContext(context);
           return MediaQuery(
