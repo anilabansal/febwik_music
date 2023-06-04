@@ -1,6 +1,7 @@
 import 'package:audio_service/audio_service.dart';
 import 'package:get/get.dart';
 import 'package:music_app/app/models/home_music_response.dart';
+import 'package:music_app/app/models/view_more.dart';
 import '../models/artist.dart';
 import 'getx_audio_handler.dart';
 import 'getx_playlist_repository.dart';
@@ -37,16 +38,20 @@ class GetXPlayerController extends GetxController {
   final trending = <LatestRelease>[].obs;
   final artist = <Artists>[].obs;
   final artistPageData = ArtistData().obs;
-final  artistSongList= <Songs>[].obs;
+   final  artistSongList= <Songs>[].obs;
+   final viewMoreData =  ViewMoreData().obs;
+   final viewMoreSongList = <ViewMoreSongs>[].obs;
+
 
   var isLoading = true.obs;
   var isArtistLoading = true.obs;
-  var moreArtistSongLoad = false.obs;
+ var viewMoreIsLoading = true.obs;
 
   final _audioHandler = Get.find<GetXAudioHandler>().audioHandler;
 
-  Future<void> _loadPlaylist() async {
+  ///TODO: load playlist api call
 
+  Future<void> _loadPlaylist() async {
     print('step 2 _loadPlaylist');
     final songRepository = Get.find<GetXDemoPlaylist>();
     Response response = await songRepository.fetchInitialPlaylist();
@@ -64,6 +69,8 @@ final  artistSongList= <Songs>[].obs;
     }
   }
 
+
+  ///TODO: artist detail api call
   Future<bool> loadArtistDetailApiCall(index,page) async{
     print("artist--------->");
     // isArtistLoading.value = true;
@@ -79,12 +86,33 @@ final  artistSongList= <Songs>[].obs;
         artistPageData.value = result.data! ;
        artistSongList.addAll(result.data!.songs!);
       print("initialArtistSongs${artistSongList.length}");
-
-
     return true;
     }
     return false;
   }
+
+  ///TODO: view more button api call
+  Future<bool> loadViewMoreApiCall(slug,page) async{
+    print("artist--------->");
+    // isArtistLoading.value = true;
+    final songRepository = Get.find<GetXDemoPlaylist>();
+    Response response = await songRepository.getViewMoreList(slug,page);
+    if(response.statusCode == 200){
+
+      print("success api call");
+      viewMoreIsLoading.value = false;
+      print("result--->${response.bodyString}");
+      var result =  ViewMoreDateFromJson(response.bodyString ?? "");
+      // if(result.data!=null){
+      // viewMoreData.value = result.data! ;
+      viewMoreSongList.addAll(result.data!);
+      print("initialViewSongs${viewMoreSongList.length}");
+      print("initialViewFirstSongs${viewMoreSongList[0].thumbnail128}");
+      return true;
+    }
+    return false;
+  }
+
 
   void _listenToChangesInPlaylist() {
     print('step 3 _listenToChangesInPlaylist');

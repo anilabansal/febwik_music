@@ -22,12 +22,24 @@ class GetXDemoPlaylist extends GetxService {
     return _nextSong();
   }
 
+  ///TODO: home list
   Future<Response> getHomeSongList() async {
     return await ApiClient().getRequest(Api.home);
   }
+
+  ///TODO: artist detail
   Future<Response> getArtistDetailSongList(index,page) async {
     return await ApiClient().getRequest("${Api.artistDetailUrl}$index?page=$page");
   }
+
+  ///TODO: view more api call
+  Future<Response> getViewMoreList(slug,page) async {
+    return await ApiClient().getRequest("${Api.viewMoreUrl}$slug?page=$page");
+  }
+
+
+
+
   var _songIndex = 0;
   static const _maxSongNumber = 10;
 

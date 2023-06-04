@@ -6,8 +6,10 @@ class ApiClient extends GetConnect {
   Future<Response> getRequest(String uri) async {
     try {
       Response response = await get("${Api.baseUrl}$uri");
-      print("");
+
+      print('URL Request ------------------------------->\n ${Api.baseUrl}$uri}');
       log(response.statusText.toString());
+
       return response;
     } catch (e) {
       return Response(statusCode: 1, statusText: e.toString());
