@@ -35,21 +35,6 @@ class _LoginPageState extends State<LoginPage> {
           headerSliverBuilder:
               (BuildContext context, bool innerBoxIsScrolled) {
             return <Widget>[
-              // SliverAppBar(
-              //   title: SmallText(
-              //     text:
-              //         "lllll",
-              //     size: Dimensions.font16,
-              //   ),
-              //   pinned: true,
-              //   elevation: 0,
-              //   centerTitle: false,
-              //   flexibleSpace: FlexibleSpaceBar(
-              //     collapseMode: CollapseMode.pin,
-              //
-              //   ),
-              //
-              // ),
             ];
           },
           body: Column(
@@ -91,8 +76,8 @@ class _LoginPageState extends State<LoginPage> {
 
                     child: Card(
                       color: AppColor.cardBackground,
-                      shape: new RoundedRectangleBorder(
-                          side: new BorderSide(
+                      shape:  RoundedRectangleBorder(
+                          side:  const BorderSide(
                             color: AppColor.cardBackground,
                           ),
                           borderRadius: BorderRadius.circular(10.0)),
@@ -107,7 +92,7 @@ class _LoginPageState extends State<LoginPage> {
                           decoration: InputDecoration(
                               labelText: 'Mobile Number',
                               fillColor: AppColor.whiteColor,
-                              labelStyle: TextStyle(
+                              labelStyle: const TextStyle(
                                 color: AppColor.orangeColor,
 
                               ),

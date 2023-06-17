@@ -112,6 +112,7 @@ class Songs {
   String? thumbnail320;
   int? isFavourite;
   List<Artists>? artists;
+  int? selectedIndex;
 
   Songs(
       {this.id,
@@ -122,6 +123,7 @@ class Songs {
         this.thumbnail320,
         this.isFavourite,
         this.artists,
+        this.selectedIndex,
       });
 
   Songs.fromJson(Map<String, dynamic> json) {
@@ -138,6 +140,8 @@ class Songs {
         artists!.add( Artists.fromJson(v));
       });
     }
+    selectedIndex = -1;
+
   }
 
   Map<String, dynamic> toJson() {

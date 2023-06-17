@@ -38,23 +38,25 @@ class HomePage extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.start,
                     crossAxisAlignment: CrossAxisAlignment.start,
                     mainAxisSize: MainAxisSize.min,
-                    children: const [
-                      HomeAppbar(),
-                      TrendingSongs(),
-                      TopStations(
+                    children:   [
+                      const HomeAppbar(),
+                      const TrendingSongs(),
+                      const TopStations(
                         title: "Top Stations",
                       ),
-                      TopArtists(),
-                      NewRelease(),
+                      const TopArtists(),
+                      const NewRelease(),
+
+                       // SizedBox(height:70)
                       //   const FreshHits(),
                       //     const PlayList(),
                       //  const TopStations(title: "Fresh Hits",),
                       // SizedBox(height: 60.h)
-                      // Get
-                      //     .find<GetXPlayerController>()
-                      //     .isCloseNotifier
-                      //     .value
-                      //     ? SizedBox(height: 60.h) : SizedBox(height: 0.h,)
+                      Get
+                          .find<GetXPlayerController>()
+                          .isCloseNotifier
+                          .value
+                          ? SizedBox(height: 60.h) : SizedBox(height: 120.h,)
                     ],
                   ),
                 ),

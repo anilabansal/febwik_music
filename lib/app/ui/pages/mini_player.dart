@@ -32,7 +32,7 @@ class MiniPlayer extends StatelessWidget {
           // );
         },
         child: Padding(
-          padding: const EdgeInsets.only(bottom: 8),
+          padding: const EdgeInsets.only(bottom: 8,),
          // padding:  EdgeInsets.only(bottom:  callFrom=="artistPage"?15:70.0),
           child: Container(
             //  margin: const EdgeInsets.only(bottom: 10),
@@ -55,7 +55,7 @@ class MiniPlayer extends StatelessWidget {
                   child: const CustomSlider(),
                 ),
                 // SizedBox(height: 55.h)
-                SizedBox(height: 0.h)
+                SizedBox(height:0.h)
               ],
             ),
           ),
@@ -176,8 +176,8 @@ class MiniArtImage extends GetView<GetXPlayerController> {
       padding: EdgeInsets.only(left: 10.w, right: 10.w, top: 5.h, bottom: 5.h),
       child: AspectRatio(
         aspectRatio: 1,
-        child: ClipRRect(
-          borderRadius: BorderRadius.circular(10.r),
+        child: ClipOval(
+          // borderRadius: BorderRadius.circular(10.r),
           // borderRadius: BorderRadius.circular(20.r),
           child: Obx(
             () => Image.network(
@@ -285,6 +285,7 @@ class MiniCloseSongButton extends GetView<GetXPlayerController> {
       () => GestureDetector(
         onTap: () {
           controller.isCloseNotifier.value = true;
+          controller.selectedSong.value="";
         },
         child: Icon(
           Icons.close,

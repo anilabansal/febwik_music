@@ -1,7 +1,8 @@
 import 'package:audio_service/audio_service.dart';
 import 'package:flutter/foundation.dart';
-import 'package:get/get_state_manager/get_state_manager.dart';
+import 'package:get/get.dart';
 import 'package:just_audio/just_audio.dart';
+import 'package:music_app/app/player/getx_player_controller.dart';
 
 class GetXAudioHandler extends GetxService {
   late AudioHandler audioHandler;
@@ -29,10 +30,10 @@ class GetXBaseAudioHandler extends BaseAudioHandler {
   final _playlist = ConcatenatingAudioSource(children: []);
 
   GetXBaseAudioHandler() {
-   _loadEmptyPlaylist();
-  _notifyAudioHandlerAboutPlaybackEvents();
-   _listenForDurationChanges();
-  _listenForCurrentSongIndexChanges();
+    _loadEmptyPlaylist();
+    _notifyAudioHandlerAboutPlaybackEvents();
+    _listenForDurationChanges();
+    _listenForCurrentSongIndexChanges();
     _listenForSequenceStateChanges();
   }
 
@@ -41,19 +42,22 @@ class GetXBaseAudioHandler extends BaseAudioHandler {
   Future<void> _loadEmptyPlaylist() async {
     try {
       print("ist time queue---->${_playlist}");
-      await _player.setAudioSource(_playlist, );
-
+      await _player.setAudioSource(
+        _playlist,
+      );
     } catch (e) {
       if (kDebugMode) {
         print("Error: $e");
       }
     }
   }
+
   void printSongsName1121(list) {
     list.forEach((item) {
       print(item.title);
     });
   }
+
   void _notifyAudioHandlerAboutPlaybackEvents() {
     _player.playbackEventStream.listen((PlaybackEvent event) {
       final playing = _player.playing;
@@ -118,11 +122,20 @@ class GetXBaseAudioHandler extends BaseAudioHandler {
     print("Step 1122233 ---->");
     _player.currentIndexStream.listen((index) {
       final playlist = queue.value;
+
       print("service --->${playlist}");
       playlist.forEach((item) {
         print(item.title);
       });
+
       if (index == null || playlist.isEmpty) return;
+      if(index!=null|| playlist.isNotEmpty){
+        print("currentStreamIndex--->${index}");
+        Get.put(GetXPlayerController()).selectedSong.value =
+            playlist[index].title;
+        print(
+            "currentStreamIndexSong--->${Get.find<GetXPlayerController>().selectedSong.value}");
+      }
       if (_player.shuffleModeEnabled) {
         index = _player.shuffleIndices![index];
         print("index ---->${index}");
@@ -141,7 +154,6 @@ class GetXBaseAudioHandler extends BaseAudioHandler {
       final items = sequence.map((source) => source.tag as MediaItem);
 
       queue.add(items.toList());
-
     });
   }
 
@@ -151,7 +163,7 @@ class GetXBaseAudioHandler extends BaseAudioHandler {
     queue.forEach((item) {
       print(item.length);
     });
-  queue.value.clear();
+    queue.value.clear();
 
     print("audioSourcejfvjgjggj");
     queue.forEach((item) {
@@ -159,7 +171,7 @@ class GetXBaseAudioHandler extends BaseAudioHandler {
     });
     print("playlist length---->${_playlist.length}");
 
-  _playlist.clear();
+    _playlist.clear();
     print("playlist length1---->${_playlist.length}");
 
     // manage Just Audio
@@ -181,7 +193,7 @@ class GetXBaseAudioHandler extends BaseAudioHandler {
     queue.add(newQueue);
   }
 
- // @override
+  // @override
   // Future<void> addQueueItem(MediaItem mediaItem) async {
   //   // manage Just Audio
   //   final audioSource = _createAudioSource(mediaItem);

@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:music_app/app/player/getx_player_controller.dart';
-import 'package:music_app/app/ui/pages/mini_player.dart';
 import '../../../config/dimensions.dart';
 import '../../../config/widgets/background/custom_background.dart';
 import '../../../config/widgets/small_text.dart';
@@ -291,6 +290,10 @@ class _ArtistsPageState extends State<ArtistsPage> {
 
                                               return GestureDetector(
                                                 onTap: () {
+
+                                                  Get.find<
+                                                      GetXPlayerController>().selectedSong.value = list[index]
+                                                      .name!;
                                                   List<MediaItem> playlist = [];
                                                   print('tap latest');
                                                   for (int i = 0;
@@ -329,9 +332,11 @@ class _ArtistsPageState extends State<ArtistsPage> {
                                                   minLeadingWidth: 0,
                                                   contentPadding:
                                                       const EdgeInsets.only(
-                                                          left: 5),
+                                                    left: 5,
+                                                  ),
                                                   title: Row(
                                                     children: [
+                                                      /// song image
                                                       Container(
                                                         height: 50.h,
                                                         width: 50.w,
@@ -365,19 +370,16 @@ class _ArtistsPageState extends State<ArtistsPage> {
                                                       const SizedBox(
                                                         width: 10,
                                                       ),
-                                                      Column(
-                                                        mainAxisAlignment:
-                                                            MainAxisAlignment
-                                                                .start,
-                                                        crossAxisAlignment:
-                                                            CrossAxisAlignment
-                                                                .start,
-                                                        children: [
-                                                          SizedBox(
-                                                            width: 250,
-
-                                                            // width: MediaQuery.of(context).size.width-150,
-                                                            child: SmallText(
+                                                      Expanded(
+                                                        child: Column(
+                                                          mainAxisAlignment:
+                                                              MainAxisAlignment
+                                                                  .start,
+                                                          crossAxisAlignment:
+                                                              CrossAxisAlignment
+                                                                  .start,
+                                                          children: [
+                                                            SmallText(
                                                               text: list[index]
                                                                       .name ??
                                                                   "",
@@ -386,54 +388,58 @@ class _ArtistsPageState extends State<ArtistsPage> {
                                                                       .ellipsis,
                                                               size: Dimensions
                                                                   .font15,
+                                                              color:   Get.find<
+                                                                  GetXPlayerController>().selectedSong.value== list[index]
+                                                                  .name?
+                                                              AppColor.orangeColor:AppColor.whiteTextColor,
                                                             ),
-                                                          ),
-                                                          const SizedBox(
-                                                            height: 5,
-                                                          ),
-                                                          Row(
-                                                            children: [
-                                                              Container(
-                                                                width: 15,
-                                                                height: 15,
-                                                                decoration:
-                                                                    const BoxDecoration(
-                                                                  shape: BoxShape
-                                                                      .circle,
-                                                                  color: Colors
-                                                                      .green,
+                                                            const SizedBox(
+                                                              height: 5,
+                                                            ),
+                                                            Row(
+                                                              children: [
+                                                                // Container(
+                                                                //   width: 15,
+                                                                //   height: 15,
+                                                                //   decoration:
+                                                                //       const BoxDecoration(
+                                                                //     shape: BoxShape
+                                                                //         .circle,
+                                                                //     color: Colors
+                                                                //         .green,
+                                                                //   ),
+                                                                //   child:
+                                                                //       const Icon(
+                                                                //     Icons
+                                                                //         .arrow_downward,
+                                                                //     size: 10,
+                                                                //     color: Colors
+                                                                //         .black,
+                                                                //   ),
+                                                                // ),
+                                                                // const SizedBox(
+                                                                //   width: 5,
+                                                                // ),
+                                                                SizedBox(
+                                                                  width: 238,
+                                                                  child:
+                                                                      SmallText(
+                                                                    text: artistNames
+                                                                        .join(
+                                                                            ','),
+                                                                    overFlow:
+                                                                        TextOverflow
+                                                                            .ellipsis,
+                                                                    size: Dimensions
+                                                                        .font12,
+                                                                    color: Colors
+                                                                        .white54,
+                                                                  ),
                                                                 ),
-                                                                child:
-                                                                    const Icon(
-                                                                  Icons
-                                                                      .arrow_downward,
-                                                                  size: 10,
-                                                                  color: Colors
-                                                                      .black,
-                                                                ),
-                                                              ),
-                                                              const SizedBox(
-                                                                width: 5,
-                                                              ),
-                                                              SizedBox(
-                                                                width: 238,
-                                                                child:
-                                                                    SmallText(
-                                                                  text: artistNames
-                                                                      .join(
-                                                                          ','),
-                                                                  overFlow:
-                                                                      TextOverflow
-                                                                          .ellipsis,
-                                                                  size: Dimensions
-                                                                      .font12,
-                                                                  color: Colors
-                                                                      .white54,
-                                                                ),
-                                                              ),
-                                                            ],
-                                                          ),
-                                                        ],
+                                                              ],
+                                                            ),
+                                                          ],
+                                                        ),
                                                       ),
                                                     ],
                                                   ),
@@ -454,11 +460,13 @@ class _ArtistsPageState extends State<ArtistsPage> {
                                                 ),
                                               );
                                             }),
-                                        // Get.find<GetXPlayerController>()
-                                        //         .isCloseNotifier
-                                        //         .value
-                                        //     ? const SizedBox(height: 55)
-                                        //     : const SizedBox(height: 0),
+
+                                        Get
+                                            .find<GetXPlayerController>()
+                                            .isCloseNotifier
+                                            .value
+                                            ? SizedBox(height: 60.h) : SizedBox(height: 120.h,)
+                                        //     : const SizedBox(height: 70),
                                       ]),
                                     ),
                                   ],
