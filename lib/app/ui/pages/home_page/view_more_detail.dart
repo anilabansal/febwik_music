@@ -272,6 +272,7 @@ class _ViewMorePageState extends State<ViewMorePage> {
 
                                           return GestureDetector(
                                             onTap: () {
+                                              Get.find<GetXPlayerController>().selectedSong.value = list[index].name!;
                                               List<MediaItem> playlist = [];
                                               print('tap latest');
                                               for (int i = 0;
@@ -338,72 +339,76 @@ class _ViewMorePageState extends State<ViewMorePage> {
                                                   const SizedBox(
                                                     width: 10,
                                                   ),
-                                                  Column(
-                                                    mainAxisAlignment:
-                                                    MainAxisAlignment
-                                                        .start,
-                                                    crossAxisAlignment:
-                                                    CrossAxisAlignment
-                                                        .start,
-                                                    children: [
-                                                      SizedBox(
-                                                        width: 250,
+                                                  Expanded(
+                                                    child: Column(
+                                                      mainAxisAlignment:
+                                                      MainAxisAlignment
+                                                          .start,
+                                                      crossAxisAlignment:
+                                                      CrossAxisAlignment
+                                                          .start,
+                                                      children: [
+                                                        SizedBox(
+                                                          // width: 250,
 
-                                                        // width: MediaQuery.of(context).size.width-150,
-                                                        child: SmallText(
-                                                          text: list[index]
-                                                              .name ??
-                                                              "",
-                                                          overFlow:
-                                                          TextOverflow
-                                                              .ellipsis,
-                                                          size: Dimensions
-                                                              .font15,
+                                                          // width: MediaQuery.of(context).size.width-150,
+                                                          child: SmallText(
+                                                            text: list[index]
+                                                                .name ??
+                                                                "",
+                                                            overFlow:
+                                                            TextOverflow
+                                                                .ellipsis,
+                                                            size: Dimensions
+                                                                .font15,
+                                                            color: Get.find<GetXPlayerController>().selectedSong.value == list[index].name?
+                                                            AppColor.orangeColor:AppColor.whiteTextColor,
+                                                          ),
                                                         ),
-                                                      ),
-                                                      const SizedBox(
-                                                        height: 5,
-                                                      ),
-                                                      Row(
-                                                        children: [
-                                                          Container(
-                                                            width: 15,
-                                                            height: 15,
-                                                            decoration:
-                                                            const BoxDecoration(
-                                                              shape: BoxShape
-                                                                  .circle,
-                                                              color: Colors
-                                                                  .green,
+                                                        const SizedBox(
+                                                          height: 5,
+                                                        ),
+                                                        Row(
+                                                          children: [
+                                                            // Container(
+                                                            //   width: 15,
+                                                            //   height: 15,
+                                                            //   decoration:
+                                                            //   const BoxDecoration(
+                                                            //     shape: BoxShape
+                                                            //         .circle,
+                                                            //     color: Colors
+                                                            //         .green,
+                                                            //   ),
+                                                            //   child: const Icon(
+                                                            //     Icons
+                                                            //         .arrow_downward,
+                                                            //     size: 10,
+                                                            //     color: Colors
+                                                            //         .black,
+                                                            //   ),
+                                                            // ),
+                                                            // const SizedBox(
+                                                            //   width: 5,
+                                                            // ),
+                                                            SizedBox(
+                                                              width: 238,
+                                                              child: SmallText(
+                                                                text: artistNames
+                                                                    .join(','),
+                                                                overFlow:
+                                                                TextOverflow
+                                                                    .ellipsis,
+                                                                size: Dimensions
+                                                                    .font12,
+                                                                color: Colors
+                                                                    .white54,
+                                                              ),
                                                             ),
-                                                            child: const Icon(
-                                                              Icons
-                                                                  .arrow_downward,
-                                                              size: 10,
-                                                              color: Colors
-                                                                  .black,
-                                                            ),
-                                                          ),
-                                                          const SizedBox(
-                                                            width: 5,
-                                                          ),
-                                                          SizedBox(
-                                                            width: 238,
-                                                            child: SmallText(
-                                                              text: artistNames
-                                                                  .join(','),
-                                                              overFlow:
-                                                              TextOverflow
-                                                                  .ellipsis,
-                                                              size: Dimensions
-                                                                  .font12,
-                                                              color: Colors
-                                                                  .white54,
-                                                            ),
-                                                          ),
-                                                        ],
-                                                      ),
-                                                    ],
+                                                          ],
+                                                        ),
+                                                      ],
+                                                    ),
                                                   ),
                                                 ],
                                               ),
@@ -425,11 +430,11 @@ class _ViewMorePageState extends State<ViewMorePage> {
                                           );
 
                                         }),
-                                    // Get.find<GetXPlayerController>()
-                                    //         .isCloseNotifier
-                                    //         .value
-                                    //     ? const SizedBox(height: 55)
-                                    //     : const SizedBox(height: 0),
+                                    Get
+                                        .find<GetXPlayerController>()
+                                        .isCloseNotifier
+                                        .value
+                                        ? SizedBox(height: 60.h) : SizedBox(height: 120.h,)
                                   ]),
                                 ),
                               ],

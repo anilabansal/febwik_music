@@ -46,7 +46,7 @@ class GetXPlayerController extends GetxController {
   var isLoading = true.obs;
   var isArtistLoading = true.obs;
  var viewMoreIsLoading = true.obs;
-
+var selectedSong = ''.obs;
   final _audioHandler = Get.find<GetXAudioHandler>().audioHandler;
 
   ///TODO: load playlist api call
@@ -253,6 +253,7 @@ class GetXPlayerController extends GetxController {
 
   void next() => _audioHandler.skipToNext();
 
+
   void startFromStarting() => _audioHandler.skipToQueueItem(0);
 
   void startFromEnd() =>
@@ -298,7 +299,6 @@ class GetXPlayerController extends GetxController {
     print('list new1');
     printSongsName1(_audioHandler.queue.value);
     print('media item');
-
     printSongsName1(mediaItem);
     _audioHandler.addQueueItems(mediaItem);
     _audioHandler.skipToQueueItem(index);
