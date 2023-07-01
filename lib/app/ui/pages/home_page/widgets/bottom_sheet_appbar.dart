@@ -15,11 +15,13 @@ class BottomSheetAppbar extends StatelessWidget implements PreferredSizeWidget {
         margin: EdgeInsets.only(top: 0.h),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          crossAxisAlignment: CrossAxisAlignment.center,
+         crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             RotatedBox(
               quarterTurns: 1,
-              child: IconButton(
+              child:
+              IconButton(
+                padding: EdgeInsets.zero,
                 onPressed: () => Get.back(),
                 icon: const Icon(Icons.arrow_forward_ios, size: 20,),
 
@@ -30,6 +32,7 @@ class BottomSheetAppbar extends StatelessWidget implements PreferredSizeWidget {
               weight: FontWeight.bold,
             ),
             IconButton(
+              padding: EdgeInsets.zero,
               onPressed: () => Get.back(),
               icon: const Icon(Icons.more_vert),
             ),

@@ -37,7 +37,15 @@ class GetXDemoPlaylist extends GetxService {
     return await ApiClient().getRequest("${Api.viewMoreUrl}$slug?page=$page");
   }
 
+  ///TODO: login api call
+  Future<dynamic> loginApiCall(phoneNumber) async{
+    return await ApiClient().getRequest("${Api.loginUrl}$phoneNumber");
+  }
 
+  ///TODO: otp verification screen
+  Future<dynamic> otpVerification(body) async{
+    return await ApiClient().postRequest(Api.otpVerificationUrl, body);
+  }
 
 
   var _songIndex = 0;

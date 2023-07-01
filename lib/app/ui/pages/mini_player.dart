@@ -238,8 +238,8 @@ class MiniPlayButton extends GetView<GetXPlayerController> {
               child: IconButton(
                 icon: const Icon(Icons.play_arrow),
                 // iconSize: 30.h,
-                iconSize: 15.h,
-                // iconSize: 20.h,
+                // iconSize: 15.h,
+                iconSize: 20.h,
                 onPressed: controller.play,
               ),
             ),
@@ -263,8 +263,8 @@ class MiniPlayButton extends GetView<GetXPlayerController> {
             child: Center(
               child: IconButton(
                 icon: const Icon(Icons.pause),
-               // iconSize: 20.h,
-                iconSize: 15.h,
+               iconSize: 20.h,
+               //  iconSize: 15.h,
                 onPressed: controller.pause,
               ),
             ),

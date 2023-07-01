@@ -11,6 +11,7 @@ import 'package:music_app/app/routes/app_pages.dart';
 import 'package:music_app/app/ui/pages/login_page/otp_page.dart';
 import 'package:music_app/main.dart';
 
+import '../../../auth_controller/auth_controller.dart';
 import '../../theme/colors.dart';
 
 class LoginPage extends StatefulWidget {
@@ -27,6 +28,9 @@ LoginRequestData _loginData = LoginRequestData();
   }
 
 class _LoginPageState extends State<LoginPage> {
+
+  AuthController authController = Get.put(AuthController());
+
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -84,6 +88,7 @@ class _LoginPageState extends State<LoginPage> {
                       child: Padding(
                         padding:  EdgeInsets.symmetric(vertical: 50.h, horizontal: 10.w),
                         child: TextFormField(
+                          controller:authController.mobilePhoneNumberController ,
                           focusNode: myFocusNode,
                           cursorColor: AppColor.whiteColor,
                           // initialValue: 'Input text',
@@ -105,7 +110,7 @@ class _LoginPageState extends State<LoginPage> {
                                   borderRadius: BorderRadius.circular(7),
                                   borderSide: const BorderSide(color:  AppColor.orangeColor,)
                               ),
-                              prefixIcon: Icon(
+                              prefixIcon:const Icon(
                                 Icons.phone_android,
                                 color: AppColor.orangeColor,
                               )
@@ -123,37 +128,39 @@ class _LoginPageState extends State<LoginPage> {
                     bottom: -12,
                     child: GestureDetector(
                       onTap: () async{
-                        if(_loginData.mobile.length == 10) {
-                          // var verifyid;
-                          await FirebaseAuth.instance.verifyPhoneNumber(
-                            phoneNumber: '+91'+_loginData.mobile,
-                            verificationCompleted: (
-                                PhoneAuthCredential credential) {},
-                            verificationFailed: (FirebaseAuthException e) {},
-                            codeSent: (String verificationId,
-                                int? resendToken) {},
-                            codeAutoRetrievalTimeout: (String verificationId) {
-                              // verifyid = verificationId;
-                              print(verificationId);
-                              navigatorKey.currentState?.push(
-                                MaterialPageRoute(
-                                  builder: (context) =>
-                                      OtpPage(verifyid: verificationId),
-                                ),
-                              );
-                            },
-                          );
-                        }else{
-                          print('error message for mobile number..');
-                          print('+91'+_loginData.mobile);
-                        }
-                        // navigatorKey.currentState?.push(
-                        //   MaterialPageRoute(
-                        //     builder: (context) =>
-                        //         OtpPage(verifyid: "bb"),
-                        //   ),
-                        // );
-                        // Get.toNamed(AppRoutes.otpPage);
+                      await  authController.loginScreenApiCall(authController.mobilePhoneNumberController.value.text);
+
+                        // if(_loginData.mobile.length == 10) {
+                        //   // var verifyid;
+                        //   await FirebaseAuth.instance.verifyPhoneNumber(
+                        //     phoneNumber: '+91'+_loginData.mobile,
+                        //     verificationCompleted: (
+                        //         PhoneAuthCredential credential) {},
+                        //     verificationFailed: (FirebaseAuthException e) {},
+                        //     codeSent: (String verificationId,
+                        //         int? resendToken) {},
+                        //     codeAutoRetrievalTimeout: (String verificationId) {
+                        //       // verifyid = verificationId;
+                        //       print(verificationId);
+                        //       navigatorKey.currentState?.push(
+                        //         MaterialPageRoute(
+                        //           builder: (context) =>
+                        //               OtpPage(verifyid: verificationId),
+                        //         ),
+                        //       );
+                        //     },
+                        //   );
+                        // }else{
+                        //   print('error message for mobile number..');
+                        //   print('+91'+_loginData.mobile);
+                        // }
+                        // // navigatorKey.currentState?.push(
+                        // //   MaterialPageRoute(
+                        // //     builder: (context) =>
+                        // //         OtpPage(verifyid: "bb"),
+                        // //   ),
+                        // // );
+                        // // Get.toNamed(AppRoutes.otpPage);
                       },
                       child: Container(
                         // alignment: Alignment,

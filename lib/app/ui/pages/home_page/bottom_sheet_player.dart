@@ -21,7 +21,7 @@ class BottomSheetPlayer extends StatelessWidget {
             //const Positioned.fill(child: CustomBackground()),
             Positioned.fill(
               child: Padding(
-                padding: EdgeInsets.symmetric(horizontal: 24.r),
+                padding: EdgeInsets.symmetric(horizontal: 0.r),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
@@ -29,21 +29,27 @@ class BottomSheetPlayer extends StatelessWidget {
                     SizedBox(height: 30.h),
                     const ArtImage(),
                     //SizedBox(height: 5.h),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: const [
-                        RepeatButton(),
-                        Icon(Icons.add),
-                        Icon(Icons.favorite_border_outlined,
-                            ),
-                        ShuffleButton(),
-                        Icon(Icons.share, ),
-                      ],
+                    Padding(
+                      padding:  EdgeInsets.symmetric(horizontal: 24.h),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: const [
+                          RepeatButton(),
+                          Icon(Icons.add),
+                          Icon(Icons.favorite_border_outlined,
+                              ),
+                          ShuffleButton(),
+                          Icon(Icons.share, ),
+                        ],
+                      ),
                     ),
                     SizedBox(height: 20.h),
-                     const CustomSlider(
-                      callFrom: "bottomSheet",
+                     Padding(
+                       padding:  EdgeInsets.symmetric(horizontal: 24.h),
+                       child: const CustomSlider(
+                        callFrom: "bottomSheet",
                     ),
+                     ),
                     SizedBox(height: 20.h),
                     const ArtistAndSongName(),
                     SizedBox(height: 20.h),
@@ -87,7 +93,7 @@ class ArtImage extends GetView<GetXPlayerController> {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: EdgeInsets.only(bottom: 30.h),
+      padding: EdgeInsets.only(bottom: 30.h, left: 24.h, right: 24.h),
       child: ClipRRect(
         borderRadius: BorderRadius.circular(20.r),
         child: Obx(

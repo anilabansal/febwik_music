@@ -9,46 +9,49 @@ import 'package:music_app/app/config/widgets/small_text.dart';
 import 'package:music_app/app/config/widgets/text_base.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:pinput/pinput.dart';
+import '../../../auth_controller/auth_controller.dart';
 import '../../theme/colors.dart';
 
 class OtpPage extends StatefulWidget {
-  var verifyid;
-   OtpPage({this.verifyid, Key? key}) : super(key: key);
-
+  final String? mobileNumber;
+  const OtpPage({ Key? key, this.mobileNumber}) : super(key: key);
   @override
   State<OtpPage> createState() => _OtpPageState();
 }
-OtpRequestData _otpData = OtpRequestData();
-
-class OtpRequestData {
-  String otp = '';
-}
-FocusNode myFocusNode = new FocusNode();
+// OtpRequestData _otpData = OtpRequestData();
+//
+// class OtpRequestData {
+//   String otp = '';
+// }
+FocusNode myFocusNode =  FocusNode();
 final FirebaseAuth auth = FirebaseAuth.instance;
+
 class _OtpPageState extends State<OtpPage> {
   @override
   Widget build(BuildContext context) {
+
+    AuthController authController = Get.put(AuthController());
     final defaultPinTheme = PinTheme(
       width: 56,
       height: 56,
       textStyle: TextStyle(fontSize: 20.sp, color: AppColor.whiteColor, fontWeight: FontWeight.w200),
-        decoration: BoxDecoration(border: Border(bottom: BorderSide(color: AppColor.orangeColor)))
+        decoration:const BoxDecoration(border: Border(bottom: BorderSide(color: AppColor.orangeColor)))
     );
 
     final focusedPinTheme = defaultPinTheme.copyDecorationWith(
-      border: Border.all(color: Color.fromRGBO(114, 178, 238, 1)),
+      border: Border.all(color: const Color.fromRGBO(114, 178, 238, 1)),
       borderRadius: BorderRadius.circular(8),
     );
 
     final submittedPinTheme = defaultPinTheme.copyWith(
       decoration: defaultPinTheme.decoration?.copyWith(
-        color: Color.fromRGBO(234, 239, 243, 1),
+        color: const Color.fromRGBO(234, 239, 243, 1),
       ),
     );
     return SafeArea(
       child: Scaffold(body:CustomBackgroundImg(
         child: NestedScrollView(
-            physics: NeverScrollableScrollPhysics(),
+            physics:const NeverScrollableScrollPhysics(),
           headerSliverBuilder:
               (BuildContext context, bool innerBoxIsScrolled) {
             return <Widget>[
@@ -93,7 +96,7 @@ class _OtpPageState extends State<OtpPage> {
                 padding: const EdgeInsets.only(left:15.0, top: 10, bottom: 40),
                 child:
                 SmallText(
-                  text: "Enter the code received on 9825158445",
+                  text: "Enter the code received on ${widget.mobileNumber}",
                   overFlow: TextOverflow.ellipsis,
                   size: Dimensions.font12,
                   color: Colors.grey,
@@ -108,8 +111,8 @@ class _OtpPageState extends State<OtpPage> {
 
                     child: Card(
                       color: AppColor.cardBackground,
-                      shape: new RoundedRectangleBorder(
-                          side: new BorderSide(
+                      shape:  RoundedRectangleBorder(
+                          side: const BorderSide(
                             color: AppColor.cardBackground,
                           ),
                           borderRadius: BorderRadius.circular(10.0)),
@@ -118,7 +121,7 @@ class _OtpPageState extends State<OtpPage> {
                         children: [
                           Container(
                             // padding: EdgeInsets.symmetric(horizontal: 15.h),
-                            padding: EdgeInsets.only(left: 15, top: 20),
+                            padding:const EdgeInsets.only(left: 15, top: 20),
                             // margin: EdgeInsets.only(left: 15, top: 20),
                             child: SmallText(
                               text: "Enter Code",
@@ -146,7 +149,7 @@ class _OtpPageState extends State<OtpPage> {
                                 // },
                                 onChanged: (pin){
                                   print("pin"+pin);
-                                  _otpData.otp = pin;
+                                  authController.otp = pin;
                                 },
                               ),
                             ),
@@ -170,22 +173,11 @@ class _OtpPageState extends State<OtpPage> {
                     bottom: -12,
                     child: GestureDetector(
                       onTap: () async{
-                        if(_otpData.otp.length == 6) {
-                          try{
-                            // Create a PhoneAuthCredential with the code
-                            PhoneAuthCredential credential = PhoneAuthProvider.credential(verificationId: widget.verifyid, smsCode: _otpData.otp);
+                      await  authController.otpVerificationApiCall({
+                          "contact_no": widget.mobileNumber,
+                          "otp" : authController.otp,
+                        });
 
-                            // Sign the user in (or link) with the credential
-                            await auth.signInWithCredential(credential);
-                            print(widget.verifyid);
-                            print(credential);
-                          }catch(e){
-                            print("something wrong...");
-                          }
-                          print(_otpData.otp);
-                        }else{
-                          print('enter valid otp..');
-                        }
                       },
                       child: Container(
                         // alignment: Alignment,
@@ -226,7 +218,9 @@ class _OtpPageState extends State<OtpPage> {
                       color: Colors.grey,
                     ),
                     GestureDetector(
-                      onTap: (){},
+                      onTap: (){
+                        authController.loginScreenApiCall(authController.mobilePhoneNumberController.value.text);
+                      },
                       child: SmallText(
                         text: "Resend",
                         overFlow: TextOverflow.ellipsis,
@@ -245,52 +239,53 @@ class _OtpPageState extends State<OtpPage> {
     );
   }}
 // For otp filed.
-class Otp extends StatelessWidget {
-  const Otp({
-    Key? key,
-  }) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return SizedBox(
-      width: 50,
-      height: 90,
-      child: Padding(
-        padding: EdgeInsets.symmetric(vertical: 0.h, horizontal: 10.w),
-        child: TextFormField(
-          cursorColor: AppColor.whiteColor,
-          keyboardType: TextInputType.number,
-          style: Theme.of(context).textTheme.headline6,
-          textAlign: TextAlign.center,
-          inputFormatters: [
-            LengthLimitingTextInputFormatter(1),
-            FilteringTextInputFormatter.digitsOnly,
-          ],
-          onChanged: (value) {
-            if (value.length == 1) {
-              FocusScope.of(context).nextFocus();
-            }
-            if (value.isEmpty) {
-              FocusScope.of(context).previousFocus();
-            }
-            _otpData.otp = value;
-            print(value);
-          },
-          decoration: const InputDecoration(
-            // hintText: ('0'),
-              enabledBorder: UnderlineInputBorder(
-                borderSide: BorderSide(color: AppColor.orangeColor),
-              ),
-              focusedBorder: UnderlineInputBorder(
-                borderSide: BorderSide(color: AppColor.whiteColor),
-              ),
-            // border: OutlineInputBorder(
-            // ),
-          ),
-          onSaved: (value) {},
-        ),
-      ),
-    );
-  }
-}
+// class Otp extends StatelessWidget {
+//   const Otp({
+//     Key? key,
+//   }) : super(key: key);
+//
+//   @override
+//   Widget build(BuildContext context) {
+//
+//     return SizedBox(
+//       width: 50,
+//       height: 90,
+//       child: Padding(
+//         padding: EdgeInsets.symmetric(vertical: 0.h, horizontal: 10.w),
+//         child: TextFormField(
+//           cursorColor: AppColor.whiteColor,
+//           keyboardType: TextInputType.number,
+//           style: Theme.of(context).textTheme.headline6,
+//           textAlign: TextAlign.center,
+//           inputFormatters: [
+//             LengthLimitingTextInputFormatter(1),
+//             FilteringTextInputFormatter.digitsOnly,
+//           ],
+//           onChanged: (value) {
+//             if (value.length == 1) {
+//               FocusScope.of(context).nextFocus();
+//             }
+//             if (value.isEmpty) {
+//               FocusScope.of(context).previousFocus();
+//             }
+//             _otpData.otp = value;
+//             print(value);
+//           },
+//           decoration: const InputDecoration(
+//             // hintText: ('0'),
+//               enabledBorder: UnderlineInputBorder(
+//                 borderSide: BorderSide(color: AppColor.orangeColor),
+//               ),
+//               focusedBorder: UnderlineInputBorder(
+//                 borderSide: BorderSide(color: AppColor.whiteColor),
+//               ),
+//             // border: OutlineInputBorder(
+//             // ),
+//           ),
+//           onSaved: (value) {},
+//         ),
+//       ),
+//     );
+//   }
+// }
 

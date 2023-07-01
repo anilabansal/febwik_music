@@ -142,7 +142,7 @@ class _ArtistsPageState extends State<ArtistsPage> {
                                                   decoration: BoxDecoration(
                                                     borderRadius:
                                                         BorderRadius.circular(
-                                                            20),
+                                                            20,),
                                                     // color: Color(0xff3b2e28),
                                                     color: AppColor
                                                         .searchBarGreyColor,
@@ -184,13 +184,16 @@ class _ArtistsPageState extends State<ArtistsPage> {
                                                 padding:
                                                     const EdgeInsets.fromLTRB(
                                                         60, 10, 60, 0),
-                                                child: Image.network(
-                                                  "${Api.baseUrl}/${Get.find<GetXPlayerController>().artistPageData.value.singer!.image}",
-                                                  // width: MediaQuery.of(context)
-                                                  //     .size
-                                                  //     .width,
-                                                  fit: BoxFit.fill,
-                                                  height: 250,
+                                                child: ClipRRect(
+                                                  borderRadius: BorderRadius.circular(20),
+                                                  child: Image.network(
+                                                    "${Api.baseUrl}/${Get.find<GetXPlayerController>().artistPageData.value.singer!.image}",
+                                                    // width: MediaQuery.of(context)
+                                                    //     .size
+                                                    //     .width,
+                                                    fit: BoxFit.fill,
+                                                    height: 250,
+                                                  ),
                                                 ),
                                               ),
                                             ],

@@ -10,6 +10,7 @@ abstract class AppRoutes {
   static const bottomBar = _Paths.bottomBar;
   static const loginPage = _Paths.loginPage;
   static const otpPage = _Paths.otpPage;
+  static const connectivityPage = _Paths.connectivityPage;
 }
 
 abstract class _Paths {
@@ -22,4 +23,5 @@ abstract class _Paths {
   static const bottomBar = '/bottomBar';
   static const loginPage = '/loginPage';
   static const otpPage = '/otpPage';
+  static const connectivityPage = '/ConnectivityScreen';
 }
