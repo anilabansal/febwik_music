@@ -1,13 +1,16 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:get_storage/get_storage.dart';
 import 'app/player/getx_audio_handler.dart';
 import 'app/player/getx_player_controller.dart';
 import 'app/player/getx_playlist_repository.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'app/routes/app_pages.dart';
 import 'app/services/connectivity.dart';
+
 import 'app/ui/theme/index.dart';
+import 'dataBase/app_data_base.dart';
 
 GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
 ConnectionManagerController connectionManagerController = Get.put(ConnectionManagerController());
@@ -19,6 +22,9 @@ void main() async {
   await Get.putAsync(() => GetXDemoPlaylist().init());
   await Get.putAsync(() => GetXPlayerController().init());
   connectionManagerController.getConnectivity();
+  await GetStorage().initStorage;
+  AppLocalStorage().init();
+  print("id ---->${AppLocalStorage().userId}");
   // await Firebase.initializeApp();
   runApp(const App());
 }
@@ -66,7 +72,7 @@ class _AppState extends State<App> with WidgetsBindingObserver {
         getPages: AppPages.routes,
         debugShowCheckedModeBanner: false,
       // home: const SliverAppBarStatus(),
-      // home: Home(),
+     // home: const SplashScreen(),
         builder: (context, widget) {
           // ScreenUtil.setContext(context);
           return MediaQuery(

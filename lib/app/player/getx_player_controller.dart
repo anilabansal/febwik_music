@@ -49,6 +49,8 @@ class GetXPlayerController extends GetxController {
 var selectedSong = ''.obs;
   final _audioHandler = Get.find<GetXAudioHandler>().audioHandler;
 
+  int homeDestinationIndex = 0;
+
   ///TODO: load playlist api call
 
   Future<void> _loadPlaylist() async {

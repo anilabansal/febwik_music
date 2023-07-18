@@ -20,7 +20,7 @@ class LoginPage extends StatefulWidget {
   @override
   State<LoginPage> createState() => _LoginPageState();
 }
-FocusNode myFocusNode = new FocusNode();
+FocusNode myFocusNode =  FocusNode();
 LoginRequestData _loginData = LoginRequestData();
 
   class LoginRequestData {

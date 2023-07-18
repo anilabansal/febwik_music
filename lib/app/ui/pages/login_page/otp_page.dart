@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:music_app/app/config/dimensions.dart';
-import 'package:music_app/app/config/widgets/background/custom_background.dart';
 import 'package:music_app/app/config/widgets/background/custom_background_image.dart';
 import 'package:music_app/app/config/widgets/small_text.dart';
 import 'package:music_app/app/config/widgets/text_base.dart';

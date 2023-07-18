@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:music_app/app/player/getx_player_controller.dart';
+import '../../../../main.dart';
 import '../../../config/dimensions.dart';
 import '../../../config/widgets/background/custom_background.dart';
 import '../../../config/widgets/small_text.dart';
@@ -10,6 +11,8 @@ import '../../../config/widgets/vector_asset.dart';
 import '../../../services/api.dart';
 import '../../theme/colors.dart';
 import '../home_page/bottom_sheet_player.dart';
+import '../home_page/home_page_view.dart';
+
 
 class ArtistsPage extends StatefulWidget {
   final int? id;
@@ -38,7 +41,12 @@ class _ArtistsPageState extends State<ArtistsPage> {
         });
       });
     Get.find<GetXPlayerController>().loadArtistDetailApiCall(widget.id, page);
+    setState(() {
+      Get.find<GetXPlayerController>().homeDestinationIndex = 1;
+    });
   }
+
+
 
   bool get _isSliverAppBarExpanded {
     return _scrollController.hasClients &&
@@ -59,6 +67,8 @@ class _ArtistsPageState extends State<ArtistsPage> {
       });
     }
   }
+
+
 
   @override
   Widget build(BuildContext context) {
@@ -98,6 +108,9 @@ class _ArtistsPageState extends State<ArtistsPage> {
                                       leading: GestureDetector(
                                         onTap: () {
                                           print("sndksk");
+                                          setState(() {
+                                            Get.find<GetXPlayerController>().homeDestinationIndex=0;
+                                          });
                                           Navigator.pop(context);
                                         },
                                         child: const Icon(
@@ -118,7 +131,8 @@ class _ArtistsPageState extends State<ArtistsPage> {
                                                         .singer!
                                                         .name ??
                                                     "",
-                                                overFlow: TextOverflow.ellipsis,
+                                                overFlow:
+                                                    TextOverflow.ellipsis,
                                                 size: Dimensions.font12,
                                                 color: Colors.white,
                                               )
@@ -127,22 +141,24 @@ class _ArtistsPageState extends State<ArtistsPage> {
 
                                             ///TODO: artist image
                                             Padding(
-                                          padding:
-                                              const EdgeInsets.only(top: 40.0),
+                                          padding: const EdgeInsets.only(
+                                              top: 40.0),
                                           child: Column(
                                             children: [
                                               Padding(
                                                 padding:
                                                     const EdgeInsets.all(8.0),
                                                 child: Container(
-                                                  width: MediaQuery.of(context)
-                                                      .size
-                                                      .width,
+                                                  width:
+                                                      MediaQuery.of(context)
+                                                          .size
+                                                          .width,
                                                   height: 40,
                                                   decoration: BoxDecoration(
                                                     borderRadius:
                                                         BorderRadius.circular(
-                                                            20,),
+                                                      20,
+                                                    ),
                                                     // color: Color(0xff3b2e28),
                                                     color: AppColor
                                                         .searchBarGreyColor,
@@ -185,7 +201,9 @@ class _ArtistsPageState extends State<ArtistsPage> {
                                                     const EdgeInsets.fromLTRB(
                                                         60, 10, 60, 0),
                                                 child: ClipRRect(
-                                                  borderRadius: BorderRadius.circular(20),
+                                                  borderRadius:
+                                                      BorderRadius.circular(
+                                                          20),
                                                   child: Image.network(
                                                     "${Api.baseUrl}/${Get.find<GetXPlayerController>().artistPageData.value.singer!.image}",
                                                     // width: MediaQuery.of(context)
@@ -214,13 +232,13 @@ class _ArtistsPageState extends State<ArtistsPage> {
                                             0,
                                           ),
                                           child: SmallText(
-                                            text:
-                                                Get.find<GetXPlayerController>()
-                                                        .artistPageData
-                                                        .value
-                                                        .singer!
-                                                        .name ??
-                                                    "",
+                                            text: Get.find<
+                                                        GetXPlayerController>()
+                                                    .artistPageData
+                                                    .value
+                                                    .singer!
+                                                    .name ??
+                                                "",
                                             overFlow: TextOverflow.ellipsis,
                                             size: Dimensions.font12,
                                             color: Colors.white,
@@ -272,32 +290,36 @@ class _ArtistsPageState extends State<ArtistsPage> {
 
                                         ///Todo: list of songs
                                         ListView.builder(
-                                            itemCount:
-                                                Get.find<GetXPlayerController>()
-                                                    .artistSongList
-                                                    .length,
+                                            itemCount: Get.find<
+                                                    GetXPlayerController>()
+                                                .artistSongList
+                                                .length,
                                             shrinkWrap: true,
                                             physics:
                                                 const NeverScrollableScrollPhysics(),
                                             itemBuilder: (context, index) {
-                                              List<dynamic> artistNames = Get
-                                                      .find<
+                                              List<dynamic> artistNames =
+                                                  Get.find<
                                                           GetXPlayerController>()
-                                                  .artistSongList[index]
-                                                  .artists!
-                                                  .map((artist) => artist.name)
-                                                  .toList();
+                                                      .artistSongList[index]
+                                                      .artists!
+                                                      .map((artist) =>
+                                                          artist.name)
+                                                      .toList();
                                               var list = Get.find<
                                                       GetXPlayerController>()
                                                   .artistSongList;
 
                                               return GestureDetector(
                                                 onTap: () {
-
                                                   Get.find<
-                                                      GetXPlayerController>().selectedSong.value = list[index]
+                                                          GetXPlayerController>()
+                                                      .selectedSong
+                                                      .value = list[
+                                                          index]
                                                       .name!;
-                                                  List<MediaItem> playlist = [];
+                                                  List<MediaItem> playlist =
+                                                      [];
                                                   print('tap latest');
                                                   for (int i = 0;
                                                       i < list.length;
@@ -363,7 +385,8 @@ class _ArtistsPageState extends State<ArtistsPage> {
                                                           ),
                                                           image:
                                                               DecorationImage(
-                                                            image: NetworkImage(
+                                                            image:
+                                                                NetworkImage(
                                                               "${Api.baseUrl}/${list[index].thumbnail128}",
                                                             ),
                                                             fit: BoxFit.fill,
@@ -391,10 +414,15 @@ class _ArtistsPageState extends State<ArtistsPage> {
                                                                       .ellipsis,
                                                               size: Dimensions
                                                                   .font15,
-                                                              color:   Get.find<
-                                                                  GetXPlayerController>().selectedSong.value== list[index]
-                                                                  .name?
-                                                              AppColor.orangeColor:AppColor.whiteTextColor,
+                                                              color: Get.find<GetXPlayerController>()
+                                                                          .selectedSong
+                                                                          .value ==
+                                                                      list[index]
+                                                                          .name
+                                                                  ? AppColor
+                                                                      .orangeColor
+                                                                  : AppColor
+                                                                      .whiteTextColor,
                                                             ),
                                                             const SizedBox(
                                                               height: 5,
@@ -451,7 +479,8 @@ class _ArtistsPageState extends State<ArtistsPage> {
                                                         12, // space between two icons
                                                     children: const <Widget>[
                                                       Icon(
-                                                        Icons.favorite_outline,
+                                                        Icons
+                                                            .favorite_outline,
                                                         size: 22,
                                                       ), // icon-1
                                                       Icon(
@@ -464,11 +493,13 @@ class _ArtistsPageState extends State<ArtistsPage> {
                                               );
                                             }),
 
-                                        Get
-                                            .find<GetXPlayerController>()
-                                            .isCloseNotifier
-                                            .value
-                                            ? SizedBox(height: 60.h) : SizedBox(height: 120.h,)
+                                        Get.find<GetXPlayerController>()
+                                                .isCloseNotifier
+                                                .value
+                                            ? SizedBox(height: 60.h)
+                                            : SizedBox(
+                                                height: 120.h,
+                                              )
                                         //     : const SizedBox(height: 70),
                                       ]),
                                     ),

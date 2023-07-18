@@ -1,11 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:fluttertoast/fluttertoast.dart';
+import 'package:get/get.dart';
 import 'package:music_app/app/config/widgets/text_base.dart';
 import 'package:music_app/app/ui/pages/login_page/login_page.dart';
+import 'package:music_app/dataBase/app_data_base.dart';
 import '../../../../main.dart';
 import '../../../config/widgets/background/custom_background.dart';
 import '../../../config/widgets/vector_asset.dart';
 import '../../theme/colors.dart';
+import '../coming_soon.dart';
 
 class ProfilePage extends StatefulWidget {
   const ProfilePage({Key? key}) : super(key: key);
@@ -89,24 +93,65 @@ class _ProfilePageState extends State<ProfilePage> {
                                 ),
                               ),
                               const SizedBox(height: 100,),
-                              const CommonContainer(
+                               CommonContainer(
                                 icon:
-                                Icon(
+                                const Icon(
                                   Icons.favorite_outline, color: Colors.white,),
                                 text: "Liked Song",
+                                onTap: (){
+                                  print("clicked");
+                                  print("userId 12------>${AppLocalStorage().userId}");
+                                  if(AppLocalStorage().userId==0){
+                                    Get.to(const LoginPage());
+                                  }
+                                  else{
+                                    Get.to(const ComingSoon());
+                                    // return;
+                                  }
+                                },
                               ),
-                              const CommonContainer(
-                                icon: VectorAsset(icon: "ic_clock", size: 20,),
+                               CommonContainer(
+                                icon: const VectorAsset(icon: "ic_clock", size: 20,),
                                 text: "Recently Played",
+                                   onTap: (){
+                                     print("clicked");
+                                     print("userId 12------>${AppLocalStorage().userId}");
+                                     if(AppLocalStorage().userId==0){
+                                       Get.to(const LoginPage());
+                                     }
+                                     else{
+                                       Get.to(const ComingSoon());
+                                       // return;
+                                     }
+                                   }
                               ),
-                              const CommonContainer(
-                                icon: VectorAsset(
+                               CommonContainer(
+                                icon: const VectorAsset(
                                   icon: "ic_playlisticon", size: 20,),
                                 text: "Playlist",
+                                   onTap: (){
+                                     print("clicked");
+                                     print("userId 12------>${AppLocalStorage().userId}");
+                                     if(AppLocalStorage().userId==0){
+                                       Get.to(const LoginPage());
+                                     }
+                                     else{
+                                       Get.to(const ComingSoon());
+                                       // return;
+                                     }
+                                   }
                               ),
-                              const CommonContainer(
-                                icon: VectorAsset(icon: "ic_logout", size: 20,),
+                               CommonContainer(
+                                icon: const VectorAsset(icon: "ic_logout", size: 20,),
                                 text: "Logout",
+                                onTap: (){
+                                  Fluttertoast.showToast(
+                                      msg: "Logout Successfully!",
+                                      textColor: Colors.white,
+                                      backgroundColor: AppColor.orangeColor);
+                                  AppLocalStorage().clearData();
+                                    AppLocalStorage().setUserId(0);
+                                },
                               ),
                             ],
                           ),
@@ -148,8 +193,9 @@ class _ProfilePageState extends State<ProfilePage> {
 class CommonContainer extends StatelessWidget {
   final Widget? icon;
   final String? text;
+  final void Function()? onTap;
 
-  const CommonContainer({Key? key, this.icon, this.text}) : super(key: key);
+  const CommonContainer({Key? key, this.icon, this.text, this.onTap}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -182,8 +228,11 @@ class CommonContainer extends StatelessWidget {
                   textAlign: TextAlign.center
               ),
               const Spacer(),
-              const Icon(Icons.arrow_forward_ios_outlined, color: Colors.white,
-                size: 20,)
+              GestureDetector(
+                onTap: onTap,
+                child: const Icon(Icons.arrow_forward_ios_outlined, color: Colors.white,
+                  size: 20,),
+              )
             ],
           ),
         ),

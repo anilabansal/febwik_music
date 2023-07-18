@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
-import 'package:music_app/main.dart';
+import '../../dataBase/app_data_base.dart';
 import '../config/widgets/progress_loader.dart';
+import '../models/login_modal.dart';
 import '../player/getx_playlist_repository.dart';
 import '../ui/pages/login_page/otp_page.dart';
-import '../ui/pages/profile/profile_page.dart';
 import '../ui/theme/colors.dart';
 
 class AuthController extends GetxController {
@@ -14,6 +14,7 @@ class AuthController extends GetxController {
 
   ///TODO: otp verification
   String otp = '';
+  var loginDetail = LoginDetail().obs;
 
   ///TODO: view more button api call
 
@@ -31,13 +32,16 @@ class AuthController extends GetxController {
               textColor: Colors.white,
               backgroundColor: AppColor.orangeColor);
           print("otp --> ${responseData["otp"]}");
-          navigatorKey.currentState?.push(
-            MaterialPageRoute(
-              builder: (context) =>  OtpPage(
-                mobileNumber: mobilePhoneNumberController.text,
-              ),
-            ),
-          );
+          Get.to(OtpPage(
+            mobileNumber: mobilePhoneNumberController.text,
+          ),);
+          // navigatorKey.currentState?.push(
+          //   MaterialPageRoute(
+          //     builder: (context) => OtpPage(
+          //       mobileNumber: mobilePhoneNumberController.text,
+          //     ),
+          //   ),
+          // );
           return true;
         } else {
           Navigator.of(Get.context!).pop();
@@ -71,11 +75,18 @@ class AuthController extends GetxController {
         dynamic responseData = response.body;
         if (responseData["status"] == 1) {
           Navigator.of(Get.context!).pop();
-          navigatorKey.currentState?.push(
-            MaterialPageRoute(
-              builder: (context) => const ProfilePage(),
-            ),
-          );
+          Navigator.of(Get.context!).pop();
+          Navigator.of(Get.context!).pop();
+          // navigatorKey.currentState?.push(
+          //   MaterialPageRoute(
+          //     builder: (context) => const ProfilePage(),
+          //   ),
+          // );
+          loginDetail.value = LoginDetail.fromJson(responseData);
+          AppLocalStorage().setUserData(loginDetail.value);
+          AppLocalStorage().setUserId(responseData["id"]??0);
+          AppLocalStorage().setIsLoginUser(true);
+          print("userId---->${AppLocalStorage().userDetail!.id}");
         } else {
           Navigator.of(Get.context!).pop();
           Fluttertoast.showToast(
@@ -110,13 +121,9 @@ class AuthController extends GetxController {
   otpVerification() {
     if (otp == "") {
       return "Please Enter Otp";
-    }
-    else if(
-    otp.length!=6
-    ){
+    } else if (otp.length != 6) {
       return "Please Enter Valid Otp";
-    }
-    else {
+    } else {
       return "";
     }
   }

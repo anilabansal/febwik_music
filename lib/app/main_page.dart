@@ -1,7 +1,8 @@
+import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
-import 'package:music_app/app/services/connectivity.dart';
+import 'package:music_app/app/player/getx_player_controller.dart';
 import 'package:music_app/app/ui/pages/common/connectivity_page.dart';
 import 'package:music_app/app/ui/pages/home_page/home_page_view.dart';
 import 'package:music_app/app/ui/pages/login_page/login_page.dart';
@@ -10,7 +11,7 @@ import 'package:music_app/app/ui/pages/profile/profile_page.dart';
 import 'package:music_app/app/ui/theme/colors.dart';
 import '../main.dart';
 import 'config/widgets/custom_nav_bar.dart';
-import 'ui/pages/search/search_page.dart';
+import 'config/widgets/exist_dialog.dart';
 
 class MainPage extends StatefulWidget {
   final int selectedIndex;
@@ -23,13 +24,15 @@ class MainPage extends StatefulWidget {
 
 class _MainPageState extends State<MainPage> {
   // PageController _pageController = PageController();
-      int _currentIndex = 0;
+  int _currentIndex = 0;
+
   final List<Widget> _children = [
-    const   HomePage()   ,
+    const HomePage(),
     const ConnectivityScreen(),
     // const SearchPage(),
     const ProfilePage(),
-    const ProfilePage()
+    const ProfilePage(),
+    // const ProfilePage()
   ];
 
   @override
@@ -45,59 +48,119 @@ class _MainPageState extends State<MainPage> {
     super.dispose();
   }
 
-  // @override
-  // void setState(VoidCallback fn) {
-  //   super.setState(fn);
+  final _inactiveColor = AppColor.orangeColor;
+
+  // Future<bool> showExitPopup() async {
+  //   if (_currentIndex == 0 ) {
+  //     if( Get.find<GetXPlayerController>().homeDestinationIndex ==0){
+  //       return await showDialog(
+  //           barrierColor: Colors.transparent,
+  //           barrierDismissible: false,
+  //           context: context,
+  //           builder: (context) {
+  //             return BackdropFilter(
+  //               filter: ImageFilter.blur(sigmaX: 2, sigmaY: 2),
+  //               child: const Dialog(
+  //                 backgroundColor: AppColor.searchBarGreyColor,
+  //                 shape: RoundedRectangleBorder(
+  //                   borderRadius: BorderRadius.all(
+  //                     Radius.circular(10.0),
+  //                   ),
+  //                 ),
+  //                 child: ExistDialog(),
+  //               ),
+  //             );
+  //           });
+  //     }
+  //   } else {
+  //     if (_currentIndex != 0) {
+  //       await Future.delayed(const Duration(milliseconds: 200));
+  //       setState(() {
+  //         _currentIndex = 0;
+  //       });
+  //       navigatorKey.currentState!.push(
+  //         MaterialPageRoute(
+  //           builder: (context) => const HomePage(),
+  //         ),
+  //       );
+  //
+  //       return false;
+  //     }
+  //   }
+  //   return false;
   // }
 
-  final _inactiveColor = AppColor.orangeColor;
+  final List<int> _navigationQueue = [0];
 
   @override
   Widget build(BuildContext context) {
     return WillPopScope(
+      // onWillPop: showExitPopup,
       onWillPop: () async {
-        if (navigatorKey.currentState!.canPop()) {
-          // If there are screens in the navigation stack, allow navigation
-          // navigatorKey.currentState!.pop();
-          return false;
-        } else {
-          if (_currentIndex != 0) {
-            setState(() {
-              _currentIndex = 0;
-            });
-            navigatorKey.currentState!.push(
-              MaterialPageRoute(
-                builder: (context) => const HomePage(),
-              ),
-            );
+        if (_currentIndex == 0) {
+          print("empty");
+          if (Get.find<GetXPlayerController>().homeDestinationIndex == 0) {
+            return await showDialog(
+                barrierColor: Colors.transparent,
+                barrierDismissible: false,
+                context: context,
+                builder: (context) {
+                  return BackdropFilter(
+                    filter: ImageFilter.blur(sigmaX: 2, sigmaY: 2),
+                    child: const Dialog(
+                      backgroundColor: AppColor.searchBarGreyColor,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.all(
+                          Radius.circular(10.0),
+                        ),
+                      ),
+                      child: ExistDialog(),
+                    ),
+                  );
+                });
+          } else if (Get.find<GetXPlayerController>().homeDestinationIndex !=
+              0) {
 
-            return false;
+            Future.delayed(const Duration(microseconds: 200), () {
+              navigatorKey.currentState!.popUntil((route) => route.isFirst);
+            });
+            setState(() {
+              _currentIndex = _navigationQueue.last;
+              Get.find<GetXPlayerController>().homeDestinationIndex = 0;
+            });
+
           }
+          // return true;
+          // Navigator.of(context).maybePop();
+        } else {
+          setState(() {
+            _currentIndex = _navigationQueue.last;
+            //   _navigationQueue.removeLast();
+          });
+          print("not empty");
         }
-        return true;
+        return false;
       },
+
       child: Scaffold(
         backgroundColor: Colors.transparent,
         // body: getBody(),
-        body:
-        Navigator(
+        body: Navigator(
           key: navigatorKey,
           onGenerateRoute: (routeSettings) {
-            return
-              MaterialPageRoute(
-              builder: (context) {
-              return  Obx(() {
-               return connectionManagerController.isAlertSet.value==true?const ConnectivityScreen():_children[_currentIndex];
+            return MaterialPageRoute(builder: (context) {
+              return Obx(() {
+                return connectionManagerController.isAlertSet.value == true
+                    ? const ConnectivityScreen()
+                    : _children[_currentIndex];
               });
-                // if () {
-                //   return const ConnectivityScreen();
-                // }
-                // else{
-                //   return  _children[_currentIndex];
-                // }
-              }
-
-            );
+              // if () {
+              //   return const ConnectivityScreen();
+              // }
+              // else{
+              //   return  _children[_currentIndex];
+              // }
+            });
           },
         ),
         floatingActionButtonLocation:
@@ -124,8 +187,7 @@ class _MainPageState extends State<MainPage> {
       curve: Curves.easeIn,
       animationDuration: const Duration(milliseconds: 400),
       mainAxisAlignment: MainAxisAlignment.spaceAround,
-      onItemSelected:
-          (index) {
+      onItemSelected: (index) {
         setState(() {
           _currentIndex = index;
         });
