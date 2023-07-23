@@ -74,6 +74,7 @@ class AuthController extends GetxController {
         var response = await Get.find<GetXDemoPlaylist>().otpVerification(body);
         dynamic responseData = response.body;
         if (responseData["status"] == 1) {
+          AppLocalStorage().setUserId(responseData["id"]??0);
           Navigator.of(Get.context!).pop();
           Navigator.of(Get.context!).pop();
           Navigator.of(Get.context!).pop();
@@ -84,7 +85,7 @@ class AuthController extends GetxController {
           // );
           loginDetail.value = LoginDetail.fromJson(responseData);
           AppLocalStorage().setUserData(loginDetail.value);
-          AppLocalStorage().setUserId(responseData["id"]??0);
+
           AppLocalStorage().setIsLoginUser(true);
           print("userId---->${AppLocalStorage().userDetail!.id}");
         } else {

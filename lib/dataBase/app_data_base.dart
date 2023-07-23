@@ -15,44 +15,21 @@ class AppLocalStorage extends GetxController{
   AppLocalStorage._internal();
 
   final appDb = GetStorage();
-  // bool get isDark => appDb.read('darkmode') ?? false;
-  //
-  // ThemeData get theme => isDark ? ThemeData.dark() : ThemeData.light();
-  // void changeTheme(bool val) => appDb.write('darkmode', val);
+
 
   LoginDetail? _userDetail;
-  int? _userId;
+  // int? _userId;
+  final _userId = 0.obs;
   bool _isLogin=false;
-  // bool _isOpenAppRewardTaken=false;
-  // bool _isProfileCreated=false;
-  // String _token="";
-  // String _lastLoginTime="";
-  // String _userTempEmail="";
-  // int _userIdTemp=0;
-
   get isLogin => _isLogin;
-  // get isOpenAppRewardTaken => _isOpenAppRewardTaken;
-  // get lastLoginTime => _lastLoginTime;
-  // get isProfileCreated => _isProfileCreated;
-  // get token => _token;
-  // get userIdTemp => _userIdTemp;
-  // get userTempEmail => _userTempEmail;
   LoginDetail? get userDetail => _userDetail;
-  int? get userId => _userId;
+  int get userId => _userId.value;
 
 
   init(){
-    _userId = readUserId();
+    _userId.value = readUserId();
     _isLogin=readIsLogin();
-    // _token=readLoginToken();
-    // _isProfileCreated=readIsProfileCreated();
-    // _userIdTemp=readUserId();
-    // _isOpenAppRewardTaken=readOpenAppIn24Hrs();
-    // _lastLoginTime=readLastLoginTime();
 
-    // if(readUserData()!=null){
-    //   _userDetail=readUserData();
-    // }
   }
 
 
@@ -64,55 +41,15 @@ class AppLocalStorage extends GetxController{
   readIsLogin(){
     return appDb.read('isLogin') ?? false;
   }
-  //
-  // readOpenAppIn24Hrs(){
-  //   return appDb.read('is24hoursPass') ?? false;
-  // }
 
-
-  // setIsProfileCreated(isProfile){
-  //   _isProfileCreated=true;
-  //   appDb.write('isProfile',isProfile);
-  // }
-  // readLastLoginTime(){
-  //   return appDb.read('lastLoginTime') ?? "";
-  // }
-  //
-  // setLastLoginTime(time){
-  //   _lastLoginTime=time;
-  //   appDb.write('lastLoginTime',time);
-  //   update();
-  // }
-
-
-  // setIsOpenAppPassTime(yesOrNo){
-  //   _isOpenAppRewardTaken=yesOrNo;
-  //   appDb.write('is24hoursPass',yesOrNo);
-  // }
-  //
-  // readIsProfileCreated(){
-  //   return appDb.read('isProfile') ?? false;
-  // }
-  //
   setUserId(loginId) {
-    _userId = loginId;
+    _userId.value = loginId;
     appDb.write('userId', loginId);
   }
   readUserId() {
     return appDb.read('userId') ?? 0;
   }
-  //
-  //
-  // setLoginToken(token){
-  //   _token=token;
-  //   appDb.write('auth_token',token);
-  // }
-  //
-  // setUserId(userIdTemp,userEmail){
-  //   _userIdTemp=userIdTemp;
-  //   _userTempEmail=userEmail;
-  //   appDb.write('userId',userIdTemp);
-  // }
+
 
 
   readLoginToken(){

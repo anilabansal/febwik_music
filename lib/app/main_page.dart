@@ -120,7 +120,6 @@ class _MainPageState extends State<MainPage> {
                 });
           } else if (Get.find<GetXPlayerController>().homeDestinationIndex !=
               0) {
-
             Future.delayed(const Duration(microseconds: 200), () {
               navigatorKey.currentState!.popUntil((route) => route.isFirst);
             });
@@ -128,7 +127,6 @@ class _MainPageState extends State<MainPage> {
               _currentIndex = _navigationQueue.last;
               Get.find<GetXPlayerController>().homeDestinationIndex = 0;
             });
-
           }
           // return true;
           // Navigator.of(context).maybePop();
@@ -241,7 +239,7 @@ class _MainPageState extends State<MainPage> {
         BottomNavyBarItem(
           icon: NavBarIcon(
               imgUrl: _currentIndex == 2
-                  ? "footer_navigation.png"
+                  ? "footer-menu-colored.png"
                   : "footer_navigation.png"),
           title: const Text("library"),
           activeColor: AppColor.whiteColor,

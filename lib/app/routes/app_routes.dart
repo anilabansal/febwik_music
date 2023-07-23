@@ -11,6 +11,7 @@ abstract class AppRoutes {
   static const loginPage = _Paths.loginPage;
   static const otpPage = _Paths.otpPage;
   static const connectivityPage = _Paths.connectivityPage;
+  static const splashPage = _Paths.splashPage;
 }
 
 abstract class _Paths {
@@ -24,4 +25,5 @@ abstract class _Paths {
   static const loginPage = '/loginPage';
   static const otpPage = '/otpPage';
   static const connectivityPage = '/ConnectivityScreen';
+  static const splashPage = '/SplashScreen';
 }

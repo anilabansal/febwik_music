@@ -4,8 +4,8 @@ import 'package:get/get.dart';
 import 'package:music_app/app/config/widgets/small_text.dart';
 import '../../config/widgets/vector_asset.dart';
 import '../../player/getx_player_controller.dart';
-import '../../routes/app_pages.dart';
 import '../theme/colors.dart';
+import 'home_page/bottom_sheet_player.dart';
 import 'player_page/widgets/custom_slider.dart';
 
 
@@ -22,7 +22,7 @@ class MiniPlayer extends StatelessWidget {
           ? const SizedBox.shrink()
           : GestureDetector(
         onTap: () {
-          Get.toNamed(AppRoutes.bottomPlayer);
+          Get.to( BottomSheetPlayer());
           // Get.bottomSheet(
           //   const BottomSheetPlayer(),
           //   backgroundColor: Colors.white,

@@ -5,7 +5,7 @@ import 'package:music_app/app/ui/pages/home_page/home_page_view.dart';
 import 'package:music_app/app/ui/pages/login_page/login_page.dart';
 import 'package:music_app/app/ui/pages/login_page/otp_page.dart';
 import 'package:music_app/app/ui/pages/player_page/player_page_view.dart';
-import '../ui/pages/artist_page/artists_page.dart';
+
 import '../ui/pages/common/connectivity_page.dart';
 
 part 'app_routes.dart';
@@ -15,7 +15,7 @@ class AppPages {
 
   // ignore: constant_identifier_names
   static const INITIAL =
-      AppRoutes.mainPage;
+      AppRoutes.splashPage;
 
   // static const connectivityPage = AppRoutes.connectivityPage;
 
@@ -50,13 +50,13 @@ class AppPages {
     // ),
     GetPage(
       name: _Paths.loginPage,
-      page: () =>  LoginPage(),
+      page: () =>  const LoginPage(),
       transition: Transition.rightToLeft,
       transitionDuration: const Duration(milliseconds: 300),
     ),
   GetPage(
       name: _Paths.loginPage,
-      page: () =>  OtpPage(),
+      page: () =>  const OtpPage(),
     ),
   ];
 }
