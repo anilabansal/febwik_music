@@ -1,12 +1,10 @@
-
 import 'package:flutter/material.dart';
-
 
 class ProgressDialog {
   static void showProgressDialog(BuildContext context) {
-    AlertDialog alert = AlertDialog(
+    AlertDialog alert = const AlertDialog(
       backgroundColor: Colors.transparent,
-      shape: const RoundedRectangleBorder(
+      shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.all(
           Radius.circular(30),
         ),
@@ -17,7 +15,7 @@ class ProgressDialog {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.center,
             mainAxisAlignment: MainAxisAlignment.center,
-            children: const [
+            children: [
 
               CircularProgressIndicator(
                 color: Colors.white,

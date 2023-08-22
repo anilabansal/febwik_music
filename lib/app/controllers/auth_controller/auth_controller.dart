@@ -1,12 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
-import '../../dataBase/app_data_base.dart';
-import '../config/widgets/progress_loader.dart';
-import '../models/login_modal.dart';
-import '../player/getx_playlist_repository.dart';
-import '../ui/pages/login_page/otp_page.dart';
-import '../ui/theme/colors.dart';
+
+import '../../../dataBase/app_data_base.dart';
+import '../../config/widgets/progress_loader.dart';
+import '../../models/login_modal.dart';
+import '../../player/getx_playlist_repository.dart';
+import '../../ui/pages/login_page/otp_page.dart';
+import '../../ui/theme/colors.dart';
+
 
 class AuthController extends GetxController {
   ///TODO: login mobile number controller
@@ -83,10 +85,15 @@ class AuthController extends GetxController {
           //     builder: (context) => const ProfilePage(),
           //   ),
           // );
+
+          print("auth token \n${responseData["access_token"]}");
           loginDetail.value = LoginDetail.fromJson(responseData);
           AppLocalStorage().setUserData(loginDetail.value);
 
           AppLocalStorage().setIsLoginUser(true);
+          AppLocalStorage().setLoginToken(responseData["access_token"]);
+          print("access token ---->${AppLocalStorage().authToken}");
+          print("access token check ---->${responseData["access_token"]}");
           print("userId---->${AppLocalStorage().userDetail!.id}");
         } else {
           Navigator.of(Get.context!).pop();

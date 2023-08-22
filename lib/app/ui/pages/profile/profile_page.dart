@@ -3,11 +3,16 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
 import 'package:music_app/app/config/widgets/text_base.dart';
+import 'package:music_app/app/player/getx_player_controller.dart';
 import 'package:music_app/app/ui/pages/login_page/login_page.dart';
+import 'package:music_app/app/ui/pages/mini_player.dart';
+import 'package:music_app/app/ui/pages/profile/liked_songs_view.dart';
+import 'package:music_app/app/ui/pages/profile/profile_playlist.dart';
 import 'package:music_app/dataBase/app_data_base.dart';
 import '../../../../main.dart';
 import '../../../config/widgets/background/custom_background.dart';
 import '../../../config/widgets/vector_asset.dart';
+import '../../../controllers/profile_controller/profile_controller.dart';
 import '../../theme/colors.dart';
 import '../coming_soon.dart';
 
@@ -21,6 +26,8 @@ class ProfilePage extends StatefulWidget {
 class _ProfilePageState extends State<ProfilePage> {
   @override
   Widget build(BuildContext context) {
+    // Get.lazyPut(() => ProfileController());
+    ProfileController profileController = Get.put(ProfileController());
     return CustomBackground(
       child: SafeArea(
         child: Scaffold(
@@ -109,7 +116,8 @@ class _ProfilePageState extends State<ProfilePage> {
                                 if (AppLocalStorage().userId == 0) {
                                   Get.to(const LoginPage());
                                 } else {
-                                  Get.to(const ComingSoon());
+                                  // Get.to(() => const ComingSoon());
+                                  Get.to(const LikeSongsListView());
                                   // return;
                                 }
                               },
@@ -124,7 +132,7 @@ class _ProfilePageState extends State<ProfilePage> {
                                   if (AppLocalStorage().userId == 0) {
                                     Get.to(const LoginPage());
                                   } else {
-                                    Get.to(const ComingSoon());
+                                    Get.to(() => const ComingSoon());
                                     // return;
                                   }
                                 }),
@@ -138,7 +146,7 @@ class _ProfilePageState extends State<ProfilePage> {
                                   if (AppLocalStorage().userId == 0) {
                                     Get.to(const LoginPage());
                                   } else {
-                                    Get.to(const ComingSoon());
+                                    Get.to(() => const ProfilePlayList());
                                   }
                                 }),
                             // GetBuilder<AppLocalStorage>(
@@ -187,6 +195,14 @@ class _ProfilePageState extends State<ProfilePage> {
                         ),
                       ),
                     ),
+                    // Get.find<GetXPlayerController>().isCloseNotifier.value
+                    //     ? const SizedBox(height: 55)
+                    //     : const SizedBox(height: 0),
+                    //
+                    // ///Todo: mini player
+                    // const MiniPlayer(
+                    //     //callFrom: "artistPage",
+                    //     ),
                   ],
                 ),
               ],

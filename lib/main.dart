@@ -8,7 +8,9 @@ import 'app/player/getx_playlist_repository.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'app/routes/app_pages.dart';
 import 'app/services/connectivity.dart';
+import 'app/ui/pages/add_to_play_list/add_to_play_list_screen.dart';
 import 'app/ui/pages/splash/splash_screen.dart';
+import 'app/ui/share_demo.dart';
 import 'app/ui/theme/index.dart';
 import 'dataBase/app_data_base.dart';
 
@@ -70,7 +72,7 @@ class _AppState extends State<App> with WidgetsBindingObserver {
         // initialRoute:AppPages.INITIAL,
         //   getPages: AppPages.routes,
         debugShowCheckedModeBanner: false,
-        // home: const SliverAppBarStatus(),
+        // home:   Home(),
         home: const SplashScreen(),
         builder: (context, widget) {
           // ScreenUtil.setContext(context);

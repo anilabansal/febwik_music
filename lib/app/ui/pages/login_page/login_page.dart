@@ -6,7 +6,8 @@ import 'package:music_app/app/config/dimensions.dart';
 import 'package:music_app/app/config/widgets/background/custom_background_image.dart';
 import 'package:music_app/app/config/widgets/small_text.dart';
 import 'package:music_app/app/config/widgets/text_base.dart';
-import '../../../auth_controller/auth_controller.dart';
+
+import '../../../controllers/auth_controller/auth_controller.dart';
 import '../../theme/colors.dart';
 
 class LoginPage extends StatefulWidget {

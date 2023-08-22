@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
+import 'package:music_app/app/config/widgets/common_like_button.dart';
 import 'package:music_app/app/config/widgets/small_text.dart';
 import '../../config/widgets/vector_asset.dart';
 import '../../player/getx_player_controller.dart';
@@ -8,59 +9,69 @@ import '../theme/colors.dart';
 import 'home_page/bottom_sheet_player.dart';
 import 'player_page/widgets/custom_slider.dart';
 
-
 class MiniPlayer extends StatelessWidget {
   final String? callFrom;
-  const MiniPlayer({Key? key,this.callFrom}) : super(key: key);
+
+  const MiniPlayer({Key? key, this.callFrom}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     GetXPlayerController controller = Get.find();
-    // Get.find<GetXPlayerController>().
     return Obx(() {
       return controller.isCloseNotifier.value
           ? const SizedBox.shrink()
           : GestureDetector(
-        onTap: () {
-          Get.to( BottomSheetPlayer());
-          // Get.bottomSheet(
-          //   const BottomSheetPlayer(),
-          //   backgroundColor: Colors.white,
-          //   isScrollControlled: true,
-          //   enterBottomSheetDuration: const Duration(milliseconds: 500),
-          //   exitBottomSheetDuration: const Duration(milliseconds: 500),
-          // );
-        },
-        child: Padding(
-          padding: const EdgeInsets.only(bottom: 8,),
-         // padding:  EdgeInsets.only(bottom:  callFrom=="artistPage"?15:70.0),
-          child: Container(
-            //  margin: const EdgeInsets.only(bottom: 10),
-            //   decoration:  BoxDecoration(
-            //     borderRadius: const BorderRadius.only(
-            //         topRight: Radius.circular(15),
-            //         topLeft: Radius.circular(15)
-            //     ),
-            //   border: Border.all(color:AppColor.darkColor ),
-            //    color: AppColor.darkColor,
-            //     //color: Colors.green
-            //   ),
-            color: AppColor.searchBarGreyColor,
-            //color: AppColor.darkColor,
-            child: Column(
-              children: [
-                const MiniPlayerContainer(),
-                SizedBox(
-                  height: 0.h,
-                  child: const CustomSlider(),
+              onTap: () {
+                Get.to(
+                  Obx(
+                    () => BottomSheetPlayer(
+                      songName: controller.currentSongTitleNotifier.value,
+                      songId: controller.currentSongIdNotifier.value,
+                      imagePath: controller.currentSongArtNotifier.value,
+                      artistName: controller.currentSongArtistNotifier.value,
+                    ),
+                  ),
+                );
+                // Get.bottomSheet(
+                //   const BottomSheetPlayer(),
+                //   backgroundColor: Colors.white,
+                //   isScrollControlled: true,
+                //   enterBottomSheetDuration: const Duration(milliseconds: 500),
+                //   exitBottomSheetDuration: const Duration(milliseconds: 500),
+                // );
+              },
+              child: Padding(
+                padding: const EdgeInsets.only(
+                  bottom: 8,
                 ),
-                // SizedBox(height: 55.h)
-                SizedBox(height:0.h)
-              ],
-            ),
-          ),
-        ),
-      );
+                // padding:  EdgeInsets.only(bottom:  callFrom=="artistPage"?15:70.0),
+                child: Container(
+                  //  margin: const EdgeInsets.only(bottom: 10),
+                  //   decoration:  BoxDecoration(
+                  //     borderRadius: const BorderRadius.only(
+                  //         topRight: Radius.circular(15),
+                  //         topLeft: Radius.circular(15)
+                  //     ),
+                  //   border: Border.all(color:AppColor.darkColor ),
+                  //    color: AppColor.darkColor,
+                  //     //color: Colors.green
+                  //   ),
+                  color: AppColor.searchBarGreyColor,
+                  //color: AppColor.darkColor,
+                  child: Column(
+                    children: [
+                      const MiniPlayerContainer(),
+                      SizedBox(
+                        height: 0.h,
+                        child: const CustomSlider(),
+                      ),
+                      // SizedBox(height: 55.h)
+                      SizedBox(height: 0.h)
+                    ],
+                  ),
+                ),
+              ),
+            );
     });
   }
 }
@@ -118,9 +129,6 @@ class MiniPlayer extends StatelessWidget {
 //   }
 // }
 
-
-
-
 class MiniPlayerContainer extends GetView<GetXPlayerController> {
   const MiniPlayerContainer({
     Key? key,
@@ -135,21 +143,21 @@ class MiniPlayerContainer extends GetView<GetXPlayerController> {
         height: 57,
         alignment: Alignment.center,
 
-     //  color: Colors.black38,
+        //  color: Colors.black38,
         child: Row(
           children: [
             const MiniArtImage(),
-            const Flexible(
-              child:
-              MiniArtistAndSongName(),
+            const Expanded(
+              child: MiniArtistAndSongName(),
             ),
+            const Spacer(),
             Container(
               margin: EdgeInsets.only(right: 10.w),
               child: Row(
                 children: [
                   // const MiniPreviousSongButton(),
                   const LikeSongButton(),
-                 // const BackwordSongButton(),
+                  // const BackwordSongButton(),
                   SizedBox(width: 15.w),
                   const MiniPlayButton(),
                   SizedBox(width: 15.w),
@@ -206,19 +214,20 @@ class MiniPlayButton extends GetView<GetXPlayerController> {
             height: 35.r,
             decoration: const BoxDecoration(
               shape: BoxShape.circle,
-                gradient: LinearGradient(
-                  colors: [
-                    AppColor.orangeColor,
-                    AppColor.pinkColor,
-                  ],
-                ),
+              gradient: LinearGradient(
+                colors: [
+                  AppColor.orangeColor,
+                  AppColor.pinkColor,
+                ],
+              ),
               // color: Colors.white24,
             ),
             child: const Center(
-                child: CircularProgressIndicator(
-              color: Colors.white54,
-              strokeWidth: 2,
-            ),),
+              child: CircularProgressIndicator(
+                color: Colors.white54,
+                strokeWidth: 2,
+              ),
+            ),
           );
         case ButtonState.paused:
           return Container(
@@ -226,12 +235,12 @@ class MiniPlayButton extends GetView<GetXPlayerController> {
             height: 35.r,
             decoration: const BoxDecoration(
               shape: BoxShape.circle,
-                gradient: LinearGradient(
-                  colors: [
-                    AppColor.orangeColor,
-                    AppColor.pinkColor,
-                  ],
-                ),
+              gradient: LinearGradient(
+                colors: [
+                  AppColor.orangeColor,
+                  AppColor.pinkColor,
+                ],
+              ),
               // color: Colors.white24,
             ),
             child: Center(
@@ -252,19 +261,19 @@ class MiniPlayButton extends GetView<GetXPlayerController> {
             height: 35.r,
             decoration: const BoxDecoration(
               shape: BoxShape.circle,
-                gradient: LinearGradient(
-                  colors: [
-                    AppColor.orangeColor,
-                    AppColor.pinkColor,
-                  ],
-                ),
+              gradient: LinearGradient(
+                colors: [
+                  AppColor.orangeColor,
+                  AppColor.pinkColor,
+                ],
+              ),
               // color: Colors.white24,
             ),
             child: Center(
               child: IconButton(
                 icon: const Icon(Icons.pause),
-               iconSize: 20.h,
-               //  iconSize: 15.h,
+                iconSize: 20.h,
+                //  iconSize: 15.h,
                 onPressed: controller.pause,
               ),
             ),
@@ -285,7 +294,7 @@ class MiniCloseSongButton extends GetView<GetXPlayerController> {
       () => GestureDetector(
         onTap: () {
           controller.isCloseNotifier.value = true;
-          controller.selectedSong.value="";
+          controller.selectedSong.value = "";
         },
         child: Icon(
           Icons.close,
@@ -340,7 +349,7 @@ class MiniArtistAndSongName extends GetView<GetXPlayerController> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             SizedBox(
-              width:180.h,
+              // width: 180.h,
               child: SmallText(
                 text: controller.currentSongTitleNotifier.value,
                 //weight: FontWeight.bold,
@@ -351,9 +360,9 @@ class MiniArtistAndSongName extends GetView<GetXPlayerController> {
             ),
             //SizedBox(height: 3.r),
             SizedBox(
-             width: 150.h,
+              // width: 150.h,
               child: SmallText(
-              //  text: "artist name",
+                //  text: "artist name",
                 text: controller.currentSongArtistNotifier.value,
                 weight: FontWeight.w500,
                 size: 12.sp,
@@ -401,7 +410,40 @@ class LikeSongButton extends GetView<GetXPlayerController> {
 
   @override
   Widget build(BuildContext context) {
-  return const Icon(Icons.favorite_border_outlined,color: Colors.white, size: 25,);
+    return Obx(() {
+      return commonLikeButton(
+          onTap: () {
+            print("isLiked--${controller.isFavouriteSong.value}");
+            controller.updateMediaItemLikeSong();
+            controller.likeUnlikeSongsApiCall(
+              {"song_id": controller.currentSongIdNotifier.value},
+            );
+            controller.update();
+          },
+          isSelected:controller.isFavouriteSong.value == 1
+      );
+      //   GestureDetector(
+      //   onTap: () {
+      //     print("isLiked--${controller.isFavouriteSong.value}");
+      //     controller.updateMediaItemLikeSong();
+      //     controller.likeUnlikeSongsApiCall(
+      //       {"song_id": controller.currentSongIdNotifier.value},
+      //     );
+      //     controller.update();
+      //   },
+      //   child: controller.isFavouriteSong.value == 1
+      //       ? const Icon(
+      //           Icons.favorite,
+      //           color: Colors.red,
+      //           size: 25,
+      //         )
+      //       : const Icon(
+      //           Icons.favorite_border_outlined,
+      //           color: Colors.white,
+      //           size: 25,
+      //         ),
+      // );
+    });
   }
 }
 

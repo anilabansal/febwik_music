@@ -28,7 +28,7 @@ class _SplashScreenState extends State<SplashScreen> {
       body: SizedBox(
         width: MediaQuery.of(context).size.width,
         height:MediaQuery.of(context).size.height ,
-        child: Image.asset("assets/images/splash_screen_img.jpg",fit: BoxFit.fill,),
+        child: Image.asset("assets/images/splash_updated.jpg",fit: BoxFit.fill,),
       ),
     );
   }

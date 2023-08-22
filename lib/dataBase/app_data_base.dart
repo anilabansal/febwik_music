@@ -24,11 +24,14 @@ class AppLocalStorage extends GetxController{
   get isLogin => _isLogin;
   LoginDetail? get userDetail => _userDetail;
   int get userId => _userId.value;
+  String _authToken = '';
+  String get authToken => _authToken;
 
 
   init(){
     _userId.value = readUserId();
     _isLogin=readIsLogin();
+    _authToken = readLoginToken();
 
   }
 
@@ -51,7 +54,11 @@ class AppLocalStorage extends GetxController{
   }
 
 
+setLoginToken(value){
+    _authToken = value;
+    appDb.write("auth_token", value);
 
+}
   readLoginToken(){
     return appDb.read('auth_token') ?? "";
   }

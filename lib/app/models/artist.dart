@@ -103,6 +103,8 @@ class Singer {
   }
 }
 
+
+
 class Songs {
   int? id;
   String? name;
@@ -113,6 +115,7 @@ class Songs {
   int? isFavourite;
   List<Artists>? artists;
   int? selectedIndex;
+  String?slug;
 
   Songs(
       {this.id,
@@ -124,6 +127,7 @@ class Songs {
         this.isFavourite,
         this.artists,
         this.selectedIndex,
+        this.slug,
       });
 
   Songs.fromJson(Map<String, dynamic> json) {
@@ -141,6 +145,7 @@ class Songs {
       });
     }
     selectedIndex = -1;
+    slug = json['slug'];
 
   }
 
@@ -153,6 +158,7 @@ class Songs {
     data['thumbnail_128'] = this.thumbnail128;
     data['thumbnail_320'] = this.thumbnail320;
     data['is_favourite'] = this.isFavourite;
+    data['slug'] = this.slug;
     return data;
   }
 }

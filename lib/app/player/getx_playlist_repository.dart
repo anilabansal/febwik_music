@@ -1,8 +1,6 @@
-
 import 'package:get/get.dart';
 import 'package:music_app/app/services/api.dart';
 import 'package:music_app/app/services/api_client.dart';
-
 
 class GetXDemoPlaylist extends GetxService {
   Future<GetXDemoPlaylist> init() async {
@@ -28,25 +26,50 @@ class GetXDemoPlaylist extends GetxService {
   }
 
   ///TODO: artist detail
-  Future<Response> getArtistDetailSongList(index,page) async {
-    return await ApiClient().getRequest("${Api.artistDetailUrl}$index?page=$page");
+  Future<Response> getArtistDetailSongList(index, page) async {
+    return await ApiClient()
+        .getRequest("${Api.artistDetailUrl}$index?page=$page");
   }
 
   ///TODO: view more api call
-  Future<Response> getViewMoreList(slug,page) async {
+  Future<Response> getViewMoreList(slug, page) async {
     return await ApiClient().getRequest("${Api.viewMoreUrl}$slug?page=$page");
   }
 
   ///TODO: login api call
-  Future<dynamic> loginApiCall(phoneNumber) async{
+  Future<dynamic> loginApiCall(phoneNumber) async {
     return await ApiClient().getRequest("${Api.loginUrl}$phoneNumber");
   }
 
   ///TODO: otp verification screen
-  Future<dynamic> otpVerification(body) async{
+  Future<dynamic> otpVerification(body) async {
     return await ApiClient().postRequest(Api.otpVerificationUrl, body);
   }
 
+  ///TODO: like unlike songs
+  Future<dynamic> likeUnlikeSongs(body) async {
+    return await ApiClient().postRequest(Api.addRemoveToFavouriteUrl, body);
+  }
+
+  ///Todo: like songs list api call
+  Future<dynamic> likeSongsListApiCall() async {
+    return await ApiClient().getRequest(Api.addRemoveToFavouriteUrl);
+  }
+
+  ///TODO: add to playlist
+  Future<dynamic> addToPlayList(body) async {
+    return await ApiClient().postRequest(Api.addToPlayList, body);
+  }
+
+  ///TODO: get playlist
+  Future<dynamic> getPlayList() async {
+    return await ApiClient().getRequest(Api.addToPlayList);
+  }
+
+  ///TODO: playlist songs list
+  Future<dynamic> playListSongs(playListName) async {
+    return await ApiClient().getRequest("${Api.playListSongs}$playListName");
+  }
 
   var _songIndex = 0;
   static const _maxSongNumber = 10;

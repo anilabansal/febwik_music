@@ -7,7 +7,8 @@ import 'package:music_app/app/config/widgets/small_text.dart';
 import 'package:music_app/app/config/widgets/text_base.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:pinput/pinput.dart';
-import '../../../auth_controller/auth_controller.dart';
+
+import '../../../controllers/auth_controller/auth_controller.dart';
 import '../../theme/colors.dart';
 
 class OtpPage extends StatefulWidget {

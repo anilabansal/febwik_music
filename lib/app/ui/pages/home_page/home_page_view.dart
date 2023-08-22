@@ -12,7 +12,6 @@ import '../../../../main.dart';
 import '../../../config/widgets/small_text.dart';
 import '../../../config/widgets/background/custom_background.dart';
 import '../artist_page/artist_latest_page.dart';
-
 import 'widgets/home_appbar.dart';
 
 class HomePage extends StatelessWidget {
@@ -22,49 +21,52 @@ class HomePage extends StatelessWidget {
   Widget build(BuildContext context) {
     return CustomBackground(
       child: SafeArea(
-        child: Scaffold(body: Obx(() {
-          return Get
-              .find<GetXPlayerController>()
-              .isLoading
-              .value
-              ? const Center(
-              child: CircularProgressIndicator(color: Colors.white,))
-              : Column(
-            children: [
-              Expanded(
-                child:
-                SingleChildScrollView(
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    mainAxisSize: MainAxisSize.min,
-                    children:   [
-                      const HomeAppbar(),
-                      const TrendingSongs(),
-                      const TopStations(
-                        title: "Top Stations",
-                      ),
-                      const TopArtists(),
-                      const NewRelease(),
+        child: Scaffold(
+          body: Obx(() {
+            return Get.find<GetXPlayerController>().isLoading.value
+                ? const Center(
+                    child: CircularProgressIndicator(
+                      color: Colors.white,
+                    ),
+                  )
+                : Column(
+                    children: [
+                      Expanded(
+                        child: SingleChildScrollView(
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            mainAxisSize: MainAxisSize.min,
+                            children: [
+                              const HomeAppbar(),
+                              const TrendingSongs(),
+                              const TopStations(
+                                title: "Top Stations",
+                              ),
+                              const TopArtists(),
+                              const NewRelease(),
 
-                       // SizedBox(height:70)
-                      //   const FreshHits(),
-                      //     const PlayList(),
-                      //  const TopStations(title: "Fresh Hits",),
-                      // SizedBox(height: 60.h)
-                      Get
-                          .find<GetXPlayerController>()
-                          .isCloseNotifier
-                          .value
-                          ? SizedBox(height: 60.h) : SizedBox(height: 120.h,)
+                              // SizedBox(height:70)
+                              //   const FreshHits(),
+                              //     const PlayList(),
+                              //  const TopStations(title: "Fresh Hits",),
+                              // SizedBox(height: 60.h)
+                              Get.find<GetXPlayerController>()
+                                      .isCloseNotifier
+                                      .value
+                                  ? SizedBox(height: 60.h)
+                                  : SizedBox(
+                                      height: 120.h,
+                                    )
+                            ],
+                          ),
+                        ),
+                      ),
+                      // const MiniPlayer(),
                     ],
-                  ),
-                ),
-              ),
-            // const MiniPlayer(),
-            ],
-          );
-        }),),
+                  );
+          }),
+        ),
       ),
     );
   }
@@ -87,24 +89,21 @@ class NewRelease extends GetView<GetXPlayerController> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               HeaderSection(
-                title: controller.playlists[index].name!,
-                  onTap: (){
+                  title: controller.playlists[index].name!,
+                  onTap: () {
                     controller.playlistNotifier.clear();
                     navigatorKey.currentState?.push(
                       MaterialPageRoute(
-                        builder: (context) =>    ViewMorePage(
+                        builder: (context) => ViewMorePage(
                           slug: controller.playlists[index].slug,
                         ),
                       ),
                     );
                   }
-                // title: "New Release",
-              ),
+                  // title: "New Release",
+                  ),
               SizedBox(
-                width: MediaQuery
-                    .of(context)
-                    .size
-                    .width,
+                width: MediaQuery.of(context).size.width,
                 height: 160.h,
                 child: ListView.builder(
                     scrollDirection: Axis.horizontal,
@@ -113,9 +112,11 @@ class NewRelease extends GetView<GetXPlayerController> {
                     // physics: const NeverScrollableScrollPhysics(),
                     itemBuilder: (context, j) {
                       var list = controller.playlists[index].value;
-                      List<dynamic> artistNames =
-                      list![j].artists!.map((artist) => artist.name).toList();
-                      // return Obx(() {
+                      List<dynamic> artistNames = list![j]
+                          .artists!
+                          .map((artist) => artist.name)
+                          .toList();
+
                       return PlayerCard(
                         image: "${Api.baseUrl}/${list[j].thumbnail320}",
                         musicName: list[j].name ?? "",
@@ -138,13 +139,17 @@ class NewRelease extends GetView<GetXPlayerController> {
                                 //audioList[index].artUri,
                                 extras: {
                                   'url': "${Api.baseUrl}/${list[i].songFile}",
+                                  'isFavourite': list[i].isFavourite,
                                 },
                               ),
                             );
                           }
 
                           controller.clearPlaylist();
-                          controller.add(playlist, j,);
+                          controller.add(
+                            playlist,
+                            j,
+                          );
                           //   Get.toNamed(AppRoutes.bottomPlayer);
                         },
                       );
@@ -167,7 +172,7 @@ class HeaderSection extends StatelessWidget {
   final String title;
   final String action;
   final bool showAction;
-  final VoidCallback ? onTap;
+  final VoidCallback? onTap;
 
   @override
   Widget build(BuildContext context) {
@@ -224,7 +229,9 @@ class TrendingSongs extends GetView<GetXPlayerController> {
       mainAxisSize: MainAxisSize.min,
       children: [
         SizedBox(height: 10.h),
-        const HeaderSection(title: "Trending Playlists", showAction: false,
+        const HeaderSection(
+          title: "Trending Playlists",
+          showAction: false,
         ),
         SizedBox(
           height: 160.h,
@@ -235,8 +242,10 @@ class TrendingSongs extends GetView<GetXPlayerController> {
                 itemCount: controller.trending.length,
                 itemBuilder: (context, index) {
                   var list = controller.trending;
-                  List<dynamic> artistNames =
-                  list[index].artists!.map((artist) => artist.name).toList();
+                  List<dynamic> artistNames = list[index]
+                      .artists!
+                      .map((artist) => artist.name)
+                      .toList();
                   print("artist Name --->${artistNames}");
                   return Obx(() {
                     return PlayerCard(
@@ -249,7 +258,6 @@ class TrendingSongs extends GetView<GetXPlayerController> {
                         print('tap trend');
                         controller.printSongsName(list);
 
-
                         for (int i = 0; i < list.length; i++) {
                           playlist.add(
                             MediaItem(
@@ -261,6 +269,7 @@ class TrendingSongs extends GetView<GetXPlayerController> {
                               //audioList[index].artUri,
                               extras: {
                                 'url': "${Api.baseUrl}/${list[i].songFile}",
+                                'isFavourite': list[i].isFavourite,
                               },
                             ),
                           );
@@ -274,7 +283,6 @@ class TrendingSongs extends GetView<GetXPlayerController> {
 
                         //  Get.toNamed(AppRoutes.bottomPlayer);
                       },
-
                     );
                   });
                 });
@@ -296,7 +304,7 @@ class TopStations extends GetView<GetXPlayerController> {
       mainAxisSize: MainAxisSize.min,
       children: [
         // SizedBox(height: 10.h),
-        HeaderSection(title: title!,showAction: false),
+        HeaderSection(title: title!, showAction: false),
         SizedBox(
           height: 160.h,
           child: Obx(() {
@@ -307,8 +315,10 @@ class TopStations extends GetView<GetXPlayerController> {
                 itemBuilder: (context, index) {
                   var list = controller.latestRelease;
                   print("index---->${controller.latestRelease.length - 1}");
-                  List<dynamic> artistNames =
-                  list[index].artists!.map((artist) => artist.name).toList();
+                  List<dynamic> artistNames = list[index]
+                      .artists!
+                      .map((artist) => artist.name)
+                      .toList();
                   return Obx(() {
                     return PlayerCard(
                       image: "${Api.baseUrl}/${list[index].thumbnail320}",
@@ -319,6 +329,7 @@ class TopStations extends GetView<GetXPlayerController> {
                         print('tap latest');
                         controller.printSongsName(list);
                         for (int i = 0; i < list.length; i++) {
+                          print("isFavourite --->${list[i].isFavourite}");
                           playlist.add(
                             MediaItem(
                               id: list[i].id.toString(),
@@ -329,6 +340,7 @@ class TopStations extends GetView<GetXPlayerController> {
                               //audioList[index].artUri,
                               extras: {
                                 'url': "${Api.baseUrl}/${list[i].songFile}",
+                                'isFavourite': list[i].isFavourite,
                               },
                             ),
                           );
@@ -340,7 +352,6 @@ class TopStations extends GetView<GetXPlayerController> {
                         );
                         //   Get.toNamed(AppRoutes.bottomPlayer);
                       },
-
                     );
                   });
                 });
@@ -358,7 +369,10 @@ class TopArtists extends GetView<GetXPlayerController> {
   Widget build(BuildContext context) {
     return Column(
       children: [
-         const HeaderSection(title: "Top Artist Radio",showAction: false,),
+        const HeaderSection(
+          title: "Top Artist Radio",
+          showAction: false,
+        ),
         Container(
           height: 120.h,
           alignment: Alignment.center,
@@ -371,11 +385,12 @@ class TopArtists extends GetView<GetXPlayerController> {
               itemBuilder: (context, index) {
                 return InkWell(
                   onTap: () {
-
                     controller.playlistNotifier.clear();
                     navigatorKey.currentState?.push(
                       MaterialPageRoute(
-                        builder: (context) => ArtistsPage(id:controller.featuredArtists[index].id ,),
+                        builder: (context) => ArtistsPage(
+                          id: controller.featuredArtists[index].id,
+                        ),
                       ),
                     );
                     // Get.toNamed(AppRoutes.artistPage,
@@ -402,8 +417,7 @@ class TopArtists extends GetView<GetXPlayerController> {
                         ),
                         child: ClipOval(
                           child: Image.network(
-                            "${Api.baseUrl}/${controller.featuredArtists[index]
-                                .image}",
+                            "${Api.baseUrl}/${controller.featuredArtists[index].image}",
                             // Artists.artistList[index].imgUrl.toString(),
                             fit: BoxFit.fill,
                           ),
@@ -496,7 +510,7 @@ class PlayList extends GetView<GetXPlayerController> {
                   return Obx(() {
                     return PlayerCard(
                       image:
-                      "http://65.2.183.74/storage/7/conversions/62541b21309a5_20210110_121942_0000-mediumthumb.jpg",
+                          "http://65.2.183.74/storage/7/conversions/62541b21309a5_20210110_121942_0000-mediumthumb.jpg",
                       musicName: controller.playlists[index].name ?? "",
                       artistName: "Artist Name",
                       onTap: () => Get.toNamed(AppRoutes.bottomPlayer),
@@ -589,12 +603,8 @@ class PlayerCard extends StatelessWidget {
               ),
             ),
           ),
-
-
         ],
       ),
     );
   }
 }
-
-
