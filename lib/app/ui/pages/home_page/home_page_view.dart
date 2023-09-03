@@ -118,7 +118,8 @@ class NewRelease extends GetView<GetXPlayerController> {
                           .toList();
 
                       return PlayerCard(
-                        image: "${Api.baseUrl}/${list[j].thumbnail320}",
+                        // image: "${list[j].thumbnail320}",
+                        image: "${list[j].thumbnail320}",
                         musicName: list[j].name ?? "",
                         artistName: artistNames.join(','),
                         // artistName: "Artist Name",
@@ -135,7 +136,7 @@ class NewRelease extends GetView<GetXPlayerController> {
                                 title: list[i].name!,
                                 artist: artistNames.join(','),
                                 artUri: Uri.parse(
-                                    "${Api.baseUrl}/${list[i].thumbnail320}"),
+                                    "${list[i].thumbnail320}"),
                                 //audioList[index].artUri,
                                 extras: {
                                   'url': "${Api.baseUrl}/${list[i].songFile}",
@@ -249,7 +250,7 @@ class TrendingSongs extends GetView<GetXPlayerController> {
                   print("artist Name --->${artistNames}");
                   return Obx(() {
                     return PlayerCard(
-                      image: "${Api.baseUrl}/${list[index].thumbnail320}",
+                      image: "${list[index].thumbnail320}",
                       musicName: list[index].name ?? "",
                       artistName: artistNames.join(','),
                       // artistName: "Artist Name",
@@ -265,7 +266,7 @@ class TrendingSongs extends GetView<GetXPlayerController> {
                               title: list[i].name!,
                               artist: artistNames.join(', '),
                               artUri: Uri.parse(
-                                  "${Api.baseUrl}/${list[i].thumbnail320}"),
+                                  "${list[i].thumbnail320}"),
                               //audioList[index].artUri,
                               extras: {
                                 'url': "${Api.baseUrl}/${list[i].songFile}",
@@ -321,7 +322,7 @@ class TopStations extends GetView<GetXPlayerController> {
                       .toList();
                   return Obx(() {
                     return PlayerCard(
-                      image: "${Api.baseUrl}/${list[index].thumbnail320}",
+                      image: "${list[index].thumbnail320}",
                       musicName: list[index].name ?? "",
                       artistName: artistNames.join(','),
                       onTap: () {
@@ -336,10 +337,10 @@ class TopStations extends GetView<GetXPlayerController> {
                               title: list[i].name!,
                               artist: artistNames.join(','),
                               artUri: Uri.parse(
-                                  "${Api.baseUrl}/${list[i].thumbnail320}"),
+                                  "${list[i].thumbnail320}"),
                               //audioList[index].artUri,
                               extras: {
-                                'url': "${Api.baseUrl}/${list[i].songFile}",
+                                'url': "${Api.baseUrl}/${Api.baseUrl}/${list[i].songFile}",
                                 'isFavourite': list[i].isFavourite,
                               },
                             ),

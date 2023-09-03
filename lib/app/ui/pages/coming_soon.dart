@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:music_app/app/config/widgets/background/custom_background.dart';
-
 import '../../config/widgets/text_base.dart';
 
 class ComingSoon extends StatelessWidget {

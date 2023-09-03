@@ -12,6 +12,7 @@ import 'package:music_app/app/ui/theme/colors.dart';
 import '../main.dart';
 import 'config/widgets/custom_nav_bar.dart';
 import 'config/widgets/exist_dialog.dart';
+import 'ui/pages/coming_soon.dart';
 
 class MainPage extends StatefulWidget {
   final int selectedIndex;
@@ -30,7 +31,7 @@ class _MainPageState extends State<MainPage> {
     const HomePage(),
     const ConnectivityScreen(),
     // const SearchPage(),
-    const ProfilePage(),
+    const ComingSoon(),
     const ProfilePage(),
     // const ProfilePage()
   ];

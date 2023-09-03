@@ -1,3 +1,5 @@
+import 'dart:ui';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:fluttertoast/fluttertoast.dart';
@@ -11,6 +13,7 @@ import 'package:music_app/app/ui/pages/profile/profile_playlist.dart';
 import 'package:music_app/dataBase/app_data_base.dart';
 import '../../../../main.dart';
 import '../../../config/widgets/background/custom_background.dart';
+import '../../../config/widgets/exist_dialog.dart';
 import '../../../config/widgets/vector_asset.dart';
 import '../../../controllers/profile_controller/profile_controller.dart';
 import '../../theme/colors.dart';
@@ -162,12 +165,34 @@ class _ProfilePageState extends State<ProfilePage> {
                                   ),
                                   text: "Logout",
                                   onTap: () {
-                                    Fluttertoast.showToast(
-                                        msg: "Logout Successfully!",
-                                        textColor: Colors.white,
-                                        backgroundColor: AppColor.orangeColor);
-                                    AppLocalStorage().clearData();
-                                    AppLocalStorage().setUserId(0);
+                                    showDialog(
+                                        barrierColor: Colors.transparent,
+                                        barrierDismissible: false,
+                                        context: context,
+                                        builder: (context) {
+                                          return BackdropFilter(
+                                            filter: ImageFilter.blur(sigmaX: 2, sigmaY: 2),
+                                            child: const Dialog(
+                                              backgroundColor: AppColor.searchBarGreyColor,
+                                              shape: RoundedRectangleBorder(
+                                                borderRadius: BorderRadius.all(
+                                                  Radius.circular(10.0),
+                                                ),
+                                              ),
+                                              child: ExistDialog(
+                                                  callFrom:"logOut",
+                                                dialogHeaderText: "Logout",
+                                                dialogText: "Do you want to Logout an App",
+                                              ),
+                                            ),
+                                          );
+                                        });
+                                    // Fluttertoast.showToast(
+                                    //     msg: "Logout Successfully!",
+                                    //     textColor: Colors.white,
+                                    //     backgroundColor: AppColor.orangeColor);
+                                    // AppLocalStorage().clearData();
+                                    // AppLocalStorage().setUserId(0);
                                   },
                                 ),
                               ),

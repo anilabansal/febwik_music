@@ -335,7 +335,7 @@ class _ArtistsPageState extends State<ArtistsPage> {
                                                             artist: artistNames
                                                                 .join(','),
                                                             artUri: Uri.parse(
-                                                                "${Api.baseUrl}/${list[i].thumbnail320}"),
+                                                                "${list[i].thumbnail320}"),
                                                             //audioList[index].artUri,
                                                             extras: {
                                                               'url':
@@ -386,7 +386,7 @@ class _ArtistsPageState extends State<ArtistsPage> {
                                                                 DecorationImage(
                                                               image:
                                                                   NetworkImage(
-                                                                "${Api.baseUrl}/${list[index].thumbnail128}",
+                                                                "${list[index].thumbnail128}",
                                                               ),
                                                               fit: BoxFit.fill,
                                                             ),
@@ -646,7 +646,7 @@ class _ArtistsPageState extends State<ArtistsPage> {
                 id: list[i].id.toString(),
                 title: list[i].name!,
                 artist: artistNames.join(','),
-                artUri: Uri.parse("${Api.baseUrl}/${list[i].thumbnail320}"),
+                artUri: Uri.parse("${list[i].thumbnail320}"),
                 //audioList[index].artUri,
                 extras: {
                   'url': "${Api.baseUrl}/${list[i].songFile}",

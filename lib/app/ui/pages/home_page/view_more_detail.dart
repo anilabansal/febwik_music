@@ -180,8 +180,8 @@ class _ViewMorePageState extends State<ViewMorePage> {
                                                   const EdgeInsets.fromLTRB(
                                                       60, 8, 60, 0),
                                               child: Image.network(
-                                                "${Api.baseUrl}/${Get.find<GetXPlayerController>().viewMoreSongList[0].thumbnail320}",
-                                                // width: MediaQuery.of(context)
+                                                "${Get.find<GetXPlayerController>().viewMoreSongList[0].thumbnail320}",
+                                                // widt${Api.baseUrl}/h: MediaQuery.of(context)
                                                 //     .size
                                                 //     .width,
                                                 fit: BoxFit.fill,
@@ -298,7 +298,7 @@ class _ViewMorePageState extends State<ViewMorePage> {
                                                       artist:
                                                           artistNames.join(','),
                                                       artUri: Uri.parse(
-                                                          "${Api.baseUrl}/${list[i].thumbnail320}"),
+                                                          "${list[i].thumbnail320}"),
                                                       //audioList[index].artUri,
                                                       extras: {
                                                         'url':
@@ -346,7 +346,7 @@ class _ViewMorePageState extends State<ViewMorePage> {
                                                         ),
                                                         image: DecorationImage(
                                                           image: NetworkImage(
-                                                            "${Api.baseUrl}/${list[index].thumbnail128}",
+                                                            "${list[index].thumbnail128}",
                                                           ),
                                                           fit: BoxFit.fill,
                                                         ),
@@ -625,7 +625,7 @@ class _ViewMorePageState extends State<ViewMorePage> {
                 id: list[i].id.toString(),
                 title: list[i].name!,
                 artist: artistNames.join(','),
-                artUri: Uri.parse("${Api.baseUrl}/${list[i].thumbnail320}"),
+                artUri: Uri.parse("${list[i].thumbnail320}"),
                 //audioList[index].artUri,
                 extras: {
                   'url': "${Api.baseUrl}/${list[i].songFile}",

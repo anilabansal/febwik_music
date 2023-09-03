@@ -1,43 +1,54 @@
 import 'package:flutter/material.dart';
 import 'package:music_app/app/config/widgets/small_text.dart';
 import 'package:music_app/app/ui/theme/colors.dart';
-
+import '../../../dataBase/app_data_base.dart';
 import '../dimensions.dart';
 
 class ExistDialog extends StatelessWidget {
-  const ExistDialog({Key? key}) : super(key: key);
+  final String? dialogHeaderText;
+  final String? dialogText;
+  final String? callFrom;
+  const ExistDialog({Key? key, this.dialogHeaderText, this.dialogText, this.callFrom}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return  Container(
+    return Container(
       height: 180,
       decoration: BoxDecoration(
-        border: Border.all(color: AppColor.orangeColor,width: 2),
-        borderRadius:
-        const BorderRadius.all(Radius.circular(10.0),),),
+        border: Border.all(color: AppColor.orangeColor, width: 2),
+        borderRadius: const BorderRadius.all(
+          Radius.circular(10.0),
+        ),
+      ),
       child: Padding(
         padding: const EdgeInsets.all(8.0),
         child: Column(
           children: [
-            const SizedBox(height: 10,),
+            const SizedBox(
+              height: 10,
+            ),
             SmallText(
-              text: 'Exit App',
+              text: dialogHeaderText??'Exit App',
               weight: FontWeight.w800,
               size: Dimensions.font16,
             ),
-           const SizedBox(height: 10,),
+            const SizedBox(
+              height: 10,
+            ),
             SmallText(
-              text: 'Do you want to exit an App?',
+              text: dialogText??'Do you want to exit an App?',
               weight: FontWeight.w400,
               size: Dimensions.font16,
               color: Colors.white54,
             ),
-            const SizedBox(height: 20,),
+            const SizedBox(
+              height: 20,
+            ),
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 InkWell(
-                  onTap: (){
+                  onTap: () {
                     Navigator.of(context).pop(false);
                   },
                   child: Container(
@@ -57,10 +68,20 @@ class ExistDialog extends StatelessWidget {
                     ),
                   ),
                 ),
-               const SizedBox(width: 10,),
+                const SizedBox(
+                  width: 10,
+                ),
                 InkWell(
-                  onTap: (){
-                    Navigator.of(context).pop(true);
+                  onTap: () {
+                    if(callFrom=="logOut"){
+                      Navigator.of(context).pop(false);
+                      AppLocalStorage().clearData();
+                      AppLocalStorage().setUserId(0);
+                    }
+                    else{
+                      Navigator.of(context).pop(true);
+                    }
+
                   },
                   child: Container(
                     width: 80,

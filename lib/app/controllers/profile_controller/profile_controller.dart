@@ -20,7 +20,6 @@ class ProfileController extends GetxController {
   var isPlayListSongLoading = true.obs;
 
 
-
 ///TODO: like songs list api call
   Future<bool> likeSongsApiCall() async {
     Response response =
