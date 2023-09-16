@@ -1,4 +1,4 @@
-package com.feb.music
+package com.febfolk
 
 import io.flutter.embedding.android.FlutterActivity
 

@@ -34,7 +34,7 @@ class _LoginPageState extends State<LoginPage> {
         SafeArea(
       child: SingleChildScrollView(
         child: SizedBox(
-          height: MediaQuery.sizeOf(context).height*1.04,
+          height: MediaQuery.sizeOf(context).height * 1.04,
           child: CustomBackgroundImg(
             child: Scaffold(
               body: Padding(

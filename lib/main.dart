@@ -1,4 +1,5 @@
 import 'package:firebase_core/firebase_core.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
@@ -8,6 +9,8 @@ import 'app/player/getx_playlist_repository.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'app/routes/app_pages.dart';
 import 'app/services/connectivity.dart';
+import 'app/services/fcm_service.dart';
+import 'app/services/local_notification.dart';
 import 'app/ui/pages/add_to_play_list/add_to_play_list_screen.dart';
 import 'app/ui/pages/splash/splash_screen.dart';
 import 'app/ui/share_demo.dart';
@@ -17,7 +20,10 @@ import 'dataBase/app_data_base.dart';
 GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
 ConnectionManagerController connectionManagerController =
     Get.put(ConnectionManagerController());
-
+Future<void> _messageHandler(RemoteMessage message) async {
+  await Firebase.initializeApp();
+  print('background message ==========> ${message.notification!.body}');
+}
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
@@ -27,7 +33,11 @@ void main() async {
   connectionManagerController.getConnectivity();
   await GetStorage().initStorage;
   AppLocalStorage().init();
-  // await Firebase.initializeApp();
+  await Firebase.initializeApp();
+  FCMService().init();
+  FCMService(). getFCMToken();
+  FirebaseMessaging.onBackgroundMessage(_messageHandler);
+  await LocalNotificationService().init();
   runApp(const App());
 }
 

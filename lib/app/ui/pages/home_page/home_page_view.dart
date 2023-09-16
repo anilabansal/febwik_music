@@ -139,7 +139,7 @@ class NewRelease extends GetView<GetXPlayerController> {
                                     "${list[i].thumbnail320}"),
                                 //audioList[index].artUri,
                                 extras: {
-                                  'url': "${Api.baseUrl}/${list[i].songFile}",
+                                  'url': "${list[i].songFile}",
                                   'isFavourite': list[i].isFavourite,
                                 },
                               ),
@@ -269,7 +269,7 @@ class TrendingSongs extends GetView<GetXPlayerController> {
                                   "${list[i].thumbnail320}"),
                               //audioList[index].artUri,
                               extras: {
-                                'url': "${Api.baseUrl}/${list[i].songFile}",
+                                'url': "${list[i].songFile}",
                                 'isFavourite': list[i].isFavourite,
                               },
                             ),
