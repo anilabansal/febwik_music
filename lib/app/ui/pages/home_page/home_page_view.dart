@@ -125,7 +125,7 @@ class NewRelease extends GetView<GetXPlayerController> {
                         // artistName: "Artist Name",
                         onTap: () {
                           List<MediaItem> playlist = [];
-                          print('tap new re');
+                          debugPrint('tap new re');
                           print(list);
                           controller.printSongsName(list);
 
@@ -247,7 +247,7 @@ class TrendingSongs extends GetView<GetXPlayerController> {
                       .artists!
                       .map((artist) => artist.name)
                       .toList();
-                  print("artist Name --->${artistNames}");
+                  debugPrint("artist Name --->$artistNames");
                   return Obx(() {
                     return PlayerCard(
                       image: "${list[index].thumbnail320}",
@@ -256,7 +256,7 @@ class TrendingSongs extends GetView<GetXPlayerController> {
                       // artistName: "Artist Name",
                       onTap: () {
                         List<MediaItem> playlist = [];
-                        print('tap trend');
+                        debugPrint('tap trend');
                         controller.printSongsName(list);
 
                         for (int i = 0; i < list.length; i++) {
@@ -315,7 +315,7 @@ class TopStations extends GetView<GetXPlayerController> {
                 itemCount: controller.latestRelease.length,
                 itemBuilder: (context, index) {
                   var list = controller.latestRelease;
-                  print("index---->${controller.latestRelease.length - 1}");
+                  debugPrint("index---->${controller.latestRelease.length - 1}");
                   List<dynamic> artistNames = list[index]
                       .artists!
                       .map((artist) => artist.name)
@@ -327,10 +327,10 @@ class TopStations extends GetView<GetXPlayerController> {
                       artistName: artistNames.join(','),
                       onTap: () {
                         List<MediaItem> playlist = [];
-                        print('tap latest');
+                        debugPrint('tap latest');
                         controller.printSongsName(list);
                         for (int i = 0; i < list.length; i++) {
-                          print("isFavourite --->${list[i].isFavourite}");
+                          debugPrint("isFavourite --->${list[i].isFavourite}");
                           playlist.add(
                             MediaItem(
                               id: list[i].id.toString(),
@@ -340,7 +340,7 @@ class TopStations extends GetView<GetXPlayerController> {
                                   "${list[i].thumbnail320}"),
                               //audioList[index].artUri,
                               extras: {
-                                'url': "${Api.baseUrl}/${Api.baseUrl}/${list[i].songFile}",
+                                'url': "${list[i].songFile}",
                                 'isFavourite': list[i].isFavourite,
                               },
                             ),
@@ -418,7 +418,7 @@ class TopArtists extends GetView<GetXPlayerController> {
                         ),
                         child: ClipOval(
                           child: Image.network(
-                            "${Api.baseUrl}/${controller.featuredArtists[index].image}",
+                            "${controller.featuredArtists[index].image}",
                             // Artists.artistList[index].imgUrl.toString(),
                             fit: BoxFit.fill,
                           ),

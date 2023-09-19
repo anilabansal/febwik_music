@@ -339,7 +339,7 @@ class _ArtistsPageState extends State<ArtistsPage> {
                                                             //audioList[index].artUri,
                                                             extras: {
                                                               'url':
-                                                                  "${Api.baseUrl}/${list[i].songFile}",
+                                                                  "${list[i].songFile}",
                                                               'isFavourite': list[
                                                                       i]
                                                                   .isFavourite,
@@ -462,7 +462,7 @@ class _ArtistsPageState extends State<ArtistsPage> {
                                                         commonLikeButton(
                                                             onTap: () {
                                                               if (AppLocalStorage()
-                                                                  .userId ==
+                                                                      .userId ==
                                                                   0) {
                                                                 Get.to(
                                                                     const LoginPage());
@@ -485,7 +485,7 @@ class _ArtistsPageState extends State<ArtistsPage> {
                                                                   {
                                                                     "song_id": controller
                                                                         .artistSongList[
-                                                                    index]
+                                                                            index]
                                                                         .id,
                                                                     // controller
                                                                     //     .artistSongList[
@@ -495,22 +495,22 @@ class _ArtistsPageState extends State<ArtistsPage> {
                                                                 );
                                                               }
                                                             },
-                                                            isSelected:(controller
-                                                                .artistSongList[
-                                                            index]
-                                                                .isFavourite ==
-                                                        1 ||
-                                                        (controller.currentSongIdNotifier
-                                                            .value ==
-                                                        controller
-                                                            .artistSongList[
-                                                        index]
-                                                            .id
-                                                            .toString() &&
-                                                        controller
-                                                            .isFavouriteSong
-                                                            .value ==
-                                                        1))),
+                                                            isSelected: (controller
+                                                                        .artistSongList[
+                                                                            index]
+                                                                        .isFavourite ==
+                                                                    1 ||
+                                                                (controller.currentSongIdNotifier
+                                                                            .value ==
+                                                                        controller
+                                                                            .artistSongList[
+                                                                                index]
+                                                                            .id
+                                                                            .toString() &&
+                                                                    controller
+                                                                            .isFavouriteSong
+                                                                            .value ==
+                                                                        1))),
                                                         // GestureDetector(
                                                         //   onTap: () {
                                                         //     if (AppLocalStorage()
@@ -649,7 +649,7 @@ class _ArtistsPageState extends State<ArtistsPage> {
                 artUri: Uri.parse("${list[i].thumbnail320}"),
                 //audioList[index].artUri,
                 extras: {
-                  'url': "${Api.baseUrl}/${list[i].songFile}",
+                  'url': "${list[i].songFile}",
                   'isFavourite': list[i].isFavourite,
                 },
               ),

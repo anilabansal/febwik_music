@@ -302,7 +302,7 @@ class _ViewMorePageState extends State<ViewMorePage> {
                                                       //audioList[index].artUri,
                                                       extras: {
                                                         'url':
-                                                            "${Api.baseUrl}/${list[i].songFile}",
+                                                            "${list[i].songFile}",
                                                         'isFavourite':
                                                             list[i].isFavourite,
                                                       },
@@ -628,7 +628,7 @@ class _ViewMorePageState extends State<ViewMorePage> {
                 artUri: Uri.parse("${list[i].thumbnail320}"),
                 //audioList[index].artUri,
                 extras: {
-                  'url': "${Api.baseUrl}/${list[i].songFile}",
+                  'url': "${list[i].songFile}",
                   'isFavourite': list[i].isFavourite,
                 },
               ),
