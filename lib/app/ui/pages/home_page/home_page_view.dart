@@ -135,8 +135,7 @@ class NewRelease extends GetView<GetXPlayerController> {
                                 id: list[i].id.toString(),
                                 title: list[i].name!,
                                 artist: artistNames.join(','),
-                                artUri: Uri.parse(
-                                    "${list[i].thumbnail320}"),
+                                artUri: Uri.parse("${list[i].thumbnail320}"),
                                 //audioList[index].artUri,
                                 extras: {
                                   'url': "${list[i].songFile}",
@@ -265,8 +264,7 @@ class TrendingSongs extends GetView<GetXPlayerController> {
                               id: list[i].id.toString(),
                               title: list[i].name!,
                               artist: artistNames.join(', '),
-                              artUri: Uri.parse(
-                                  "${list[i].thumbnail320}"),
+                              artUri: Uri.parse("${list[i].thumbnail320}"),
                               //audioList[index].artUri,
                               extras: {
                                 'url': "${list[i].songFile}",
@@ -315,7 +313,8 @@ class TopStations extends GetView<GetXPlayerController> {
                 itemCount: controller.latestRelease.length,
                 itemBuilder: (context, index) {
                   var list = controller.latestRelease;
-                  debugPrint("index---->${controller.latestRelease.length - 1}");
+                  debugPrint(
+                      "index---->${controller.latestRelease.length - 1}");
                   List<dynamic> artistNames = list[index]
                       .artists!
                       .map((artist) => artist.name)
@@ -336,8 +335,7 @@ class TopStations extends GetView<GetXPlayerController> {
                               id: list[i].id.toString(),
                               title: list[i].name!,
                               artist: artistNames.join(','),
-                              artUri: Uri.parse(
-                                  "${list[i].thumbnail320}"),
+                              artUri: Uri.parse("${list[i].thumbnail320}"),
                               //audioList[index].artUri,
                               extras: {
                                 'url': "${list[i].songFile}",

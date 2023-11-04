@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-
 import '../../../../config/widgets/text_base.dart';
 import '../../../../config/widgets/vector_asset.dart';
 

@@ -8,6 +8,7 @@ import 'package:music_app/app/ui/pages/home_page/home_page_view.dart';
 import 'package:music_app/app/ui/pages/login_page/login_page.dart';
 import 'package:music_app/app/ui/pages/mini_player.dart';
 import 'package:music_app/app/ui/pages/profile/profile_page.dart';
+import 'package:music_app/app/ui/pages/search_screen/search_screen.dart';
 import 'package:music_app/app/ui/theme/colors.dart';
 import '../main.dart';
 import 'config/widgets/custom_nav_bar.dart';
@@ -29,9 +30,9 @@ class _MainPageState extends State<MainPage> {
 
   final List<Widget> _children = [
     const HomePage(),
+    const SearchScreen(),
     const ConnectivityScreen(),
-    // const SearchPage(),
-    const ComingSoon(),
+    // const ComingSoon(),
     const ProfilePage(),
     // const ProfilePage()
   ];
