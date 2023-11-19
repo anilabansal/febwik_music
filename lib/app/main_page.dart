@@ -120,7 +120,8 @@ class _MainPageState extends State<MainPage> {
                     ),
                   );
                 });
-          } else if (Get.find<GetXPlayerController>().homeDestinationIndex !=
+          }
+          else if (Get.find<GetXPlayerController>().homeDestinationIndex !=
               0) {
             Future.delayed(const Duration(microseconds: 200), () {
               navigatorKey.currentState!.popUntil((route) => route.isFirst);
